@@ -220,6 +220,19 @@ If you're using a custom domain for emails:
 - Wait a few minutes (certificates auto-provision)
 - Contact Netlify support if issues persist
 
+### Issue: Build Fails with "Missing API key" for Resend
+
+**Symptoms:**
+
+- Error: `Missing API key. Pass it to the constructor 'new Resend("re_123")'`
+- Build fails during "Collecting page data"
+
+**Solution:**
+
+- ✅ **Already fixed:** Resend is now initialized lazily (only when sending emails)
+- Ensure `RESEND_API_KEY` is set in Netlify environment variables
+- The code now handles missing API keys gracefully during build
+
 ### Issue: NextAuth Not Working
 
 **Solution:**

@@ -4,7 +4,14 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/api/prisma';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialization - only create Resend instance when needed
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not set');
+  }
+  return new Resend(apiKey);
+}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,
@@ -13,6 +20,9 @@ export const authOptions: NextAuthOptions = {
       from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
       // Custom email sending with Resend
       sendVerificationRequest: async ({ identifier, url, provider }) => {
+        // Only initialize Resend when actually sending an email
+        const resend = getResend();
+        
         try {
           const { data, error } = await resend.emails.send({
             from: provider.from as string,

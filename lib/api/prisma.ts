@@ -4,19 +4,31 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-let prismaClient: PrismaClient | undefined;
+// Lazy initialization - only create Prisma client when needed
+function getPrismaClient(): PrismaClient {
+  if (globalForPrisma.prisma) {
+    return globalForPrisma.prisma;
+  }
 
-try {
-  prismaClient =
-    globalForPrisma.prisma ??
-    new PrismaClient({
-      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-    });
+  // During build time, DATABASE_URL might not be set
+  // Create a client anyway (it won't be used during build)
+  const client = new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  });
 
-  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prismaClient;
-} catch (error) {
-  console.warn('Prisma Client not initialized. Run "npx prisma generate" and ensure DATABASE_URL is set.');
+  if (process.env.NODE_ENV !== 'production') {
+    globalForPrisma.prisma = client;
+  }
+
+  return client;
 }
 
-export const prisma = prismaClient as PrismaClient;
+// Export a getter function that initializes on first access
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop) {
+    const client = getPrismaClient();
+    const value = (client as any)[prop];
+    return typeof value === 'function' ? value.bind(client) : value;
+  },
+});
 
