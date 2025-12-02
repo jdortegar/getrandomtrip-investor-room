@@ -20,11 +20,13 @@
 Since you're using Vercel Blob, you have two options:
 
 **Option A: Switch to Netlify Blob** (Recommended for Netlify)
+
 - Remove `@vercel/blob`
 - Install Netlify Blob storage
 - Update file storage code
 
 **Option B: Keep Vercel Blob** (Works but not ideal)
+
 - Vercel Blob works on Netlify but requires Vercel account
 - Consider switching for better integration
 
@@ -122,6 +124,7 @@ Add a **CNAME record**:
 - **TTL:** 3600 (or default)
 
 **Alternative:** If CNAME doesn't work, use **A Record**:
+
 - **Type:** A
 - **Host:** `investors`
 - **Points to:** Netlify's IP addresses (Netlify will provide these)
@@ -149,6 +152,7 @@ Netlify automatically provisions SSL certificates via Let's Encrypt:
 ### 5.1 Update NextAuth URL
 
 Ensure `NEXTAUTH_URL` in Netlify environment variables matches:
+
 ```
 https://investors.getrandomtrip.com
 ```
@@ -156,6 +160,7 @@ https://investors.getrandomtrip.com
 ### 5.2 Update Resend Domain (if using custom domain)
 
 If you're using a custom domain for emails:
+
 1. Verify domain in Resend
 2. Update `EMAIL_FROM` to use your domain
 
@@ -170,17 +175,37 @@ If you're using a custom domain for emails:
 
 ## 🐛 Troubleshooting
 
+### Issue: Build Stuck on npm install / Puppeteer
+
+**Symptoms:**
+
+- Build hangs during `npm install`
+- Warnings about Puppeteer Chromium download
+- Build times out
+
+**Solutions:**
+
+1. ✅ **Already configured:** `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` in `netlify.toml`
+2. ✅ **Already configured:** `.npmrc` file with Puppeteer skip settings
+3. If still stuck, add to Netlify environment variables:
+   - `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true`
+   - `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable`
+4. **Alternative:** Consider using `puppeteer-core` or switching to a different PDF generation library for serverless
+
 ### Issue: Build Fails
 
 **Solution:**
+
 - Check build logs in Netlify Dashboard
 - Ensure all environment variables are set
 - Verify Node version (should be 20)
 - Check `package.json` scripts
+- Verify Prisma client is generated (check `postinstall` script)
 
 ### Issue: DNS Not Resolving
 
 **Solution:**
+
 - Wait 24-48 hours for propagation
 - Verify DNS records in Squarespace match Netlify's requirements
 - Check for typos in CNAME/A record
@@ -189,6 +214,7 @@ If you're using a custom domain for emails:
 ### Issue: SSL Certificate Not Issuing
 
 **Solution:**
+
 - Ensure DNS is fully propagated
 - Check that domain is correctly added in Netlify
 - Wait a few minutes (certificates auto-provision)
@@ -197,6 +223,7 @@ If you're using a custom domain for emails:
 ### Issue: NextAuth Not Working
 
 **Solution:**
+
 - Verify `NEXTAUTH_URL` matches your subdomain exactly
 - Check `NEXTAUTH_SECRET` is set
 - Ensure database is accessible from Netlify
@@ -205,6 +232,7 @@ If you're using a custom domain for emails:
 ### Issue: Database Connection Fails
 
 **Solution:**
+
 - Ensure database allows connections from Netlify IPs
 - Check `DATABASE_URL` is correct
 - Verify SSL requirements for database
@@ -277,4 +305,3 @@ Add to `netlify.toml`:
 
 **Last Updated:** 2025-01-XX  
 **Status:** Ready for Deployment
-
