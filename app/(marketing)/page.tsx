@@ -1,13 +1,174 @@
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { BookMeetingButton } from '@/components/marketing/BookMeetingButton';
+
 export default function MarketingPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Investor Room</h1>
-        <p className="text-gray-600">RandomTrip Investor Room Application</p>
-        <p className="text-sm text-gray-500 mt-4">
-          Landing page coming soon...
-        </p>
-      </div>
+    <main className="flex min-h-screen flex-col">
+      {/* Hero Section with Video */}
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-primary/5 to-background">
+        <div className="container relative z-10 mx-auto px-4 py-24 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="mb-6 font-serif text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+              RandomTrip
+              <br />
+              <span className="text-primary">Investor Room</span>
+            </h1>
+            <p className="mb-8 text-xl text-muted-foreground sm:text-2xl">
+              A private space to validate conviction, review data, and join the
+              journey
+            </p>
+
+            {/* Hero Video Placeholder - Replace with actual video */}
+            <div className="mb-12 aspect-video w-full overflow-hidden rounded-lg border bg-muted shadow-lg">
+              <div className="flex h-full items-center justify-center">
+                <p className="text-muted-foreground">Hero video placeholder</p>
+                {/* TODO: Add actual video with autoplay, muted, loop */}
+                {/* <video autoPlay loop muted playsInline className="h-full w-full object-cover">
+                  <source src="/hero-video.mp4" type="video/mp4" />
+                </video> */}
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <BookMeetingButton
+                className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                size="lg"
+              >
+                Book Founder Call
+              </BookMeetingButton>
+              <Button asChild size="lg" variant="outline">
+                <a href="#why-now">Why Now</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Teaser Deck Section */}
+      <section className="border-t bg-background py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="mb-12 font-serif text-4xl font-bold text-foreground sm:text-5xl">
+              The Opportunity
+            </h2>
+            <div className="grid gap-8 md:grid-cols-2">
+              <Card>
+                <CardContent className="p-8">
+                  <h3 className="mb-4 font-serif text-2xl font-semibold">
+                    Market
+                  </h3>
+                  <p className="text-muted-foreground">
+                    The travel planning market is ripe for disruption. We're
+                    building the future of personalized travel experiences.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-8">
+                  <h3 className="mb-4 font-serif text-2xl font-semibold">
+                    Traction
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Strong early metrics showing product-market fit. Growing
+                    community of engaged travelers.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-8">
+                  <h3 className="mb-4 font-serif text-2xl font-semibold">
+                    Team
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Experienced founders with deep domain expertise and a clear
+                    vision for the future.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-8">
+                  <h3 className="mb-4 font-serif text-2xl font-semibold">
+                    Vision
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Creating a platform that transforms how people discover,
+                    plan, and experience travel.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Now / Why Us Section */}
+      <section id="why-now" className="border-t bg-muted/30 py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="mb-12 font-serif text-4xl font-bold text-foreground sm:text-5xl">
+              Why Now, Why Us
+            </h2>
+            <div className="space-y-12">
+              <div>
+                <h3 className="mb-4 font-serif text-2xl font-semibold text-primary">
+                  The Timing is Right
+                </h3>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  Post-pandemic travel behavior has fundamentally shifted.
+                  Travelers want personalized, authentic experiences, and
+                  they're willing to invest in quality planning. The market is
+                  ready for a solution that combines technology with human
+                  expertise.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-4 font-serif text-2xl font-semibold text-primary">
+                  Our Unique Advantage
+                </h3>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  We've built a product that resonates with our early users. Our
+                  metrics tell a story of engagement, retention, and growth.
+                  We're not just building software—we're creating a movement
+                  that connects travelers with experiences that matter.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-4 font-serif text-2xl font-semibold text-primary">
+                  Join the Journey
+                </h3>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  This is more than an investment opportunity. It's a chance to
+                  be part of transforming how millions of people experience
+                  travel. We're looking for partners who share our vision and
+                  want to build something meaningful together.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="border-t bg-gradient-to-b from-primary/10 to-background py-24">
+        <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="mb-6 font-serif text-4xl font-bold text-foreground sm:text-5xl">
+              Ready to Learn More?
+            </h2>
+            <p className="mb-8 text-xl text-muted-foreground">
+              Schedule a call with our founders to discuss the opportunity and
+              see the full investor room.
+            </p>
+            <BookMeetingButton
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
+              size="lg"
+            >
+              Book Your Founder Call
+            </BookMeetingButton>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
