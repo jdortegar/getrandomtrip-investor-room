@@ -59,8 +59,9 @@ export default function MarketingPage() {
                     Market
                   </h3>
                   <p className="text-muted-foreground">
-                    The travel planning market is ripe for disruption. We're
-                    building the future of personalized travel experiences.
+                    The travel planning market is ripe for disruption.
+                    We&apos;re building the future of personalized travel
+                    experiences.
                   </p>
                 </CardContent>
               </Card>
@@ -117,8 +118,8 @@ export default function MarketingPage() {
                 <p className="text-lg leading-relaxed text-muted-foreground">
                   Post-pandemic travel behavior has fundamentally shifted.
                   Travelers want personalized, authentic experiences, and
-                  they're willing to invest in quality planning. The market is
-                  ready for a solution that combines technology with human
+                  they&apos;re willing to invest in quality planning. The market
+                  is ready for a solution that combines technology with human
                   expertise.
                 </p>
               </div>
@@ -127,10 +128,11 @@ export default function MarketingPage() {
                   Our Unique Advantage
                 </h3>
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  We've built a product that resonates with our early users. Our
-                  metrics tell a story of engagement, retention, and growth.
-                  We're not just building software—we're creating a movement
-                  that connects travelers with experiences that matter.
+                  We&apos;ve built a product that resonates with our early
+                  users. Our metrics tell a story of engagement, retention, and
+                  growth. We&apos;re not just building software—we&apos;re
+                  creating a movement that connects travelers with experiences
+                  that matter.
                 </p>
               </div>
               <div>
@@ -138,10 +140,10 @@ export default function MarketingPage() {
                   Join the Journey
                 </h3>
                 <p className="text-lg leading-relaxed text-muted-foreground">
-                  This is more than an investment opportunity. It's a chance to
-                  be part of transforming how millions of people experience
-                  travel. We're looking for partners who share our vision and
-                  want to build something meaningful together.
+                  This is more than an investment opportunity. It&apos;s a
+                  chance to be part of transforming how millions of people
+                  experience travel. We&apos;re looking for partners who share
+                  our vision and want to build something meaningful together.
                 </p>
               </div>
             </div>

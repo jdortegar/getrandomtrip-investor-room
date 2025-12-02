@@ -213,7 +213,7 @@ GOOGLE_CLIENT_SECRET=your-client-secret
 GOOGLE_REFRESH_TOKEN=your-refresh-token`}
             </pre>
             <p className="mt-4">
-              2. Fill in the form above and click "Create Meeting"
+              2. Fill in the form above and click &quot;Create Meeting&quot;
             </p>
             <p>3. Check your Google Calendar to see the event</p>
             <p>4. Check the response for the Meet link</p>

@@ -68,7 +68,7 @@ export default function OtpPage() {
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Check your email</CardTitle>
             <CardDescription>
-              We've sent a sign-in link to <strong>{email}</strong>
+              We&apos;ve sent a sign-in link to <strong>{email}</strong>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -150,7 +150,7 @@ export default function OtpPage() {
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
             <p>
-              This is a secure, passwordless sign-in. You'll receive a link that expires in 10
+              This is a secure, passwordless sign-in. You&apos;ll receive a link that expires in 10
               minutes.
             </p>
           </div>

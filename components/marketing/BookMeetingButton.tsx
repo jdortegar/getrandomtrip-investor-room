@@ -71,7 +71,7 @@ export function BookMeetingButton({
           <DialogHeader>
             <DialogTitle>Book Your Founder Call</DialogTitle>
             <DialogDescription>
-              Enter your details and we'll open Google Calendar where you can
+              Enter your details and we&apos;ll open Google Calendar where you can
               pick your preferred date and time. Google will automatically add a
               Meet link to the event.
             </DialogDescription>
@@ -90,7 +90,7 @@ export function BookMeetingButton({
                 autoFocus
               />
               <p className="text-xs text-muted-foreground">
-                We'll add you as an attendee to the calendar event
+                We&apos;ll add you as an attendee to the calendar event
               </p>
             </div>
 
