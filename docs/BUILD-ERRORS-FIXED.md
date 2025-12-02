@@ -84,6 +84,26 @@ Make sure these are set in Netlify Dashboard → Site Settings → Environment V
 
 ---
 
+---
+
+## ✅ Fix #2: Duplicate Root Route
+
+**Issue:** Build failing with `TypeError: Cannot read properties of undefined (reading 'clientModules')` during prerendering
+
+### Problem
+Two pages were trying to handle the same root route `/`:
+- `app/page.tsx` - handles `/`
+- `app/(marketing)/page.tsx` - also handles `/` (route groups don't affect URLs)
+
+This caused a route conflict during static page generation.
+
+### Solution
+Removed the duplicate `app/page.tsx` file. The root route is now handled by `app/(marketing)/page.tsx`.
+
+**Note:** Route groups like `(marketing)` are for organization only - they don't affect the URL structure.
+
+---
+
 **Status:** ✅ Fixed  
 **Build should now complete successfully**
 
