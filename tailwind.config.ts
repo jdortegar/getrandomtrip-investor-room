@@ -15,7 +15,14 @@ const config: Config = {
         '2xl': '1400px',
       },
     },
+    fontFamily: {
+      sans: ['var(--font-barlow)', 'sans-serif'],
+    },
     extend: {
+      fontFamily: {
+        'barlow-condensed': ['var(--font-barlow-condensed)', 'sans-serif'],
+        'nothing-you-could-do': ['var(--font-nothing-you-could-do)', 'cursive'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -75,3 +82,12 @@ const config: Config = {
   plugins: [require('tailwindcss-animate')],
 };
 export default config;
+
+
+
+
+
+
+
+
+

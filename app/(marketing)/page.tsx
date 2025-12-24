@@ -1,49 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { BookMeetingButton } from '@/components/marketing/BookMeetingButton';
+import { Navbar } from '@/components/marketing/Navbar';
+import { Hero } from '@/components/marketing/Hero';
 
 export default function MarketingPage() {
   return (
     <main className="flex min-h-screen flex-col">
-      {/* Hero Section with Video */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-primary/5 to-background">
-        <div className="container relative z-10 mx-auto px-4 py-24 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
-            <h1 className="mb-6 font-serif text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              RandomTrip
-              <br />
-              <span className="text-primary">Investor Room</span>
-            </h1>
-            <p className="mb-8 text-xl text-muted-foreground sm:text-2xl">
-              A private space to validate conviction, review data, and join the
-              journey
-            </p>
-
-            {/* Hero Video Placeholder - Replace with actual video */}
-            <div className="mb-12 aspect-video w-full overflow-hidden rounded-lg border bg-muted shadow-lg">
-              <div className="flex h-full items-center justify-center">
-                <p className="text-muted-foreground">Hero video placeholder</p>
-                {/* TODO: Add actual video with autoplay, muted, loop */}
-                {/* <video autoPlay loop muted playsInline className="h-full w-full object-cover">
-                  <source src="/hero-video.mp4" type="video/mp4" />
-                </video> */}
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <BookMeetingButton
-                className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                size="lg"
-              >
-                Book Founder Call
-              </BookMeetingButton>
-              <Button asChild size="lg" variant="outline">
-                <a href="#why-now">Why Now</a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Navbar />
+      <Hero />
 
       {/* Teaser Deck Section */}
       <section className="border-t bg-background py-24">
@@ -152,7 +117,7 @@ export default function MarketingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="border-t bg-gradient-to-b from-primary/10 to-background py-24">
+      <section className="border-t bg-linear-to-b from-primary/10 to-background py-24">
         <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl">
             <h2 className="mb-6 font-serif text-4xl font-bold text-foreground sm:text-5xl">

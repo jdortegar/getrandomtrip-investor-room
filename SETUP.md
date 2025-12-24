@@ -53,3 +53,12 @@ DATABASE_URL="postgresql://..." # Same database as main app
 NEXTAUTH_URL="http://localhost:3011"
 ```
 
+
+
+
+
+
+
+
+
+
