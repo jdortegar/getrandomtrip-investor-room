@@ -5,6 +5,7 @@ import { Navbar } from '@/components/marketing/Navbar';
 import { Hero } from '@/components/marketing/Hero';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { BusinessModels } from '@/components/marketing/BusinessModels';
+import { BusinessVerticals } from '@/components/marketing/BusinessVerticals';
 import { Metrics } from '@/components/marketing/Metrics';
 
 export default function MarketingPage() {
@@ -16,8 +17,9 @@ export default function MarketingPage() {
         Somos la plataforma que conecta viajeros auténticos con aventuras únicas
       </h2>
       <HowItWorks />
-      <BusinessModels />
+      <BusinessVerticals />
       <Metrics />
+      <BusinessModels />
 
       {/* Teaser Deck Section */}
       <section className="border-t bg-background py-24">

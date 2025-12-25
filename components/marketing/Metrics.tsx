@@ -34,7 +34,16 @@ export function Metrics({ className }: MetricsProps) {
   return (
     <Section className={className}>
       <div className="relative mx-auto container">
-        <div className="relative overflow-hidden rounded-2xl bg-[#0F2D37]">
+        <div
+          className="relative overflow-hidden rounded-2xl bg-[#0F2D37]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+          }}
+        >
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Left Side - Text Content */}
             <div className="flex flex-col justify-between p-8 lg:p-12">
