@@ -3,12 +3,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { BookMeetingButton } from '@/components/marketing/BookMeetingButton';
 import { Navbar } from '@/components/marketing/Navbar';
 import { Hero } from '@/components/marketing/Hero';
+import { HowItWorks } from '@/components/marketing/HowItWorks';
+import { BusinessModels } from '@/components/marketing/BusinessModels';
 
 export default function MarketingPage() {
   return (
     <main className="flex min-h-screen flex-col">
       <Navbar />
       <Hero />
+      <h2 className="mb-12 font-barlow-condensed uppercase tracking-wide text-foreground text-5xl max-w-4xl mx-auto text-center">
+        Somos la plataforma que conecta viajeros auténticos con aventuras únicas
+      </h2>
+      <HowItWorks />
+      <BusinessModels />
 
       {/* Teaser Deck Section */}
       <section className="border-t bg-background py-24">
