@@ -6,6 +6,9 @@ import { BusinessVerticals } from '@/components/marketing/BusinessVerticals';
 import { Metrics } from '@/components/marketing/Metrics';
 import { Community } from '@/components/marketing/Community';
 import { Roadmap } from '@/components/marketing/Roadmap';
+import { Inspiration } from '@/components/marketing/Inspiration';
+import { Team } from '@/components/marketing/Team';
+import { Footer } from '@/components/marketing/Footer';
 
 export default function MarketingPage() {
   return (
@@ -21,6 +24,9 @@ export default function MarketingPage() {
       <BusinessModels />
       <Community />
       <Roadmap />
+      <Team />
+      <Inspiration />
+      <Footer />
     </main>
   );
 }
