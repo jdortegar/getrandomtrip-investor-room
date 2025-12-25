@@ -5,6 +5,7 @@ import { Navbar } from '@/components/marketing/Navbar';
 import { Hero } from '@/components/marketing/Hero';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { BusinessModels } from '@/components/marketing/BusinessModels';
+import { Metrics } from '@/components/marketing/Metrics';
 
 export default function MarketingPage() {
   return (
@@ -16,6 +17,7 @@ export default function MarketingPage() {
       </h2>
       <HowItWorks />
       <BusinessModels />
+      <Metrics />
 
       {/* Teaser Deck Section */}
       <section className="border-t bg-background py-24">
