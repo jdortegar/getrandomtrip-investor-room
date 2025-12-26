@@ -13,7 +13,7 @@ const BRANDING_REPEAT_TEXT = 'Repeat';
 
 function BrandingAnimation({
   className,
-  initialDelay = 1.4,
+  initialDelay = 0,
 }: BrandingAnimationProps) {
   const textAnimationDelay = initialDelay;
   const repeatTextAnimationDelay =
