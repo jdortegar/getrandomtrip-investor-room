@@ -1,0 +1,297 @@
+import Image from 'next/image';
+import { Section } from '@/components/marketing/Section';
+import { cn } from '@/lib/utils';
+
+interface SafeProps {
+  className?: string;
+}
+
+interface FundAllocation {
+  label: string;
+  percentage: number;
+  color: string;
+  textColor: string;
+  icon: string;
+}
+
+const FUND_ALLOCATIONS: FundAllocation[] = [
+  {
+    label: 'MARKETING & GROWTH',
+    percentage: 45,
+    color: '#FED700', // Yellow
+    textColor: '#1C2B35', // Blue text
+    icon: '/assets/svg/marketing.svg',
+  },
+  {
+    label: 'OPERACIONES',
+    percentage: 35,
+    color: '#6B7E3F', // Olive green
+    textColor: '#FED700', // Yellow text
+    icon: '/assets/svg/operations.svg',
+  },
+  {
+    label: 'TECH<br/> & PRODUCTO',
+    percentage: 20,
+    color: '#1C2B35', // Dark blue/teal
+    textColor: '#FFFFFF', // White text
+    icon: '/assets/svg/tech.svg',
+  },
+];
+
+function getConicGradient(): string {
+  let currentAngle = 0;
+  const gradients: string[] = [];
+
+  FUND_ALLOCATIONS.forEach((allocation) => {
+    const startAngle = currentAngle;
+    const endAngle = currentAngle + (allocation.percentage / 100) * 360;
+    gradients.push(`${allocation.color} ${startAngle}deg ${endAngle}deg`);
+    currentAngle = endAngle;
+  });
+
+  return `conic-gradient(${gradients.join(', ')})`;
+}
+
+function calculatePosition(
+  startAngle: number,
+  percentage: number,
+  radius: number,
+): { x: number; y: number } {
+  const midAngle = startAngle + (percentage / 100) * 180;
+  const rad = ((midAngle - 90) * Math.PI) / 180;
+  const size = 600;
+  const centerX = size / 2;
+  const centerY = size / 2;
+  const pieRadius = size / 2 - 20;
+  const radiusPx = pieRadius * radius;
+
+  return {
+    x: centerX + radiusPx * Math.cos(rad),
+    y: centerY + radiusPx * Math.sin(rad),
+  };
+}
+
+function renderLabel(label: string) {
+  const parts = label.split('<br/>');
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={index}>
+          {part}
+          {index < parts.length - 1 && <br />}
+        </span>
+      ))}
+    </>
+  );
+}
+
+export function Safe({ className }: SafeProps) {
+  const conicGradient = getConicGradient();
+
+  return (
+    <Section
+      className={className}
+      description="Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount)."
+      title="USO DE FONDOS & SAFE"
+    >
+      <div className="flex flex-col items-center">
+        <div className="relative w-full max-w-[600px] aspect-square">
+          {/* Pie Chart */}
+          <div
+            className="relative h-full w-full rounded-full border-2 border-white"
+            style={{
+              background: conicGradient,
+            }}
+          >
+            {/* Marketing & Growth - 45% */}
+            {(() => {
+              const allocation = FUND_ALLOCATIONS[0];
+              const startAngle = 0;
+              const radius = 0.685; // Larger radius for larger slice
+              const { x, y } = calculatePosition(
+                startAngle,
+                allocation.percentage,
+                radius,
+              );
+              const adjustedX = x - 20; // Move 20px to the left
+              return (
+                <div
+                  className="absolute flex flex-col items-start"
+                  style={{
+                    left: `${(adjustedX / 600) * 100}%`,
+                    top: `${(y / 600) * 100}%`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                >
+                  <div className="mb-2">
+                    <Image
+                      alt={allocation.label}
+                      className="h-14 w-14"
+                      height={60}
+                      src={allocation.icon}
+                      width={60}
+                    />
+                  </div>
+                  <div
+                    className="font-barlow-condensed font-semibold leading-none"
+                    style={{
+                      color: allocation.textColor,
+                      fontSize: '70px',
+                      letterSpacing: '-2px',
+                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                      WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+                    }}
+                  >
+                    {allocation.percentage}%
+                  </div>
+                  <div
+                    className="font-barlow-condensed font-semibold leading-none"
+                    style={{
+                      color: allocation.textColor,
+                      fontSize: '28px',
+                      letterSpacing: '0.5px',
+                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                      WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+                    }}
+                  >
+                    {renderLabel(allocation.label)}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Operaciones - 35% */}
+            {(() => {
+              const allocation = FUND_ALLOCATIONS[1];
+              const startAngle = (FUND_ALLOCATIONS[0].percentage / 100) * 360;
+              const radius = 0.655; // Medium radius
+              const { x, y } = calculatePosition(
+                startAngle,
+                allocation.percentage,
+                radius,
+              );
+              const adjustedX = x + 10; // Move 10px to the right
+              return (
+                <div
+                  className="absolute flex flex-col items-start"
+                  style={{
+                    left: `${(adjustedX / 600) * 100}%`,
+                    top: `${(y / 600) * 100}%`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="font-barlow-condensed font-semibold leading-none"
+                      style={{
+                        color: allocation.textColor,
+                        fontSize: '70px',
+                        letterSpacing: '-2px',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                        WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+                      }}
+                    >
+                      {allocation.percentage}%
+                    </div>
+                    <div>
+                      <Image
+                        alt={allocation.label}
+                        className="h-14 w-14"
+                        height={56}
+                        src={allocation.icon}
+                        width={56}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="font-barlow-condensed font-semibold leading-none"
+                    style={{
+                      color: allocation.textColor,
+                      fontSize: '28px',
+                      letterSpacing: '0.5px',
+                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                      WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+                    }}
+                  >
+                    {renderLabel(allocation.label)}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tech & Producto - 20% */}
+            {(() => {
+              const allocation = FUND_ALLOCATIONS[2];
+              const startAngle =
+                (FUND_ALLOCATIONS[0].percentage / 100) * 360 +
+                (FUND_ALLOCATIONS[1].percentage / 100) * 360;
+              const radius = 0.61; // Smaller radius for smaller slice
+              const { x, y } = calculatePosition(
+                startAngle,
+                allocation.percentage,
+                radius,
+              );
+              return (
+                <div
+                  className="absolute flex gap-2"
+                  style={{
+                    left: `${(x / 600) * 100}%`,
+                    top: `${(y / 600) * 100}%`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                >
+                  <div className="mt-3">
+                    <Image
+                      alt={allocation.label}
+                      className="h-16 w-16"
+                      height={64}
+                      src={allocation.icon}
+                      width={64}
+                    />
+                  </div>
+                  <div>
+                    <div
+                      className="font-barlow-condensed font-semibold leading-none"
+                      style={{
+                        color: allocation.textColor,
+                        fontSize: '50px',
+                        letterSpacing: '-2px',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                        WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+                      }}
+                    >
+                      {allocation.percentage}%
+                    </div>
+                    <div
+                      className="font-barlow-condensed font-semibold leading-none"
+                      style={{
+                        color: allocation.textColor,
+                        fontSize: '20px',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+                        WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+                      }}
+                    >
+                      {renderLabel(allocation.label)}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Center Logo */}
+            <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center w-20 h-20">
+              <Image
+                alt="Logo"
+                className="h-full w-full"
+                height={80}
+                src="/assets/svg/logo.svg"
+                width={80}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}

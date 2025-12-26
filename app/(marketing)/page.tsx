@@ -9,6 +9,7 @@ import { Roadmap } from '@/components/marketing/Roadmap';
 import { Inspiration } from '@/components/marketing/Inspiration';
 import { Team } from '@/components/marketing/Team';
 import { Footer } from '@/components/marketing/Footer';
+import { Safe } from '@/components/app/Safe';
 
 export default function MarketingPage() {
   return (
@@ -24,6 +25,7 @@ export default function MarketingPage() {
       <BusinessModels />
       <Community />
       <Roadmap />
+      <Safe />
       <Team />
       <Inspiration />
       <Footer />
