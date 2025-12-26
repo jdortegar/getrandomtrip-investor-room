@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { Section } from '@/components/marketing/Section';
 import { cn } from '@/lib/utils';
 
@@ -97,10 +100,16 @@ export function Safe({ className }: SafeProps) {
       <div className="flex flex-col items-center">
         <div className="relative w-full max-w-[600px] aspect-square">
           {/* Pie Chart */}
-          <div
+          <motion.div
             className="relative h-full w-full rounded-full border-2 border-white"
             style={{
               background: conicGradient,
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              ease: 'easeOut',
             }}
           >
             {/* Marketing & Growth - 45% */}
@@ -113,14 +122,22 @@ export function Safe({ className }: SafeProps) {
                 allocation.percentage,
                 radius,
               );
-              const adjustedX = x - 20; // Move 20px to the left
+              const adjustedX = x - 80; // Move 20px to the left
+              const adjustedY = y - 80; // Move 20px to the top
               return (
-                <div
+                <motion.div
                   className="absolute flex flex-col items-start"
                   style={{
                     left: `${(adjustedX / 600) * 100}%`,
-                    top: `${(y / 600) * 100}%`,
+                    top: `${(adjustedY / 600) * 100}%`,
                     transform: 'translate(-50%, -50%)',
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.2,
+                    ease: 'easeOut',
                   }}
                 >
                   <div className="mb-2">
@@ -156,7 +173,7 @@ export function Safe({ className }: SafeProps) {
                   >
                     {renderLabel(allocation.label)}
                   </div>
-                </div>
+                </motion.div>
               );
             })()}
 
@@ -170,14 +187,22 @@ export function Safe({ className }: SafeProps) {
                 allocation.percentage,
                 radius,
               );
-              const adjustedX = x + 10; // Move 10px to the right
+              const adjustedX = x - 60; // Move 20px to the left
+              const adjustedY = y - 50; // Move 20px to the top
               return (
-                <div
+                <motion.div
                   className="absolute flex flex-col items-start"
                   style={{
                     left: `${(adjustedX / 600) * 100}%`,
-                    top: `${(y / 600) * 100}%`,
+                    top: `${(adjustedY / 600) * 100}%`,
                     transform: 'translate(-50%, -50%)',
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.3,
+                    ease: 'easeOut',
                   }}
                 >
                   <div className="flex items-center gap-2">
@@ -215,7 +240,7 @@ export function Safe({ className }: SafeProps) {
                   >
                     {renderLabel(allocation.label)}
                   </div>
-                </div>
+                </motion.div>
               );
             })()}
 
@@ -231,13 +256,23 @@ export function Safe({ className }: SafeProps) {
                 allocation.percentage,
                 radius,
               );
+
+              const adjustedX = x - 80; // Move 20px to the left
+              const adjustedY = y - 50; // Move 20px to the top
               return (
-                <div
+                <motion.div
                   className="absolute flex gap-2"
                   style={{
-                    left: `${(x / 600) * 100}%`,
-                    top: `${(y / 600) * 100}%`,
+                    left: `${(adjustedX / 600) * 100}%`,
+                    top: `${(adjustedY / 600) * 100}%`,
                     transform: 'translate(-50%, -50%)',
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.4,
+                    ease: 'easeOut',
                   }}
                 >
                   <div className="mt-3">
@@ -275,12 +310,21 @@ export function Safe({ className }: SafeProps) {
                       {renderLabel(allocation.label)}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })()}
 
             {/* Center Logo */}
-            <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center w-20 h-20">
+            <motion.div
+              className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center w-20 h-20"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.4,
+                ease: 'easeOut',
+              }}
+            >
               <Image
                 alt="Logo"
                 className="h-full w-full"
@@ -288,8 +332,8 @@ export function Safe({ className }: SafeProps) {
                 src="/assets/svg/logo.svg"
                 width={80}
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </Section>
