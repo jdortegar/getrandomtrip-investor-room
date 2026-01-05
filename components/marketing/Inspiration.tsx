@@ -62,3 +62,5 @@ export function Inspiration({ className }: InspirationProps) {
     </Section>
   );
 }
+
+

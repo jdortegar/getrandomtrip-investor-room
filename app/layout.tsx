@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <body className={`${barlow.className} antialiased p-4`}>
+      <body className={`${barlow.className} antialiased py-4`}>
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
