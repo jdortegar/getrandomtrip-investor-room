@@ -98,7 +98,7 @@ export function Safe({ className }: SafeProps) {
       title="USO DE FONDOS & SAFE"
     >
       <div className="flex flex-col items-center">
-        <div className="relative w-full max-w-[600px] aspect-square">
+        <div className="relative w-full max-w-[600px] xl:max-w-[700px] 2xl:max-w-[800px] aspect-square">
           {/* Pie Chart */}
           <motion.div
             className="relative h-full w-full rounded-full border border-white md:border-2"

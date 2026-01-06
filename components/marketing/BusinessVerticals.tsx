@@ -141,7 +141,7 @@ function renderCardContent(card: BusinessModelCard, showBack: boolean) {
         }}
       />
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+      <div className="absolute bottom-0 left-0 right-0 p-4 xl:p-6 2xl:p-8 text-white">
         <h3 className="font-barlow-condensed text-3xl font-semibold uppercase tracking-wide w-full text-center whitespace-pre-line leading-tight">
           {card.title}
         </h3>
@@ -168,7 +168,7 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
       //   description="Descubre nuestras diferentes formas de viajar"
     >
       {/* Desktop: Grid with Flip Cards */}
-      <div className="hidden px-8 md:grid md:grid-cols-5 md:gap-4">
+      <div className="hidden px-8 xl:px-12 2xl:px-16 md:grid md:grid-cols-5 md:gap-4 xl:gap-6 2xl:gap-8">
         {BUSINESS_MODELS.map((card, index) => {
           const isFlipped = flippedCard === card.id;
 

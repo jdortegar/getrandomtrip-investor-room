@@ -20,7 +20,7 @@ export function Footer({ className }: FooterProps) {
         className,
       )}
     >
-      <div className="container flex flex-col gap-6 items-center mx-auto px-4 py-8 md:gap-8 md:py-12">
+      <div className="container flex flex-col gap-6 items-center mx-auto px-4 py-8 md:gap-8 md:py-12 xl:gap-10 xl:py-16 2xl:gap-12 2xl:py-20">
         {/* Main Text */}
         <motion.p
           className="font-barlow font-semibold text-base text-foreground leading-none md:text-lg"
@@ -50,7 +50,7 @@ export function Footer({ className }: FooterProps) {
 
         {/* Logo and Branding */}
         <motion.div
-          className="flex flex-col items-center gap-3 mt-2 md:gap-4 md:mt-4"
+          className="flex flex-col items-center gap-3 mt-2 md:gap-4 md:mt-4 xl:gap-6 xl:mt-6 2xl:gap-8 2xl:mt-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

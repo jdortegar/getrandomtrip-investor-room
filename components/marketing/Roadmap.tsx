@@ -40,7 +40,7 @@ export function Roadmap({ className }: RoadmapProps) {
   return (
     <Section className={className} title="TRACCIÓN & ROADMAP">
       <div className="mx-auto container">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 xl:gap-8 2xl:gap-10">
           {ROADMAP_PANELS.map((panel, index) => (
             <motion.div
               key={panel.id}
@@ -62,7 +62,7 @@ export function Roadmap({ className }: RoadmapProps) {
                 <div className="absolute inset-0 bg-black/30" />
 
                 {/* Content Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-between p-4 text-white">
+                <div className="absolute inset-0 flex flex-col justify-between p-4 xl:p-6 2xl:p-8 text-white">
                   {/* Year in top left */}
                   <div>
                     <h3 className="font-barlow-condensed text-4xl font-bold uppercase tracking-wide">
@@ -71,7 +71,7 @@ export function Roadmap({ className }: RoadmapProps) {
                   </div>
 
                   {/* Items in bottom right */}
-                  <div className="space-y-2 self-end text-right">
+                  <div className="space-y-2 xl:space-y-3 2xl:space-y-4 self-end text-right">
                     {panel.items.map((item, itemIndex) => (
                       <motion.p
                         key={itemIndex}

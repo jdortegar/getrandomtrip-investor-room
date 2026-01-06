@@ -115,7 +115,7 @@ export function HowItWorks({ className }: HowItWorksProps) {
       title="¿Cómo funciona?"
     >
       {/* Desktop: ExpandAnimatedItems */}
-      <div className="hidden px-8 md:block">
+      <div className="hidden px-8 xl:px-12 2xl:px-16 md:block">
         <ExpandAnimatedItems
           getItemId={(step) => step.number}
           itemClassName="group relative overflow-hidden rounded-3xl h-[400px] cursor-pointer"

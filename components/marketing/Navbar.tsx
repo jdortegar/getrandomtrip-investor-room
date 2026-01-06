@@ -19,7 +19,7 @@ export function Navbar() {
   return (
     <>
       <nav className="absolute left-0 right-0 top-0 z-50 w-full">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-8 text-white md:px-12 md:py-10">
+        <div className="mx-auto flex max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px] items-center justify-between px-12 py-8 text-white md:px-16 md:py-10 xl:px-20 xl:py-12 2xl:px-24 2xl:py-14">
           <Link
             className="flex items-center gap-2"
             href="/"
@@ -33,7 +33,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-[100px] md:flex">
+          <div className="hidden items-center gap-[100px] xl:gap-[120px] 2xl:gap-[150px] md:flex">
             <Link
               className="text-xl transition-colors hover:text-white"
               href="/"

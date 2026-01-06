@@ -19,11 +19,11 @@ export function Section({
   title,
 }: SectionProps) {
   return (
-    <section className={cn('bg-background py-10', className)}>
+    <section className={cn('bg-background py-10 xl:py-16 2xl:py-20', className)}>
       <div
         className={cn(
-          'mx-auto max-w-7xl',
-          noContainerPadding ? 'px-0' : 'px-4 md:px-8',
+          'mx-auto max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px]',
+          noContainerPadding ? 'px-0' : 'px-4 md:px-8 xl:px-12 2xl:px-16',
         )}
       >
         <div className="mx-auto">
@@ -31,8 +31,8 @@ export function Section({
           {title && (
             <motion.div
               className={cn(
-                'mb-6 text-center',
-                noContainerPadding && 'px-4 md:px-8',
+                'mb-6 text-center xl:mb-8 2xl:mb-10',
+                noContainerPadding && 'px-4 md:px-8 xl:px-12 2xl:px-16',
               )}
               initial={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.6 }}

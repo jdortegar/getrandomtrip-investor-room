@@ -164,9 +164,9 @@ export function Metrics({ className }: MetricsProps) {
           </div>
 
           {/* Desktop Layout: Side by side */}
-          <div className="hidden gap-8 lg:grid lg:grid-cols-2">
+          <div className="hidden gap-8 xl:gap-12 2xl:gap-16 lg:grid lg:grid-cols-2">
             {/* Left Side - Text Content */}
-            <div className="flex flex-col justify-between p-8 lg:p-12">
+            <div className="flex flex-col justify-between p-8 lg:p-12 xl:p-16 2xl:p-20">
               <motion.h2
                 className="mb-8 text-3xl font-bold leading-tight text-[#FFD700] lg:text-6xl font-barlow-condensed"
                 initial={{ opacity: 0, y: 20 }}
@@ -186,7 +186,7 @@ export function Metrics({ className }: MetricsProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="space-y-2">
+                <div className="space-y-2 xl:space-y-3 2xl:space-y-4">
                   <p className="font-barlow-condensed text-3xl font-extrabold text-[#FFD700] tracking-wide">
                     TAM:{' '}
                     <span className="text-[#ffffff] font-normal">
@@ -209,7 +209,7 @@ export function Metrics({ className }: MetricsProps) {
               </motion.div>
 
               <motion.div
-                className="mt-8 text-xs text-white"
+                className="mt-8 xl:mt-10 2xl:mt-12 text-xs text-white"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}

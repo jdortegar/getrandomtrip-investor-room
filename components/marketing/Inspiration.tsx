@@ -31,9 +31,9 @@ export function Inspiration({ className }: InspirationProps) {
         <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
 
         {/* Content Overlay */}
-        <div className="relative flex h-full min-h-[500px] flex-col items-center justify-center text-center px-4 py-12 md:min-h-[650px] md:justify-start md:p-40">
+        <div className="relative flex h-full min-h-[500px] flex-col items-center justify-center text-center px-4 py-12 md:min-h-[650px] md:justify-start md:p-40 xl:p-52 2xl:p-64">
           <motion.div
-            className="max-w-4xl space-y-6 md:space-y-8"
+            className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl space-y-6 md:space-y-8 xl:space-y-10 2xl:space-y-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

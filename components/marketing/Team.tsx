@@ -81,7 +81,7 @@ function renderCardFront(member: TeamMember) {
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
       {/* Name Overlay */}
-      <div className="absolute bottom-0 left-0 right-0 p-6">
+      <div className="absolute bottom-0 left-0 right-0 p-6 xl:p-8 2xl:p-10">
         <h3 className="font-barlow-condensed font-bold text-4xl text-white tracking-wide uppercase whitespace-normal wrap-break-word">
           {renderNameWithBreaks(member.name)}
         </h3>
@@ -113,7 +113,7 @@ function renderCardBack(member: TeamMember) {
           >
             <Image
               alt="LinkedIn"
-              className="h-6 w-6"
+              className="h-6 w-6 xl:h-8 xl:w-8 2xl:h-10 2xl:w-10"
               height={24}
               src="/images/linkedin.png"
               width={24}
@@ -145,7 +145,7 @@ export function Team({ className }: TeamProps) {
     <Section className={className} title="EQUIPO">
       <div className="mx-auto container">
         {/* Desktop: Grid with Flip Cards */}
-        <div className="hidden md:grid md:grid-cols-5 md:gap-6">
+        <div className="hidden md:grid md:grid-cols-5 md:gap-6 xl:gap-8 2xl:gap-10">
           {TEAM_MEMBERS.map((member, index) => {
             const isFlipped = flippedCard === member.id;
 

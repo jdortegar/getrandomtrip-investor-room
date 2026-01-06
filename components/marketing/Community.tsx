@@ -96,8 +96,8 @@ export function Community({ className }: CommunityProps) {
 
           {/* Content Overlay */}
           <div className="relative h-full flex items-center py-8 md:py-0">
-            <div className="container mx-auto px-4 sm:px-6 md:px-24">
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+            <div className="container mx-auto px-4 sm:px-6 md:px-24 xl:px-32 2xl:px-40">
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8 xl:gap-10 2xl:gap-12 items-center">
                 {/* Left Side - Text Content */}
                 <div>
                   <h2 className="mb-2 font-barlow-condensed text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-wide text-[#FED700]">
@@ -111,11 +111,11 @@ export function Community({ className }: CommunityProps) {
                   </h3>
 
                   {/* Features List */}
-                  <div className="space-y-3 md:space-y-4">
+                  <div className="space-y-3 md:space-y-4 xl:space-y-5 2xl:space-y-6">
                     {FEATURES.map((feature, index) => (
                       <motion.div
                         key={feature.title}
-                        className="flex items-start gap-4 md:gap-8"
+                        className="flex items-start gap-4 md:gap-8 xl:gap-10 2xl:gap-12"
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -127,7 +127,7 @@ export function Community({ className }: CommunityProps) {
                         <div className="shrink-0 mt-1">
                           <img
                             alt=""
-                            className="w-10 h-10 md:w-12 md:h-12"
+                            className="w-10 h-10 md:w-12 md:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16"
                             src={feature.icon}
                           />
                         </div>
@@ -193,7 +193,7 @@ export function Community({ className }: CommunityProps) {
         </div>
 
         {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-3 gap-4 px-10">
+        <div className="hidden md:grid md:grid-cols-3 gap-4 xl:gap-6 2xl:gap-8 px-10 xl:px-12 2xl:px-16">
           {PROFILES.map((profile, index) => (
             <motion.div
               key={profile.name}
