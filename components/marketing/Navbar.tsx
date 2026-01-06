@@ -18,54 +18,59 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="absolute left-0 right-0 top-0 z-50 flex items-center justify-between px-8 py-8 text-white md:px-12 md:py-10">
-        <Link
-          className="flex items-center gap-2"
-          href="/"
-          onClick={closeMobileMenu}
-        >
-          <img
-            alt="Randomtrip"
-            className="h-10 md:h-14"
-            src="/assets/logos/logo_getrandomtrip_1.png"
-          />
-        </Link>
+      <nav className="absolute left-0 right-0 top-0 z-50 w-full">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-8 text-white md:px-12 md:py-10">
+          <Link
+            className="flex items-center gap-2"
+            href="/"
+            onClick={closeMobileMenu}
+          >
+            <img
+              alt="Randomtrip"
+              className="h-10 md:h-14"
+              src="/assets/logos/logo_getrandomtrip_1.png"
+            />
+          </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden items-center gap-[100px] md:flex">
-          <Link className="text-xl transition-colors hover:text-white" href="/">
-            Home
-          </Link>
-          <Link
-            className="text-xl transition-colors hover:text-white"
-            href="/contact"
+          {/* Desktop Navigation */}
+          <div className="hidden items-center gap-[100px] md:flex">
+            <Link
+              className="text-xl transition-colors hover:text-white"
+              href="/"
+            >
+              Home
+            </Link>
+            <Link
+              className="text-xl transition-colors hover:text-white"
+              href="/contact"
+            >
+              Contact
+            </Link>
+            <span className="cursor-not-allowed text-xl text-[#607265]">
+              Investors Room
+            </span>
+            <Link
+              className="text-xl font-bold transition-colors hover:text-white"
+              href="/login"
+            >
+              Log In
+            </Link>
+          </div>
+
+          {/* Mobile Hamburger Menu Button */}
+          <button
+            aria-label="Toggle menu"
+            className="flex items-center justify-center md:hidden"
+            onClick={toggleMobileMenu}
+            type="button"
           >
-            Contact
-          </Link>
-          <span className="cursor-not-allowed text-xl text-[#607265]">
-            Investors Room
-          </span>
-          <Link
-            className="text-xl font-bold transition-colors hover:text-white"
-            href="/login"
-          >
-            Log In
-          </Link>
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
         </div>
-
-        {/* Mobile Hamburger Menu Button */}
-        <button
-          aria-label="Toggle menu"
-          className="flex items-center justify-center md:hidden"
-          onClick={toggleMobileMenu}
-          type="button"
-        >
-          {isMobileMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
       </nav>
 
       {/* Mobile Menu Overlay */}

@@ -20,10 +20,10 @@ export function Footer({ className }: FooterProps) {
         className,
       )}
     >
-      <div className="container flex flex-col gap-8 items-center mx-auto px-4">
+      <div className="container flex flex-col gap-6 items-center mx-auto px-4 py-8 md:gap-8 md:py-12">
         {/* Main Text */}
         <motion.p
-          className="font-barlow font-semibold text-lg text-foreground leading-none"
+          className="font-barlow font-semibold text-base text-foreground leading-none md:text-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -35,8 +35,9 @@ export function Footer({ className }: FooterProps) {
         {/* Visit Button */}
         <motion.button
           className={cn(
-            'bg-[#FED700] font-barlow-condensed font-semibold px-8 py-4 rounded-lg text-black text-2xl tracking-wide transition-all uppercase',
+            'bg-[#FED700] font-barlow-condensed font-semibold px-6 py-3 rounded-lg text-black text-lg tracking-wide transition-all uppercase',
             'hover:bg-[#FED700]/90 hover:scale-105',
+            'md:px-8 md:py-4 md:text-2xl',
           )}
           onClick={handleVisitClick}
           initial={{ opacity: 0, y: 20 }}
@@ -49,14 +50,14 @@ export function Footer({ className }: FooterProps) {
 
         {/* Logo and Branding */}
         <motion.div
-          className="flex flex-col items-center gap-4 mt-4"
+          className="flex flex-col items-center gap-3 mt-2 md:gap-4 md:mt-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           {/* Logo */}
-          <div className="relative h-32 w-auto">
+          <div className="relative h-20 w-auto md:h-32">
             <Image
               alt="RandomTrip Logo"
               className="object-contain"

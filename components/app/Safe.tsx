@@ -101,7 +101,7 @@ export function Safe({ className }: SafeProps) {
         <div className="relative w-full max-w-[600px] aspect-square">
           {/* Pie Chart */}
           <motion.div
-            className="relative h-full w-full rounded-full border-2 border-white"
+            className="relative h-full w-full rounded-full border border-white md:border-2"
             style={{
               background: conicGradient,
             }}
@@ -140,20 +140,19 @@ export function Safe({ className }: SafeProps) {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="mb-2">
+                  <div className="mb-1 md:mb-2">
                     <Image
                       alt={allocation.label}
-                      className="h-14 w-14"
+                      className="h-8 w-8 md:h-14 md:w-14"
                       height={60}
                       src={allocation.icon}
                       width={60}
                     />
                   </div>
                   <div
-                    className="font-barlow-condensed font-semibold leading-none"
+                    className="font-barlow-condensed font-semibold leading-none text-[40px] md:text-[70px]"
                     style={{
                       color: allocation.textColor,
-                      fontSize: '70px',
                       letterSpacing: '-2px',
                       textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
                       WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
@@ -162,10 +161,9 @@ export function Safe({ className }: SafeProps) {
                     {allocation.percentage}%
                   </div>
                   <div
-                    className="font-barlow-condensed font-semibold leading-none"
+                    className="font-barlow-condensed font-semibold leading-none text-base md:text-[28px]"
                     style={{
                       color: allocation.textColor,
-                      fontSize: '28px',
                       letterSpacing: '0.5px',
                       textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
                       WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
@@ -205,12 +203,11 @@ export function Safe({ className }: SafeProps) {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 md:gap-2">
                     <div
-                      className="font-barlow-condensed font-semibold leading-none"
+                      className="font-barlow-condensed font-semibold leading-none text-[40px] md:text-[70px]"
                       style={{
                         color: allocation.textColor,
-                        fontSize: '70px',
                         letterSpacing: '-2px',
                         textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
                         WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
@@ -221,7 +218,7 @@ export function Safe({ className }: SafeProps) {
                     <div>
                       <Image
                         alt={allocation.label}
-                        className="h-14 w-14"
+                        className="h-8 w-8 md:h-14 md:w-14"
                         height={56}
                         src={allocation.icon}
                         width={56}
@@ -229,10 +226,9 @@ export function Safe({ className }: SafeProps) {
                     </div>
                   </div>
                   <div
-                    className="font-barlow-condensed font-semibold leading-none"
+                    className="font-barlow-condensed font-semibold leading-none text-base md:text-[28px]"
                     style={{
                       color: allocation.textColor,
-                      fontSize: '28px',
                       letterSpacing: '0.5px',
                       textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
                       WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
@@ -257,11 +253,11 @@ export function Safe({ className }: SafeProps) {
                 radius,
               );
 
-              const adjustedX = x - 80; // Move 20px to the left
+              const adjustedX = x - 110; // Move 5% more to the left
               const adjustedY = y - 50; // Move 20px to the top
               return (
                 <motion.div
-                  className="absolute flex gap-2"
+                  className="absolute flex gap-1 md:gap-2"
                   style={{
                     left: `${(adjustedX / 600) * 100}%`,
                     top: `${(adjustedY / 600) * 100}%`,
@@ -275,10 +271,10 @@ export function Safe({ className }: SafeProps) {
                     ease: 'easeOut',
                   }}
                 >
-                  <div className="mt-3">
+                  <div className="mt-1 md:mt-3">
                     <Image
                       alt={allocation.label}
-                      className="h-16 w-16"
+                      className="h-10 w-10 md:h-16 md:w-16"
                       height={64}
                       src={allocation.icon}
                       width={64}
@@ -286,10 +282,9 @@ export function Safe({ className }: SafeProps) {
                   </div>
                   <div>
                     <div
-                      className="font-barlow-condensed font-semibold leading-none"
+                      className="font-barlow-condensed font-semibold leading-none text-[28px] md:text-[50px]"
                       style={{
                         color: allocation.textColor,
-                        fontSize: '50px',
                         letterSpacing: '-2px',
                         textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
                         WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
@@ -298,10 +293,9 @@ export function Safe({ className }: SafeProps) {
                       {allocation.percentage}%
                     </div>
                     <div
-                      className="font-barlow-condensed font-semibold leading-none"
+                      className="font-barlow-condensed font-semibold leading-none text-sm md:text-[20px]"
                       style={{
                         color: allocation.textColor,
-                        fontSize: '20px',
                         letterSpacing: '0.5px',
                         textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
                         WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
@@ -316,7 +310,7 @@ export function Safe({ className }: SafeProps) {
 
             {/* Center Logo */}
             <motion.div
-              className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center w-20 h-20"
+              className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 md:w-20 md:h-20"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{

@@ -9,6 +9,7 @@ interface MobileCarouselProps<T> {
   renderItem: (item: T, index: number) => React.ReactNode;
   className?: string;
   itemClassName?: string;
+  slideWidth?: string;
 }
 
 export function MobileCarousel<T>({
@@ -16,6 +17,7 @@ export function MobileCarousel<T>({
   renderItem,
   className = '',
   itemClassName = '',
+  slideWidth = '90%',
 }: MobileCarouselProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -41,9 +43,10 @@ export function MobileCarousel<T>({
 
   const translateX = useMemo(() => {
     if (currentIndex === 0) return '0%';
-    // Calculate: 90% per slide + 1rem gap per slide (except first)
-    return `calc(-${currentIndex * 90}% - ${currentIndex * 1}rem)`;
-  }, [currentIndex]);
+    // Calculate: slideWidth per slide + 1rem gap per slide (except first)
+    const widthPercent = parseFloat(slideWidth);
+    return `calc(-${currentIndex * widthPercent}% - ${currentIndex * 1}rem)`;
+  }, [currentIndex, slideWidth]);
 
   return (
     <div className={cn('relative w-full overflow-hidden pl-4', className)}>
@@ -65,8 +68,9 @@ export function MobileCarousel<T>({
       >
         {items.map((item, index) => (
           <div
-            className={cn('w-[90%] shrink-0', itemClassName)}
+            className={cn('shrink-0', itemClassName)}
             key={index}
+            style={{ width: slideWidth }}
           >
             {renderItem(item, index)}
           </div>

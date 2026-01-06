@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Section } from './Section';
+import { MobileCarousel } from './MobileCarousel';
 
 interface TeamMember {
   id: number;
@@ -66,13 +67,85 @@ function renderNameWithBreaks(name: string) {
   );
 }
 
+function renderCardFront(member: TeamMember) {
+  return (
+    <div className="relative h-full w-full">
+      <Image
+        alt={member.name}
+        className="h-full w-full object-cover"
+        fill
+        src="/images/team-1.png"
+      />
+
+      {/* Dark Gradient Overlay */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
+
+      {/* Name Overlay */}
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <h3 className="font-barlow-condensed font-bold text-4xl text-white tracking-wide uppercase whitespace-normal wrap-break-word">
+          {renderNameWithBreaks(member.name)}
+        </h3>
+      </div>
+    </div>
+  );
+}
+
+function renderCardBack(member: TeamMember) {
+  return (
+    <div className="flex flex-col justify-between h-full">
+      <div className="flex items-start">
+        <div className="flex-1">
+          <h3 className="font-barlow-condensed font-bold leading-none mb-2 text-4xl text-foreground tracking-wide uppercase whitespace-normal wrap-break-word">
+            {renderNameWithBreaks(member.name)}
+          </h3>
+          {member.role && (
+            <p className="font-barlow-condensed text-sm text-foreground mb-4">
+              {member.role}
+            </p>
+          )}
+        </div>
+        {member.linkedinUrl && (
+          <a
+            className="ml-4 shrink-0"
+            href={member.linkedinUrl}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Image
+              alt="LinkedIn"
+              className="h-6 w-6"
+              height={24}
+              src="/images/linkedin.png"
+              width={24}
+            />
+          </a>
+        )}
+      </div>
+
+      {member.description && (
+        <p className="font-barlow text-sm leading-relaxed text-foreground">
+          {member.description}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export function Team({ className }: TeamProps) {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const [mobileFlippedCard, setMobileFlippedCard] = useState<number | null>(
+    null,
+  );
+
+  const handleMobileCardFlip = (memberId: number) => {
+    setMobileFlippedCard((prev) => (prev === memberId ? null : memberId));
+  };
 
   return (
     <Section className={className} title="EQUIPO">
       <div className="mx-auto container">
-        <div className="grid gap-6 md:grid-cols-5">
+        {/* Desktop: Grid with Flip Cards */}
+        <div className="hidden md:grid md:grid-cols-5 md:gap-6">
           {TEAM_MEMBERS.map((member, index) => {
             const isFlipped = flippedCard === member.id;
 
@@ -80,20 +153,20 @@ export function Team({ className }: TeamProps) {
               <motion.div
                 key={member.id}
                 className="relative h-[400px]"
-                style={{ perspective: '1000px' }}
-                onHoverStart={() => setFlippedCard(member.id)}
-                onHoverEnd={() => setFlippedCard(null)}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                style={{ perspective: '1000px' }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
+                onHoverEnd={() => setFlippedCard(null)}
+                onHoverStart={() => setFlippedCard(member.id)}
               >
                 <motion.div
-                  className="relative h-full w-full"
-                  style={{ transformStyle: 'preserve-3d' }}
                   animate={{
                     rotateY: isFlipped ? 180 : 0,
                   }}
+                  className="relative h-full w-full"
+                  style={{ transformStyle: 'preserve-3d' }}
                   transition={{
                     duration: 0.6,
                     ease: 'easeInOut',
@@ -107,24 +180,7 @@ export function Team({ className }: TeamProps) {
                       WebkitBackfaceVisibility: 'hidden',
                     }}
                   >
-                    <div className="relative h-full w-full">
-                      <Image
-                        alt={member.name}
-                        className="h-full w-full object-cover"
-                        fill
-                        src="/images/team-1.png"
-                      />
-
-                      {/* Dark Gradient Overlay */}
-                      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-
-                      {/* Name Overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="font-barlow-condensed font-bold text-4xl text-white tracking-wide uppercase whitespace-normal wrap-break-word">
-                          {renderNameWithBreaks(member.name)}
-                        </h3>
-                      </div>
-                    </div>
+                    {renderCardFront(member)}
                   </motion.div>
 
                   {/* Back of Card - Name, Role, Description, LinkedIn */}
@@ -136,49 +192,67 @@ export function Team({ className }: TeamProps) {
                       transform: 'rotateY(180deg)',
                     }}
                   >
-                    {/* Content */}
-
-                    <div className="flex flex-col justify-between h-full">
-                      <div className="flex items-start">
-                        <div className="flex-1">
-                          <h3 className="font-barlow-condensed font-bold leading-none mb-2 text-4xl text-foreground tracking-wide uppercase whitespace-normal wrap-break-word">
-                            {renderNameWithBreaks(member.name)}
-                          </h3>
-                          {member.role && (
-                            <p className="font-barlow-condensed text-sm text-foreground mb-4">
-                              {member.role}
-                            </p>
-                          )}
-                        </div>
-                        {member.linkedinUrl && (
-                          <a
-                            className="ml-4 shrink-0"
-                            href={member.linkedinUrl}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                          >
-                            <Image
-                              alt="LinkedIn"
-                              className="h-6 w-6"
-                              height={24}
-                              src="/images/linkedin.png"
-                              width={24}
-                            />
-                          </a>
-                        )}
-                      </div>
-
-                      {member.description && (
-                        <p className="font-barlow text-sm leading-relaxed text-foreground">
-                          {member.description}
-                        </p>
-                      )}
-                    </div>
+                    {renderCardBack(member)}
                   </motion.div>
                 </motion.div>
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Mobile: Carousel with Flippable Cards */}
+        <div className="block md:hidden">
+          <MobileCarousel
+            itemClassName="h-[400px]"
+            items={TEAM_MEMBERS}
+            slideWidth="80%"
+            renderItem={(member) => {
+              const isFlipped = mobileFlippedCard === member.id;
+
+              return (
+                <div
+                  className="relative h-full w-full cursor-pointer"
+                  onClick={() => handleMobileCardFlip(member.id)}
+                  style={{ perspective: '1000px' }}
+                >
+                  <motion.div
+                    animate={{
+                      rotateY: isFlipped ? 180 : 0,
+                    }}
+                    className="relative h-full w-full"
+                    style={{ transformStyle: 'preserve-3d' }}
+                    transition={{
+                      duration: 0.6,
+                      ease: 'easeInOut',
+                    }}
+                  >
+                    {/* Front of Card - Image and Name */}
+                    <motion.div
+                      className="absolute inset-0 overflow-hidden rounded-2xl"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                      }}
+                    >
+                      {renderCardFront(member)}
+                    </motion.div>
+
+                    {/* Back of Card - Name, Role, Description, LinkedIn */}
+                    <motion.div
+                      className="absolute inset-0 flex flex-col overflow-hidden rounded-2xl bg-gray-100 p-6 justify-between"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
+                      }}
+                    >
+                      {renderCardBack(member)}
+                    </motion.div>
+                  </motion.div>
+                </div>
+              );
+            }}
+          />
         </div>
       </div>
     </Section>
