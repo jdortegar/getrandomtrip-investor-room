@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -39,11 +39,17 @@ export function MobileCarousel<T>({
     }
   };
 
+  const translateX = useMemo(() => {
+    if (currentIndex === 0) return '0%';
+    // Calculate: 90% per slide + 1rem gap per slide (except first)
+    return `calc(-${currentIndex * 90}% - ${currentIndex * 1}rem)`;
+  }, [currentIndex]);
+
   return (
     <div className={cn('relative w-full overflow-hidden pl-4', className)}>
       <motion.div
         animate={{
-          x: `-${currentIndex * 90}%`,
+          x: translateX,
         }}
         className="flex gap-4"
         drag="x"
@@ -59,7 +65,7 @@ export function MobileCarousel<T>({
       >
         {items.map((item, index) => (
           <div
-            className={cn('min-w-[90%] shrink-0', itemClassName)}
+            className={cn('w-[90%] shrink-0', itemClassName)}
             key={index}
           >
             {renderItem(item, index)}

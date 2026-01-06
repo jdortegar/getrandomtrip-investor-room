@@ -44,7 +44,127 @@ export function Metrics({ className }: MetricsProps) {
             backgroundSize: '40px 40px',
           }}
         >
-          <div className="grid gap-8 lg:grid-cols-2">
+          {/* Mobile Layout: Stacked vertically */}
+          <div className="flex flex-col gap-6 lg:hidden">
+            {/* Title at top */}
+            <motion.h2
+              className="px-6 pt-6 text-2xl font-bold leading-tight text-[#FFD700] font-barlow-condensed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              CAPTAR EL <span className="text-[#ffffff]">0.001%</span>
+              <br /> DEL MERCADO YA
+              <br /> SIGNIFICA TRACCIÓN REAL.
+            </motion.h2>
+
+            {/* Map in middle */}
+            <div className="relative aspect-square w-full pl-[10%]">
+              <Image
+                alt="World map showing market coverage"
+                className="h-full w-full object-cover"
+                height={800}
+                src="/images/metrics.png"
+                width={800}
+              />
+
+              {/* Animated Circles */}
+              {MARKET_CIRCLES.map((circle) => {
+                const normalizedValue = circle.value / MAX_VALUE;
+                const duration = 0.5 + normalizedValue * 1.5;
+                // 60% smaller on mobile = 40% of original size
+                const mobileSize = circle.size * 0.7;
+                // Adjust position for 10% left padding + 5% more: 15% + (circle.x * 0.9)%
+                const adjustedLeft = 15 + circle.x * 0.9;
+
+                return (
+                  <motion.div
+                    key={circle.id}
+                    className="absolute flex items-center justify-center"
+                    style={{
+                      left: `${adjustedLeft}%`,
+                      top: `${circle.y}%`,
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  >
+                    <motion.div
+                      className="relative flex items-center justify-center"
+                      initial={{ scale: 0, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration,
+                        delay: 0,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      style={{
+                        width: `${mobileSize}px`,
+                        height: `${mobileSize}px`,
+                      }}
+                    >
+                      <div className="absolute h-full w-full rounded-full bg-[#FFD700]" />
+                      <span
+                        className="relative z-10 font-barlow-condensed font-bold text-[#0a1a2e]"
+                        style={{ fontSize: `${mobileSize * 0.25}px` }}
+                      >
+                        {circle.label}
+                      </span>
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Market sizes at bottom */}
+            <motion.div
+              className="px-6 space-y-3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="space-y-2">
+                <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
+                  TAM:{' '}
+                  <span className="text-[#ffffff] font-normal">
+                    ≈ USD 500 mil millones
+                  </span>
+                </p>
+                <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
+                  SAM:{' '}
+                  <span className="text-[#ffffff] font-normal">
+                    ≈ USD 400-450 mil millones
+                  </span>
+                </p>
+                <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
+                  SOM (Año 1):{' '}
+                  <span className="text-[#ffffff] font-normal">
+                    USD 2.55 millones (≈ 0.0005 % del SAM)
+                  </span>
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Sources at very bottom */}
+            <motion.div
+              className="px-6 pb-6 text-xs text-white"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <p className="leading-relaxed">
+                Fuentes: World Travel & Tourism Council (WTTC, 2024)/ Airbnb -
+                US Hispanic Traveler Report (2024)/ INE España (2023), DATATUR
+                México (2024), Observatorio Turistico Argentina (2024), Mincetur
+                Perú (2024)./ Randomtrip Internal Estimates (2025).
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Desktop Layout: Side by side */}
+          <div className="hidden gap-8 lg:grid lg:grid-cols-2">
             {/* Left Side - Text Content */}
             <div className="flex flex-col justify-between p-8 lg:p-12">
               <motion.h2
@@ -105,7 +225,7 @@ export function Metrics({ className }: MetricsProps) {
             </div>
 
             {/* Right Side - Map with Animated Circles */}
-            <div className="relative aspect-square w-full lg:aspect-auto lg:h-full">
+            <div className="relative aspect-square w-full pl-[10%] lg:aspect-auto lg:h-full">
               <Image
                 alt="World map showing market coverage"
                 className="h-full w-full object-cover"
@@ -116,18 +236,17 @@ export function Metrics({ className }: MetricsProps) {
 
               {/* Animated Circles */}
               {MARKET_CIRCLES.map((circle) => {
-                // Normalize value (0 to 1, where max value = 1)
                 const normalizedValue = circle.value / MAX_VALUE;
-                // Duration is relative to value (larger values take longer to grow)
-                // Base duration of 0.5s, scaled by normalized value (max 2s)
                 const duration = 0.5 + normalizedValue * 1.5;
+                // Adjust position for 10% left padding + 5% more: 15% + (circle.x * 0.9)%
+                const adjustedLeft = 15 + circle.x * 0.9;
 
                 return (
                   <motion.div
                     key={circle.id}
                     className="absolute flex items-center justify-center"
                     style={{
-                      left: `${circle.x}%`,
+                      left: `${adjustedLeft}%`,
                       top: `${circle.y}%`,
                       transform: 'translate(-50%, -50%)',
                     }}
