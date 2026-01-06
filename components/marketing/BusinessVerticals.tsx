@@ -229,7 +229,7 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
       {/* Mobile: Carousel with Flip Cards */}
       <div className="block md:hidden">
         <MobileCarousel
-          itemClassName="h-[200px]"
+          itemClassName="h-auto aspect-square"
           items={BUSINESS_MODELS}
           renderItem={(card) => {
             const isFlipped = mobileFlippedCard === card.id;

@@ -51,6 +51,38 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: '',
     description: '',
   },
+  {
+    id: 6,
+    name: 'FABRIZIO<br/>BORDONI',
+    role: 'CEO & Fundador (Hospitality / Ops)',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    linkedinUrl: 'https://www.linkedin.com/in/santiago-senega/',
+  },
+  {
+    id: 7,
+    name: 'FEDERICO<br/>BOGADO',
+    role: '',
+    description: '',
+  },
+  {
+    id: 8,
+    name: 'LEONARDO<br/>ALVAREZ',
+    role: '',
+    description: '',
+  },
+  {
+    id: 9,
+    name: 'LEONARDO<br/>ALVAREZ',
+    role: '',
+    description: '',
+  },
+  {
+    id: 10,
+    name: 'NICOLÁS<br/>MARTINEZ',
+    role: '',
+    description: '',
+  },
 ];
 
 function renderNameWithBreaks(name: string) {
@@ -141,63 +173,68 @@ export function Team({ className }: TeamProps) {
     setMobileFlippedCard((prev) => (prev === memberId ? null : memberId));
   };
 
+  const handleDesktopCardHover = (memberId: number | null) => {
+    setFlippedCard(memberId);
+  };
+
   return (
     <Section className={className} title="EQUIPO">
       <div className="mx-auto container">
-        {/* Desktop: Grid with Flip Cards */}
-        <div className="hidden md:grid md:grid-cols-5 md:gap-6 xl:gap-8 2xl:gap-10">
-          {TEAM_MEMBERS.map((member, index) => {
-            const isFlipped = flippedCard === member.id;
+        {/* Desktop: Carousel with 5 visible slides */}
+        <div className="hidden md:block">
+          <MobileCarousel
+            itemClassName="h-[400px]"
+            items={TEAM_MEMBERS}
+            showDots
+            slideWidth="18.5%"
+            renderItem={(member) => {
+              const isFlipped = flippedCard === member.id;
 
-            return (
-              <motion.div
-                key={member.id}
-                className="relative h-[400px]"
-                initial={{ opacity: 0, y: 20 }}
-                style={{ perspective: '1000px' }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileInView={{ opacity: 1, y: 0 }}
-                onHoverEnd={() => setFlippedCard(null)}
-                onHoverStart={() => setFlippedCard(member.id)}
-              >
-                <motion.div
-                  animate={{
-                    rotateY: isFlipped ? 180 : 0,
-                  }}
+              return (
+                <div
                   className="relative h-full w-full"
-                  style={{ transformStyle: 'preserve-3d' }}
-                  transition={{
-                    duration: 0.6,
-                    ease: 'easeInOut',
-                  }}
+                  onMouseEnter={() => handleDesktopCardHover(member.id)}
+                  onMouseLeave={() => handleDesktopCardHover(null)}
+                  style={{ perspective: '1000px' }}
                 >
-                  {/* Front of Card - Image and Name */}
                   <motion.div
-                    className="absolute inset-0 overflow-hidden rounded-2xl"
-                    style={{
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
+                    animate={{
+                      rotateY: isFlipped ? 180 : 0,
+                    }}
+                    className="relative h-full w-full"
+                    style={{ transformStyle: 'preserve-3d' }}
+                    transition={{
+                      duration: 0.6,
+                      ease: 'easeInOut',
                     }}
                   >
-                    {renderCardFront(member)}
-                  </motion.div>
+                    {/* Front of Card - Image and Name */}
+                    <motion.div
+                      className="absolute inset-0 overflow-hidden rounded-2xl"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                      }}
+                    >
+                      {renderCardFront(member)}
+                    </motion.div>
 
-                  {/* Back of Card - Name, Role, Description, LinkedIn */}
-                  <motion.div
-                    className="absolute inset-0 flex flex-col overflow-hidden rounded-2xl bg-gray-100 p-6 justify-between"
-                    style={{
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                      transform: 'rotateY(180deg)',
-                    }}
-                  >
-                    {renderCardBack(member)}
+                    {/* Back of Card - Name, Role, Description, LinkedIn */}
+                    <motion.div
+                      className="absolute inset-0 flex flex-col overflow-hidden rounded-2xl bg-gray-100 p-6 justify-between"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
+                      }}
+                    >
+                      {renderCardBack(member)}
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </motion.div>
-            );
-          })}
+                </div>
+              );
+            }}
+          />
         </div>
 
         {/* Mobile: Carousel with Flippable Cards */}
@@ -205,6 +242,7 @@ export function Team({ className }: TeamProps) {
           <MobileCarousel
             itemClassName="h-[400px]"
             items={TEAM_MEMBERS}
+            showDots
             slideWidth="80%"
             renderItem={(member) => {
               const isFlipped = mobileFlippedCard === member.id;

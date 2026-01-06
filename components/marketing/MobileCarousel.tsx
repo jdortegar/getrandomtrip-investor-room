@@ -10,6 +10,7 @@ interface MobileCarouselProps<T> {
   className?: string;
   itemClassName?: string;
   slideWidth?: string;
+  showDots?: boolean;
 }
 
 export function MobileCarousel<T>({
@@ -18,6 +19,7 @@ export function MobileCarousel<T>({
   className = '',
   itemClassName = '',
   slideWidth = '90%',
+  showDots = false,
 }: MobileCarouselProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -48,34 +50,65 @@ export function MobileCarousel<T>({
     return `calc(-${currentIndex * widthPercent}% - ${currentIndex * 1}rem)`;
   }, [currentIndex, slideWidth]);
 
+  const handleDotClick = (index: number) => {
+    setCurrentIndex(index);
+  };
+
   return (
-    <div className={cn('relative w-full overflow-hidden pl-4', className)}>
-      <motion.div
-        animate={{
-          x: translateX,
-        }}
-        className="flex gap-4"
-        drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.2}
-        initial={false}
-        onDragEnd={handleDragEnd}
-        transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30,
-        }}
-      >
-        {items.map((item, index) => (
-          <div
-            className={cn('shrink-0', itemClassName)}
-            key={index}
-            style={{ width: slideWidth }}
-          >
-            {renderItem(item, index)}
-          </div>
-        ))}
-      </motion.div>
+    <div className={cn('relative w-full', className)}>
+      <div className="relative overflow-hidden pl-4">
+        <motion.div
+          animate={{
+            x: translateX,
+          }}
+          className="flex gap-4"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          initial={false}
+          onDragEnd={handleDragEnd}
+          transition={{
+            type: 'spring',
+            stiffness: 300,
+            damping: 30,
+          }}
+        >
+          {items.map((item, index) => (
+            <div
+              className={cn('shrink-0', itemClassName)}
+              key={index}
+              style={{ width: slideWidth }}
+            >
+              {renderItem(item, index)}
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Right gradient overlay for endless effect */}
+        <div className="absolute right-0 top-0 bottom-0 w-20 pointer-events-none bg-gradient-to-r from-transparent to-background" />
+      </div>
+
+      {/* Dots Indicator */}
+      {showDots && (
+        <div className="flex items-center justify-center gap-2 mt-6">
+          {items.map((_, index) => {
+            const isActive = currentIndex === index;
+
+            return (
+              <button
+                aria-label={`Go to slide ${index + 1}`}
+                className={cn(
+                  'h-2 rounded-full transition-all duration-300',
+                  isActive ? 'w-8 bg-foreground' : 'w-2 bg-foreground/30',
+                )}
+                key={index}
+                onClick={() => handleDotClick(index)}
+                type="button"
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
