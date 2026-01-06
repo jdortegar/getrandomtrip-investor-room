@@ -234,10 +234,7 @@ export function BusinessModels({ className }: BusinessModelsProps) {
           return (
             <motion.div
               key={card.id}
-              className="relative overflow-hidden rounded-2xl cursor-pointer"
-              animate={{
-                height: isExpanded ? '400px' : '300px',
-              }}
+              className="relative overflow-hidden rounded-2xl cursor-pointer h-[300px]"
               initial={{ opacity: 0, y: 20 }}
               transition={{
                 delay: index * 0.1,
