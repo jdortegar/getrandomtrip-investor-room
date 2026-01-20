@@ -22,8 +22,8 @@ export default function MarketingPage() {
       </Paragraph>
       <HowItWorks />
       <BusinessVerticals />
-      <Metrics />
       <BusinessModels />
+      <Metrics />
       <Community />
       <Roadmap />
       <Safe />
