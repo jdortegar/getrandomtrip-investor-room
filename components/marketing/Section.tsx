@@ -19,7 +19,9 @@ export function Section({
   title,
 }: SectionProps) {
   return (
-    <section className={cn('bg-background py-10 xl:py-16 2xl:py-20', className)}>
+    <section
+      className={cn('bg-background py-10 xl:py-16 2xl:py-20', className)}
+    >
       <div
         className={cn(
           'mx-auto max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px]',

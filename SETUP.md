@@ -46,7 +46,7 @@ Visit: http://localhost:3011
 
 ## Environment Variables
 
-Create `.env.local`:
+Create `.env`:
 
 ```env
 DATABASE_URL="postgresql://..." # Same database as main app

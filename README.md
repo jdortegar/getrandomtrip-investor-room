@@ -19,7 +19,7 @@ Open [http://localhost:3011](http://localhost:3011) in your browser.
 
 ## Environment Variables
 
-Create a `.env.local` file:
+Create a `.env` file:
 
 ```env
 DATABASE_URL="postgresql://..." # Same database as main app

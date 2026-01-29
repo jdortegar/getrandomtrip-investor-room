@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { SafeStatus } from '@prisma/client';
+
+import { authOptions } from '@/lib/auth/config';
+import { prisma } from '@/lib/api/prisma';
+import { formatCurrency } from '@/lib/helpers/formatCurrency';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -6,93 +15,139 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { BarChart3, FileText, FileSignature, Gift } from 'lucide-react';
-import { getGoogleMeetLink } from '@/lib/constants/meeting';
 
-export default function RoomPage() {
-  const modules = [
-    {
-      title: 'Metrics Dashboard',
-      description: 'View real-time metrics, KPIs, and performance data',
-      href: '/room/metrics',
-      icon: BarChart3,
-      color: 'text-primary',
-    },
-    {
-      title: 'Legal Center',
-      description: 'Access secure documents, cap table, and legal materials',
-      href: '/room/legal',
-      icon: FileText,
-      color: 'text-primary',
-    },
-    {
-      title: 'SAFE Generator',
-      description: 'Generate and sign your SAFE agreement',
-      href: '/room/safe',
-      icon: FileSignature,
-      color: 'text-secondary',
-    },
-    {
-      title: 'First Believer Kit',
-      description: 'Unlock exclusive benefits after signing',
-      href: '/room/first-believer',
-      icon: Gift,
-      color: 'text-secondary',
-    },
-  ];
+export default async function RoomPage() {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect('/otp');
+
+  const investor = session.investor;
+  if (!investor?.approved || !investor?.profileComplete) redirect('/otp');
+
+  const [latestSafe, signedAggregate, totalAggregate, totalDocuments] =
+    await Promise.all([
+      prisma.safeDocument.findFirst({
+        orderBy: { generatedAt: 'desc' },
+        where: { investorId: investor.id },
+      }),
+      prisma.safeDocument.aggregate({
+        _sum: { amount: true },
+        where: { investorId: investor.id, status: SafeStatus.SIGNED },
+      }),
+      prisma.safeDocument.aggregate({
+        _sum: { amount: true },
+        where: { investorId: investor.id },
+      }),
+      prisma.document.count(),
+    ]);
+
+  const totalGenerated = totalAggregate._sum.amount ?? 0;
+  const totalSigned = signedAggregate._sum.amount ?? 0;
 
   return (
-    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mb-12 text-center">
-        <h2 className="mb-4 font-serif text-4xl font-bold text-foreground sm:text-5xl">
-          Your Investor Dashboard
+    <div className="space-y-8 xl:space-y-12">
+      <div>
+        <h2 className="mb-2 font-barlow-condensed text-3xl font-bold uppercase tracking-wide text-foreground md:text-4xl xl:text-5xl">
+          Resumen
         </h2>
-        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-          Access metrics, documents, and tools to support your investment
-          decision
+        <p className="text-muted-foreground text-sm md:text-base">
+          Resumen de tu inversión y acceso rápido a recursos clave.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-        {modules.map((module) => {
-          const Icon = module.icon;
-          return (
-            <Link key={module.href} href={module.href}>
-              <Card className="h-full transition-all hover:shadow-lg">
-                <CardHeader>
-                  <div className="mb-4 flex items-center gap-4">
-                    <div className={`rounded-lg bg-muted p-3 ${module.color}`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-xl">{module.title}</CardTitle>
-                  </div>
-                  <CardDescription className="text-base">
-                    {module.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-sm font-medium text-primary">View →</div>
-                </CardContent>
-              </Card>
-            </Link>
-          );
-        })}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-barlow-condensed text-lg font-semibold uppercase tracking-wide">
+              Total generado
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Todos los documentos SAFE creados hasta ahora
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="font-barlow-condensed text-2xl font-bold tracking-wide md:text-3xl">
+            {formatCurrency(totalGenerated)}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-barlow-condensed text-lg font-semibold uppercase tracking-wide">
+              Total firmado
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Solo documentos SAFE FIRMADOS
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="font-barlow-condensed text-2xl font-bold tracking-wide md:text-3xl">
+            {formatCurrency(totalSigned)}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-barlow-condensed text-lg font-semibold uppercase tracking-wide">
+              Archivos de inversión
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Documentos del data room de la empresa
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="font-barlow-condensed text-2xl font-bold tracking-wide md:text-3xl">
+            {totalDocuments}
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="mt-12 rounded-lg border bg-muted/30 p-8 text-center">
-        <h3 className="mb-2 font-serif text-2xl font-semibold">Questions?</h3>
-        <p className="mb-4 text-muted-foreground">
-          Schedule a call with our founders to discuss the opportunity
-        </p>
-        <Link
-          className="text-primary hover:underline"
-          href={getGoogleMeetLink()}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Book a Founder Call →
-        </Link>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-barlow-condensed text-xl font-semibold uppercase tracking-wide md:text-2xl">
+            Último SAFE
+          </CardTitle>
+          <CardDescription className="text-sm">
+            El estado de tu último SAFE
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          {!latestSafe ? (
+            <div className="text-muted-foreground text-sm">
+              Aún no hay documentos SAFE. Cuando generes uno, aparecerá aquí.
+            </div>
+          ) : (
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="space-y-1">
+                <div className="font-medium">
+                  {formatCurrency(latestSafe.amount)}
+                </div>
+                <div className="text-muted-foreground text-sm">
+                  Generado{' '}
+                  {new Date(latestSafe.generatedAt).toLocaleDateString()}
+                </div>
+              </div>
+              <Badge
+                variant={
+                  latestSafe.status === SafeStatus.SIGNED
+                    ? 'default'
+                    : 'secondary'
+                }
+              >
+                {latestSafe.status}
+              </Badge>
+            </div>
+          )}
+
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="default">
+              <Link href="/room/files">Ver archivos</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/room/investment">Mi inversión</Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link href="/room/helper">Ayuda</Link>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

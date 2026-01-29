@@ -35,25 +35,22 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-[100px] xl:gap-[120px] 2xl:gap-[150px] md:flex">
             <Link
-              className="text-xl transition-colors hover:text-white"
+              className="text-xl transition-colors hover:text-white hover:font-bold"
               href="/"
             >
               Home
             </Link>
             <Link
-              className="text-xl transition-colors hover:text-white"
+              className="text-xl transition-colors hover:text-white hover:font-bold"
               href="/contact"
             >
               Contact
             </Link>
-            <span className="cursor-not-allowed text-xl text-[#607265]">
-              Investors Room
-            </span>
             <Link
-              className="text-xl font-bold transition-colors hover:text-white"
-              href="/login"
+              className="text-xl transition-colors hover:text-white hover:font-bold"
+              href="/room"
             >
-              Log In
+              Investors Room
             </Link>
           </div>
 

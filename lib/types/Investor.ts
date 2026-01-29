@@ -5,6 +5,9 @@ export interface Investor {
   id: string;
   email: string;
   name?: string;
+  phone?: string;
+  company?: string;
+  profileComplete: boolean;
   approved: boolean;
   approvedAt?: Date;
   approvedBy?: string;
@@ -19,4 +22,3 @@ export interface InvestorWithRelations extends Investor {
   accessLogs?: AccessLog[];
   analytics?: AnalyticsEvent[];
 }
-

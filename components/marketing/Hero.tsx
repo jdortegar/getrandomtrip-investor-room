@@ -13,7 +13,7 @@ export function Hero() {
             backgroundImage: 'url("/images/hero.jpg")',
           }}
         />
-        
+
         {/* Video background */}
         <video
           autoPlay

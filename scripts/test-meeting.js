@@ -67,6 +67,6 @@ fetch(url, {
     console.error('\n❌ Request failed:', error.message);
     console.log('\nMake sure:');
     console.log('1. Dev server is running: npm run dev');
-    console.log('2. Environment variables are set in .env.local');
+    console.log('2. Environment variables are set in .env');
     process.exit(1);
   });

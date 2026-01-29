@@ -70,6 +70,9 @@ model Investor {
   id            String   @id @default(cuid())
   email         String   @unique
   name          String?
+  phone         String?
+  company       String?
+  profileComplete Boolean @default(false) // True when user has filled onboarding form
   approved      Boolean  @default(false) // Manual approval after founder call
   approvedAt    DateTime?
   approvedBy    String?  // Founder email
@@ -89,6 +92,7 @@ model Investor {
 
   @@index([email])
   @@index([approved])
+  @@index([profileComplete])
 }
 
 // OTP Management (for custom OTP if needed, NextAuth handles most of this)

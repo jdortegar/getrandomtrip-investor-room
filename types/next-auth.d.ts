@@ -13,6 +13,9 @@ declare module 'next-auth' {
       id: string;
       email: string;
       name?: string | null;
+      phone?: string | null;
+      company?: string | null;
+      profileComplete: boolean;
       approved: boolean;
     };
   }
@@ -21,4 +24,3 @@ declare module 'next-auth' {
     id: string;
   }
 }
-

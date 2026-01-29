@@ -69,15 +69,16 @@ export default function TestMeetingPage() {
       <div className="mx-auto max-w-2xl">
         <Card>
           <CardHeader>
-            <CardTitle>Test Google Calendar API Integration</CardTitle>
+            <CardTitle>Prueba de integración con Google Calendar</CardTitle>
             <CardDescription>
-              Test creating a calendar event with Google Meet link
+              Prueba de creación de un evento de calendario con enlace de Google
+              Meet
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Investor Email *</Label>
+                <Label htmlFor="email">Correo del inversor *</Label>
                 <Input
                   id="email"
                   type="email"
@@ -90,7 +91,7 @@ export default function TestMeetingPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="name">Investor Name (Optional)</Label>
+                <Label htmlFor="name">Nombre del inversor (opcional)</Label>
                 <Input
                   id="name"
                   type="text"
@@ -104,7 +105,7 @@ export default function TestMeetingPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="preferredDate">
-                    Preferred Date (Optional)
+                    Fecha preferida (opcional)
                   </Label>
                   <Input
                     id="preferredDate"
@@ -118,7 +119,7 @@ export default function TestMeetingPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="preferredTime">
-                    Preferred Time (Optional)
+                    Hora preferida (opcional)
                   </Label>
                   <Input
                     id="preferredTime"
@@ -135,7 +136,7 @@ export default function TestMeetingPage() {
                 className="w-full"
                 disabled={isLoading || !email}
               >
-                {isLoading ? 'Creating Meeting...' : 'Create Meeting'}
+                {isLoading ? 'Creando reunión...' : 'Crear reunión'}
               </Button>
             </form>
 
@@ -149,7 +150,7 @@ export default function TestMeetingPage() {
               <div className="mt-6 space-y-4">
                 <Alert>
                   <AlertDescription className="font-semibold">
-                    Response:
+                    Respuesta:
                   </AlertDescription>
                 </Alert>
                 <div className="rounded-lg bg-muted p-4">
@@ -160,7 +161,9 @@ export default function TestMeetingPage() {
 
                 {result.meetingLink && (
                   <div className="space-y-2">
-                    <p className="text-sm font-semibold">Meeting Links:</p>
+                    <p className="text-sm font-semibold">
+                      Enlaces de la reunión:
+                    </p>
                     <div className="space-y-2">
                       <div>
                         <Label className="text-xs text-muted-foreground">
@@ -178,7 +181,7 @@ export default function TestMeetingPage() {
                       {result.calendarEventLink && (
                         <div>
                           <Label className="text-xs text-muted-foreground">
-                            Calendar Event:
+                            Evento de calendario:
                           </Label>
                           <a
                             href={result.calendarEventLink}
@@ -200,11 +203,12 @@ export default function TestMeetingPage() {
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="text-lg">Testing Instructions</CardTitle>
+            <CardTitle className="text-lg">Instrucciones de prueba</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>
-              1. Make sure your environment variables are set in `.env.local`:
+              1. Asegúrate de que las variables de entorno estén configuradas en
+              `.env`:
             </p>
             <pre className="mt-2 rounded bg-muted p-2 text-xs">
               {`GOOGLE_CALENDAR_ENABLED=true
@@ -213,10 +217,10 @@ GOOGLE_CLIENT_SECRET=your-client-secret
 GOOGLE_REFRESH_TOKEN=your-refresh-token`}
             </pre>
             <p className="mt-4">
-              2. Fill in the form above and click &quot;Create Meeting&quot;
+              2. Completa el formulario y haz clic en &quot;Crear reunión&quot;
             </p>
-            <p>3. Check your Google Calendar to see the event</p>
-            <p>4. Check the response for the Meet link</p>
+            <p>3. Revisa tu Google Calendar para ver el evento</p>
+            <p>4. Revisa la respuesta para el enlace de Meet</p>
           </CardContent>
         </Card>
       </div>

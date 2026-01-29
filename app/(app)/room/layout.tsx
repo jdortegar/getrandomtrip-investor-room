@@ -1,10 +1,11 @@
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/config';
 import Link from 'next/link';
+import { RoomNav } from '@/components/navigation/RoomNav';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart3, FileText, FileSignature, Gift } from 'lucide-react';
+import { SignOutButton } from '@/components/navigation/SignOutButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,16 +28,25 @@ export default async function RoomLayout({
 
     const investor = (session as any).investor;
 
-    if (!investor || !investor.approved) {
+    // Check if profile is complete
+    if (!investor || !investor.profileComplete) {
+      redirect('/onboarding');
+    }
+
+    // Check if approved
+    if (!investor.approved) {
+      // Don't redirect, just show the pending message
+      // This prevents redirect loops
       return (
         <main className="container mx-auto p-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="mb-4 text-4xl font-bold">Access Pending</h1>
+            <h1 className="mb-4 text-4xl font-bold">Acceso pendiente</h1>
             <p className="mb-8 text-muted-foreground">
-              Your access is pending approval. Please contact the founders to get approved.
+              Tu acceso está pendiente de aprobación. Por favor contacta a los
+              fundadores para obtener aprobación.
             </p>
             <Button asChild>
-              <Link href="/">Return to Landing</Link>
+              <Link href="/">Volver al inicio</Link>
             </Button>
           </div>
         </main>
@@ -44,22 +54,45 @@ export default async function RoomLayout({
     }
 
     return (
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col bg-background">
         {/* Header */}
-        <header className="border-b bg-background">
-          <div className="container mx-auto flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <div>
-              <h1 className="font-serif text-2xl font-bold text-primary">Investor Room</h1>
-              <p className="text-sm text-muted-foreground">Welcome, {investor.name || investor.email}</p>
+        <header className="border-b border-border bg-background">
+          <div className="mx-auto flex max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px] items-center justify-between px-4 py-6 md:px-8 md:py-8 xl:px-12 xl:py-10 2xl:px-16 2xl:py-12">
+            <div className="flex items-center gap-4">
+              <Image
+                src="/assets/svg/logo.svg"
+                alt="Investor Room"
+                width={48}
+                height={48}
+                priority={false}
+              />
+              <div>
+                <h1 className="font-barlow-condensed text-2xl font-bold uppercase tracking-wide text-primary md:text-3xl xl:text-4xl">
+                  Sala de Inversores
+                </h1>
+                <p className="mt-1 text-sm text-muted-foreground md:text-base">
+                  Bienvenido, {investor.name || investor.email}
+                </p>
+              </div>
             </div>
-            <Button asChild variant="ghost">
-              <Link href="/">Back to Landing</Link>
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button asChild variant="ghost">
+                <Link href="/">Volver al inicio</Link>
+              </Button>
+              <SignOutButton />
+            </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-8 md:grid-cols-[240px_1fr] md:px-8 xl:max-w-[1600px] xl:px-12 xl:py-12 2xl:max-w-[1800px] 2xl:px-16 2xl:py-16">
+            <aside>
+              <RoomNav />
+            </aside>
+            <div className="flex-1">{children}</div>
+          </div>
+        </main>
       </div>
     );
   } catch (error) {
@@ -76,4 +109,3 @@ export default async function RoomLayout({
     );
   }
 }
-
