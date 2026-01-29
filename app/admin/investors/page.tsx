@@ -3,12 +3,29 @@ import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import dynamicImport from 'next/dynamic';
+
+const ApproveInvestorButton = dynamicImport(
+  () =>
+    import('@/components/admin/ApproveInvestorButton').then(
+      (mod) => mod.ApproveInvestorButton,
+    ),
+  { ssr: false },
+);
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminInvestorsPage() {
   const session = await getServerSession(authOptions);
-  if (!session || session.user?.email !== process.env.FOUNDER_EMAIL) {
+  const founders = (process.env.FOUNDER_EMAIL || '')
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  if (
+    !session ||
+    !session.user?.email ||
+    !founders.includes(session.user.email.toLowerCase())
+  ) {
     notFound();
   }
 
@@ -51,16 +68,10 @@ export default async function AdminInvestorsPage() {
                 <td className="py-3">{inv.createdAt.toLocaleString()}</td>
                 <td className="py-3">
                   <div className="flex items-center gap-2">
-                    <script
-                      suppressHydrationWarning
-                    >{`// client button`}</script>
-                    <div>
-                      {/* @ts-ignore */}
-                      <ApproveInvestorButton
-                        email={inv.email}
-                        onApproved={() => location.reload()}
-                      />
-                    </div>
+                    <ApproveInvestorButton
+                      email={inv.email}
+                      onApproved={() => location.reload()}
+                    />
                   </div>
                 </td>
               </tr>

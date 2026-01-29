@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const approved = !!(session as any)?.investor?.approved;
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -48,27 +50,18 @@ export function Navbar() {
               Contact
             </Link>
             {/* Disable Investors Room until investor is approved */}
-            {(() => {
-              const { data: session } = useSession();
-              const approved = !!(session as any)?.investor?.approved;
-
-              if (!approved) {
-                return (
-                  <div className="text-xl transition-colors text-white/60 cursor-not-allowed">
-                    Investors Room
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  className="text-xl transition-colors hover:text-white hover:font-bold"
-                  href="/room"
-                >
-                  Investors Room
-                </Link>
-              );
-            })()}
+            {!approved ? (
+              <div className="text-xl transition-colors text-white/60 cursor-not-allowed">
+                Investors Room
+              </div>
+            ) : (
+              <Link
+                className="text-xl transition-colors hover:text-white hover:font-bold"
+                href="/room"
+              >
+                Investors Room
+              </Link>
+            )}
           </div>
 
           {/* Mobile Hamburger Menu Button */}
@@ -119,26 +112,19 @@ export function Navbar() {
           >
             Contact
           </Link>
-          {(() => {
-            const { data: session } = useSession();
-            const approved = !!(session as any)?.investor?.approved;
-            if (!approved) {
-              return (
-                <span className="cursor-not-allowed text-xl text-white/60">
-                  Investors Room
-                </span>
-              );
-            }
-            return (
-              <Link
-                className="text-xl text-white transition-colors hover:text-white/80"
-                href="/room"
-                onClick={closeMobileMenu}
-              >
-                Investors Room
-              </Link>
-            );
-          })()}
+          {!approved ? (
+            <span className="cursor-not-allowed text-xl text-white/60">
+              Investors Room
+            </span>
+          ) : (
+            <Link
+              className="text-xl text-white transition-colors hover:text-white/80"
+              href="/room"
+              onClick={closeMobileMenu}
+            >
+              Investors Room
+            </Link>
+          )}
           <Link
             className="text-xl font-bold text-white transition-colors hover:text-white/80"
             href="/login"

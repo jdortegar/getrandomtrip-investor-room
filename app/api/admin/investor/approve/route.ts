@@ -7,7 +7,15 @@ import { Resend } from 'resend';
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user?.email !== process.env.FOUNDER_EMAIL) {
+    const founders = (process.env.FOUNDER_EMAIL || '')
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    if (
+      !session ||
+      !session.user?.email ||
+      !founders.includes(session.user.email.toLowerCase())
+    ) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

@@ -26,8 +26,12 @@ export const GOOGLE_MEET_LINK =
 export const GOOGLE_CALENDAR_ENABLED =
   process.env.GOOGLE_CALENDAR_ENABLED === 'true';
 export const GOOGLE_CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID || 'primary';
-export const FOUNDER_EMAIL =
-  process.env.FOUNDER_EMAIL || 'founder@randomtrip.com';
+export const FOUNDER_EMAILS = (
+  process.env.FOUNDER_EMAIL || 'founder@randomtrip.com'
+)
+  .split(',')
+  .map((s) => s.trim());
+export const FOUNDER_EMAIL = FOUNDER_EMAILS[0];
 
 /**
  * Get the Google Meet link from environment
