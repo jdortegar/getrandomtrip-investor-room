@@ -15,31 +15,29 @@ import { Button } from '@/components/ui/button';
 
 interface Props {
   email: string;
-  onApproved?: () => void;
 }
 
-export function ApproveInvestorButton({ email, onApproved }: Props) {
+export function ResendInvitationButton({ email }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
-  async function handleApprove() {
+  async function handleResend() {
     setIsLoading(true);
     setMessage(null);
     try {
-      const res = await fetch('/api/admin/investor/approve', {
+      const res = await fetch('/api/admin/investor/resend-invitation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
       if (!res.ok) {
-        setMessage(data?.error || 'Error al aprobar');
+        setMessage(data?.error || 'Error reenviando invitación');
       } else {
-        setMessage('Aprobado y correo enviado');
+        setMessage('Invitación reenviada');
         setOpen(false);
-        if (onApproved) onApproved();
-        else setTimeout(() => window.location.reload(), 1500);
+        setTimeout(() => window.location.reload(), 1500);
       }
     } catch (err: unknown) {
       setMessage(err instanceof Error ? err.message : 'Error de red');
@@ -53,15 +51,15 @@ export function ApproveInvestorButton({ email, onApproved }: Props) {
     <div>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <Button size="sm" variant="outline">
-            Aprobar
+          <Button variant="ghost" size="sm">
+            Reenviar
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirmar aprobación</AlertDialogTitle>
+            <AlertDialogTitle>Reenviar invitación</AlertDialogTitle>
             <AlertDialogDescription>
-              ¿Aprobar y enviar acceso al inversor <strong>{email}</strong>?
+              ¿Reenviar el enlace de acceso a <strong>{email}</strong>?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -72,10 +70,10 @@ export function ApproveInvestorButton({ email, onApproved }: Props) {
             </AlertDialogCancel>
             <Button
               disabled={isLoading}
-              onClick={handleApprove}
+              onClick={handleResend}
               variant="default"
             >
-              {isLoading ? 'Aprobando...' : 'Aprobar y enviar'}
+              {isLoading ? 'Enviando...' : 'Reenviar'}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

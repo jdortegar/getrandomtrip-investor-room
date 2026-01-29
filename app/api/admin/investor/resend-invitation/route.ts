@@ -26,21 +26,18 @@ export async function POST(req: Request) {
     }
     const email = emailParam.trim().toLowerCase();
 
-    // Upsert investor: create if not exists (e.g. founder approving a new invite), update if exists
-    const investor = await prisma.investor.upsert({
-      create: {
-        email,
-        approved: true,
-        approvedAt: new Date(),
-        approvedBy: session.user.email ?? undefined,
-      },
-      update: {
-        approved: true,
-        approvedAt: new Date(),
-        approvedBy: session.user.email ?? undefined,
-      },
+    // Find or create investor so "send invitation" works for new emails
+    let investor = await prisma.investor.findUnique({
       where: { email },
     });
+    if (!investor) {
+      investor = await prisma.investor.create({
+        data: {
+          email,
+          approved: false,
+        },
+      });
+    }
 
     // Send access email with link to /otp?callbackUrl=/room
     const resendApiKey = process.env.RESEND_API_KEY;
@@ -56,13 +53,21 @@ export async function POST(req: Request) {
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3011';
     const accessUrl = `${baseUrl}/otp?callbackUrl=/room`;
 
+    const subject = investor.approved
+      ? 'Reenvío: Acceso a Sala de inversores'
+      : 'Acceso a Sala de inversores';
+    const title = investor.approved ? 'Reenvío de acceso' : 'Has sido aprobado';
+    const message = investor.approved
+      ? 'Se te ha reenviado el enlace de acceso a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión.'
+      : 'Felicidades — has sido aprobado para acceder a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión y acceder al data room.';
+
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; max-width:600px; margin:24px auto; padding:20px; background:#fff; border-radius:8px;">
         <div style="text-align:center; margin-bottom:16px;">
           <img src="${baseUrl}/assets/svg/logo.svg" alt="Investor Room" style="height:40px;" />
         </div>
-        <h2 style="color:#0A2240">Has sido aprobado</h2>
-        <p>Felicidades — has sido aprobado para acceder a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión y acceder al data room.</p>
+        <h2 style="color:#0A2240">${title}</h2>
+        <p>${message}</p>
         <div style="text-align:center; margin:20px 0;">
           <a href="${accessUrl}" style="background:#0A2240;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;">Acceder a la Sala de inversores</a>
         </div>
@@ -70,10 +75,10 @@ export async function POST(req: Request) {
       </div>
     `;
 
-    const { data: sendData, error: sendError } = await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: fromAddress,
       to: investor.email,
-      subject: 'Acceso a Sala de inversores',
+      subject,
       html,
     });
 
@@ -93,7 +98,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (err: any) {
-    console.error('Approve investor error:', err);
+    console.error('Resend invitation error:', err);
     return NextResponse.json(
       { error: err?.message || 'Unknown' },
       { status: 500 },

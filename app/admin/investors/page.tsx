@@ -4,11 +4,20 @@ import { prisma } from '@/lib/api/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import dynamicImport from 'next/dynamic';
+import { Badge } from '@/components/ui/badge';
 
 const ApproveInvestorButton = dynamicImport(
   () =>
     import('@/components/admin/ApproveInvestorButton').then(
       (mod) => mod.ApproveInvestorButton,
+    ),
+  { ssr: false },
+);
+
+const ResendInvitationButton = dynamicImport(
+  () =>
+    import('@/components/admin/ResendInvitationButton').then(
+      (mod) => mod.ResendInvitationButton,
     ),
   { ssr: false },
 );
@@ -29,60 +38,80 @@ export default async function AdminInvestorsPage() {
     notFound();
   }
 
-  const pending = await prisma.investor.findMany({
-    where: { approved: false },
+  const investors = await prisma.investor.findMany({
     orderBy: { createdAt: 'desc' },
     take: 100,
   });
 
+  function getStatusBadge(investor: any) {
+    if (investor.approved) {
+      return (
+        <Badge variant="default" className="bg-green-600">
+          Aprobado
+        </Badge>
+      );
+    }
+    return (
+      <Badge variant="secondary" className="bg-yellow-500">
+        Pendiente
+      </Badge>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">Pending investors</h1>
+        <h1 className="text-3xl font-bold">Inversores</h1>
         <p className="text-muted-foreground">
-          Approve and send access after your call
+          Gestiona el estado de registro y reenvía invitaciones
         </p>
       </div>
 
-      {pending.length === 0 ? (
+      {investors.length === 0 ? (
         <div className="rounded-lg border p-6 text-muted-foreground">
-          No pending investors
+          No hay inversores registrados
         </div>
       ) : (
-        <table className="w-full table-auto border-collapse">
-          <thead>
-            <tr className="text-left border-b">
-              <th className="py-2">Email</th>
-              <th className="py-2">Name</th>
-              <th className="py-2">Company</th>
-              <th className="py-2">Requested</th>
-              <th className="py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pending.map((inv) => (
-              <tr key={inv.id} className="border-b">
-                <td className="py-3">{inv.email}</td>
-                <td className="py-3">{inv.name || '-'}</td>
-                <td className="py-3">{inv.company || '-'}</td>
-                <td className="py-3">{inv.createdAt.toLocaleString()}</td>
-                <td className="py-3">
-                  <div className="flex items-center gap-2">
-                    <ApproveInvestorButton
-                      email={inv.email}
-                      onApproved={() => location.reload()}
-                    />
-                  </div>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr className="text-left border-b">
+                <th className="py-2">Email</th>
+                <th className="py-2">Nombre</th>
+                <th className="py-2">Empresa</th>
+                <th className="py-2">Estado</th>
+                <th className="py-2">Registrado</th>
+                <th className="py-2">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {investors.map((inv) => (
+                <tr key={inv.id} className="border-b">
+                  <td className="py-3">{inv.email}</td>
+                  <td className="py-3">{inv.name || '-'}</td>
+                  <td className="py-3">{inv.company || '-'}</td>
+                  <td className="py-3">{getStatusBadge(inv)}</td>
+                  <td className="py-3 text-sm text-muted-foreground">
+                    {inv.createdAt.toLocaleString()}
+                  </td>
+                  <td className="py-3">
+                    <div className="flex items-center gap-2">
+                      {!inv.approved && (
+                        <ApproveInvestorButton email={inv.email} />
+                      )}
+                      <ResendInvitationButton email={inv.email} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <div className="mt-6">
         <Link href="/" className="text-sm text-primary">
-          Back to site
+          Volver al sitio
         </Link>
       </div>
     </div>
