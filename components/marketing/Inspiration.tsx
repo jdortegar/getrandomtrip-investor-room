@@ -52,9 +52,13 @@ export function Inspiration({ className }: InspirationProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <button className="px-6 py-3 rounded-md border border-[#FED700] bg-transparent font-barlow-condensed text-sm font-semibold uppercase tracking-wide text-white transition-all hover:bg-black/60 hover:scale-105 md:px-8 md:py-4 md:text-lg">
+              <BookMeetingButton
+                variant="secondary"
+                size="lg"
+                className="px-6 py-3 rounded-md border border-[#FED700] bg-transparent font-barlow-condensed text-sm font-semibold uppercase tracking-wide text-white transition-all hover:bg-black/60 hover:scale-105 md:px-8 md:py-4 md:text-lg"
+              >
                 AGENDA TU VIDEOLLAMADA
-              </button>
+              </BookMeetingButton>
             </motion.div>
           </motion.div>
         </div>

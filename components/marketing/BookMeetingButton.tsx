@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -69,37 +70,51 @@ export function BookMeetingButton({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Book Your Founder Call</DialogTitle>
-            <DialogDescription>
-              Enter your details and we&apos;ll open Google Calendar where you can
-              pick your preferred date and time. Google will automatically add a
-              Meet link to the event.
-            </DialogDescription>
+            <div className="flex flex-col items-center gap-3">
+              <div className="rounded-sm overflow-hidden">
+                <Image
+                  src="/assets/svg/logo.svg"
+                  alt="Investor Room"
+                  width={56}
+                  height={56}
+                />
+              </div>
+              <div className="text-center">
+                <DialogTitle className="mb-2">
+                  Reservar llamada con fundadores
+                </DialogTitle>
+                <DialogDescription>
+                  Introduce tus datos y abriremos Google Calendar para elegir
+                  fecha y hora. Google añadirá automáticamente un enlace de Meet
+                  al evento.
+                </DialogDescription>
+              </div>
+            </div>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address *</Label>
+              <Label htmlFor="email">Correo electrónico *</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="investor@example.com"
+                placeholder="inversor@ejemplo.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoFocus
               />
               <p className="text-xs text-muted-foreground">
-                We&apos;ll add you as an attendee to the calendar event
+                Te añadiremos como asistente al evento del calendario
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">Your Name (Optional)</Label>
+              <Label htmlFor="name">Tu nombre (opcional)</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Juan Pérez"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -107,11 +122,11 @@ export function BookMeetingButton({
 
             <Alert>
               <AlertDescription className="text-sm">
-                After submitting, Google Calendar will open where you can:
+                Después de enviar, Google Calendar se abrirá donde podrás:
                 <ul className="mt-2 ml-4 list-disc space-y-1">
-                  <li>Pick your preferred date and time</li>
-                  <li>Add the event to your calendar</li>
-                  <li>Get a Google Meet link automatically</li>
+                  <li>Elegir la fecha y hora preferida</li>
+                  <li>Añadir el evento a tu calendario</li>
+                  <li>Obtener automáticamente un enlace de Google Meet</li>
                 </ul>
               </AlertDescription>
             </Alert>
@@ -122,10 +137,10 @@ export function BookMeetingButton({
                 variant="outline"
                 onClick={() => setIsOpen(false)}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button type="submit" disabled={!email}>
-                Open Google Calendar
+                Abrir Google Calendar
               </Button>
             </div>
           </form>

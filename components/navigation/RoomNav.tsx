@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
 
 interface RoomNavItem {
   href: string;
@@ -42,6 +43,8 @@ const roomNavItems: RoomNavItem[] = [
 
 export function RoomNav() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const approved = !!(session as any)?.investor?.approved;
 
   return (
     <nav className="space-y-2">
@@ -50,6 +53,22 @@ export function RoomNav() {
         const isActive =
           pathname === item.href ||
           (item.href !== '/room' && pathname?.startsWith(item.href));
+
+        // Disable access to the main room until approved
+        if (item.href === '/room' && !approved) {
+          return (
+            <div
+              key={item.href}
+              className={cn(
+                'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-barlow-condensed font-semibold uppercase tracking-wide transition-colors opacity-50 cursor-not-allowed',
+              )}
+              aria-disabled
+            >
+              <Icon className="h-5 w-5" />
+              {item.label}
+            </div>
+          );
+        }
 
         return (
           <Link
