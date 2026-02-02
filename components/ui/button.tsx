@@ -56,7 +56,7 @@ function Button({
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (trackLabel) trackButtonClick(trackLabel);
-    onClick?.(e);
+    onClick?.(e as React.MouseEvent<HTMLButtonElement>);
   };
 
   return (
