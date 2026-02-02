@@ -6,6 +6,7 @@ import {
 } from 'next/font/google';
 import './globals.css';
 import { SessionProvider } from '@/components/providers/SessionProvider';
+import AppTracking from '@/components/tracking/AppTracking';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -45,7 +46,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className={`${barlow.className} antialiased py-4`}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <AppTracking />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
