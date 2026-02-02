@@ -4,6 +4,7 @@ import {
   Barlow_Condensed,
   Nothing_You_Could_Do,
 } from 'next/font/google';
+import { Suspense } from 'react';
 import './globals.css';
 import { SessionProvider } from '@/components/providers/SessionProvider';
 import AppTracking from '@/components/tracking/AppTracking';
@@ -47,7 +48,9 @@ export default function RootLayout({
     >
       <body className={`${barlow.className} antialiased py-4`}>
         <SessionProvider>
-          <AppTracking />
+          <Suspense fallback={null}>
+            <AppTracking />
+          </Suspense>
           {children}
         </SessionProvider>
       </body>
