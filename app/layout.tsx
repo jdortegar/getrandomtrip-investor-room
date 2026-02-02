@@ -8,6 +8,7 @@ import { Suspense } from 'react';
 import './globals.css';
 import { SessionProvider } from '@/components/providers/SessionProvider';
 import AppTracking from '@/components/tracking/AppTracking';
+import ScrollDepthTracker from '@/components/tracking/ScrollDepthTracker';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -50,6 +51,7 @@ export default function RootLayout({
         <SessionProvider>
           <Suspense fallback={null}>
             <AppTracking />
+            <ScrollDepthTracker />
           </Suspense>
           {children}
         </SessionProvider>

@@ -19,7 +19,11 @@ export type GTMEvents =
   | { event: 'sign_up'; method: string }
   | { event: 'click_button'; label: string }
   | { event: 'set_user'; user_id: string }
-  | { event: 'set_user_properties'; user_type: string };
+  | { event: 'set_user_properties'; user_type: string }
+  | { event: 'scroll_depth'; page_path: string; depth_percent: number }
+  | { event: 'section_view'; page_path: string; section_id: string }
+  | { event: 'form_start'; form_name: string; page_path?: string }
+  | { event: 'form_submit'; form_name: string; page_path?: string };
 
 declare global {
   interface Window {
@@ -65,4 +69,31 @@ export function setUserProperties(user_type: string): void {
 
 export function trackCustomEvent<T extends GTMEvents>(data: T): void {
   pushToDataLayer(data);
+}
+
+export function trackScrollDepth(
+  page_path: string,
+  depth_percent: number,
+): void {
+  pushToDataLayer({ event: 'scroll_depth', page_path, depth_percent });
+}
+
+export function trackSectionView(page_path: string, section_id: string): void {
+  pushToDataLayer({ event: 'section_view', page_path, section_id });
+}
+
+export function trackFormStart(form_name: string, page_path?: string): void {
+  pushToDataLayer({
+    event: 'form_start',
+    form_name,
+    ...(page_path && { page_path }),
+  });
+}
+
+export function trackFormSubmit(form_name: string, page_path?: string): void {
+  pushToDataLayer({
+    event: 'form_submit',
+    form_name,
+    ...(page_path && { page_path }),
+  });
 }
