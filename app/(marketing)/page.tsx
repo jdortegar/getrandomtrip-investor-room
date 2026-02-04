@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/marketing/Navbar';
 import { Hero } from '@/components/marketing/Hero';
+import { ValueProposition } from '@/components/marketing/ValueProposition';
 import { Paragraph } from '@/components/marketing/Paragraph';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { BusinessModels } from '@/components/marketing/BusinessModels';
@@ -17,6 +18,7 @@ export default function MarketingPage() {
     <main className="flex min-h-screen flex-col">
       <Navbar />
       <Hero />
+      <ValueProposition />
       <Paragraph>
         Somos la plataforma que conecta viajeros auténticos con aventuras únicas
       </Paragraph>
