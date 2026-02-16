@@ -83,9 +83,6 @@ export function MobileCarousel<T>({
             </div>
           ))}
         </motion.div>
-
-        {/* Right gradient overlay for endless effect */}
-        <div className="absolute right-0 top-0 bottom-0 w-20 pointer-events-none bg-gradient-to-r from-transparent to-background" />
       </div>
 
       {/* Dots Indicator */}

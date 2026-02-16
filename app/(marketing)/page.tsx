@@ -3,6 +3,7 @@ import { Hero } from '@/components/marketing/Hero';
 import { ValueProposition } from '@/components/marketing/ValueProposition';
 import { ProblemSolution } from '@/components/marketing/ProblemSolution';
 import { Paragraph } from '@/components/marketing/Paragraph';
+import { ThreeDecisions } from '@/components/marketing/ThreeDecisions';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { BusinessModels } from '@/components/marketing/BusinessModels';
 import { BusinessVerticals } from '@/components/marketing/BusinessVerticals';
@@ -26,7 +27,8 @@ export default function MarketingPage() {
         <br className="md:hidden" />{' '}
         <span className="font-bold">CON INTENCIÓN, DATA Y CRITERIO.</span>
       </Paragraph>
-      <HowItWorks />
+      <ThreeDecisions />
+      {/* <HowItWorks /> */}
       <BusinessVerticals />
       <BusinessModels />
       <Metrics />
