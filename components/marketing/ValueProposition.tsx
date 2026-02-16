@@ -10,7 +10,7 @@ export function ValueProposition() {
       <div className="grid gap-6 md:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16 max-w-[1200px] mx-auto">
         <div className="flex flex-col justify-center">
           <div className="mb-3 md:mb-6 relative">
-            <h2 className="font-barlow-condensed pl-[8px] text-[28px] md:text-[40px] font-normal leading-[48px] md:leading-[100%] uppercase text-foreground tracking-normal relative z-[11] md:z-auto">
+            <h2 className="font-barlow-condensed pl-[8px] md:pl-0 text-[28px] md:text-[40px] font-normal leading-[48px] md:leading-[100%] uppercase text-foreground tracking-normal relative z-[11] md:z-auto">
               DEVOLVERLE TIEMPO AL VIAJERO
             </h2>
             <div className="relative inline-block -mt-2 md:mt-0 z-10 md:z-auto">

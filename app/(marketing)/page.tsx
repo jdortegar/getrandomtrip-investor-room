@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/marketing/Navbar';
 import { Hero } from '@/components/marketing/Hero';
 import { ValueProposition } from '@/components/marketing/ValueProposition';
+import { ProblemSolution } from '@/components/marketing/ProblemSolution';
 import { Paragraph } from '@/components/marketing/Paragraph';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { BusinessModels } from '@/components/marketing/BusinessModels';
@@ -19,8 +20,11 @@ export default function MarketingPage() {
       <Navbar />
       <Hero />
       <ValueProposition />
+      <ProblemSolution />
       <Paragraph>
-        Somos la plataforma que conecta viajeros auténticos con aventuras únicas
+        Construimos el sistema para diseñar viajes cómo se diseñan productos:
+        <br className="md:hidden" />{' '}
+        <span className="font-bold">CON INTENCIÓN, DATA Y CRITERIO.</span>
       </Paragraph>
       <HowItWorks />
       <BusinessVerticals />
