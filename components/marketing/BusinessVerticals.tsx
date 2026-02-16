@@ -10,8 +10,6 @@ interface BusinessModelCard {
   title: string;
   description: string[];
   imageUrl?: string;
-  backgroundColor?: string;
-  icon?: React.ReactNode;
 }
 
 interface BusinessVerticalsProps {
@@ -23,46 +21,30 @@ const BUSINESS_MODELS: BusinessModelCard[] = [
     id: 1,
     title: 'BY TRAVELLER',
     description: [
-      'Descubre experiencias auténticas creadas por viajeros reales.',
-      'Cada aventura está diseñada por personas que conocen los destinos.',
+      'Descubre experiencias',
+      'auténticas creadas',
+      'por viajeros reales.',
     ],
     imageUrl: '/images/business-1.png',
   },
   {
     id: 2,
-    title: 'Trippers',
+    title: 'BY TRIPPER',
     description: [
       'Explora perfiles',
       'de viajeros expertos',
       'que curan experiencias',
-      'auténticas y memorables.',
+      'auténticas y memorables',
     ],
-    imageUrl: '/images/business-2.png',
-    backgroundColor: '#FFD700', // Yellow
-    icon: (
-      <svg
-        className="h-12 w-12 text-white"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <circle cx="12" cy="12" r="10" strokeWidth="2" />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
-        />
-        <circle cx="12" cy="12" r="3" strokeWidth="2" />
-      </svg>
-    ),
+    imageUrl: '/images/business-1.png',
   },
   {
     id: 3,
     title: 'ROADTRIPS',
     description: [
-      'Planifica roadtrips épicos con rutas cuidadosamente seleccionadas.',
-      'Descubre destinos fuera de lo común y vive aventuras inolvidables.',
+      'Planifica roadtrips épicos',
+      'con rutas cuidadosamente',
+      'seleccionadas.',
     ],
     imageUrl: '/images/business-3.png',
   },
@@ -70,8 +52,9 @@ const BUSINESS_MODELS: BusinessModelCard[] = [
     id: 4,
     title: 'TRIPPERS DECODE',
     description: [
-      'Decodifica los mejores destinos con insights de viajeros expertos.',
-      'Accede a información privilegiada sobre lugares y experiencias.',
+      'Decodifica los mejores',
+      'destinos con insights',
+      'de viajeros expertos.',
     ],
     imageUrl: '/images/business-4.png',
   },
@@ -79,49 +62,33 @@ const BUSINESS_MODELS: BusinessModelCard[] = [
     id: 5,
     title: 'SUNDAYS\nRANDOMTRIP XSED',
     description: [
-      'Experiencias exclusivas diseñadas para domingos especiales.',
-      'Aventuras únicas que transforman tus fines de semana.',
+      'Experiencias exclusivas',
+      'diseñadas para domingos',
+      'especiales.',
     ],
     imageUrl: '/images/business-5.png',
-    icon: (
-      <svg
-        className="h-12 w-12 text-white"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <circle cx="12" cy="12" r="10" strokeWidth="2" />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
-        />
-        <circle cx="12" cy="12" r="3" strokeWidth="2" />
-      </svg>
-    ),
   },
 ];
 
 function renderCardContent(card: BusinessModelCard, showBack: boolean) {
   if (showBack) {
-    // Back of Card (Yellow background with text)
     return (
-      <div
-        className="relative h-full w-full rounded-2xl overflow-hidden flex flex-col items-start justify-between p-6 aspect-square"
-        style={{
-          backgroundColor: card.backgroundColor || '#FFD700',
-        }}
-      >
-        {card.icon && <div className="self-end opacity-20">{card.icon}</div>}
+      <div className="relative h-full w-full rounded-2xl overflow-hidden flex flex-col items-start justify-between p-6 aspect-square bg-[#FFD700]">
+        <div className="self-end">
+          <img
+            src="/assets/logos/logo_random_white.svg"
+            alt="Randomtrip"
+            className="w-16 h-16 opacity-80"
+          />
+        </div>
         <div>
-          <h3 className="font-barlow-condensed text-lg font-semibold leading-tight uppercase tracking-wide text-foreground whitespace-pre-line">
-            -
-          </h3>
+          <p className="font-barlow-condensed text-lg font-semibold leading-tight text-[#0F2D37] mb-0">
+            —
+          </p>
           {card.description.map((line, idx) => (
             <p
               key={idx}
-              className="font-barlow-condensed text-lg leading-tight text-foreground font-semibold uppercase"
+              className="font-barlow-condensed text-lg leading-tight text-[#0F2D37] font-semibold uppercase"
             >
               {line}
             </p>
@@ -131,7 +98,6 @@ function renderCardContent(card: BusinessModelCard, showBack: boolean) {
     );
   }
 
-  // Front of Card (Image with title)
   return (
     <div className="relative h-full w-full rounded-2xl overflow-hidden">
       <div
@@ -164,9 +130,13 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
     <Section
       className={className}
       noContainerPadding
-      title="Puntos de partida"
-      //   description="Descubre nuestras diferentes formas de viajar"
     >
+      <h3
+        className="font-barlow-condensed font-semibold text-[#0F2D37] px-4 md:px-8 xl:px-12 2xl:px-16 mb-6"
+        style={{ fontSize: '28px', lineHeight: '100%' }}
+      >
+        Puntos de partida
+      </h3>
       {/* Desktop: Grid with Flip Cards */}
       <div className="hidden px-8 xl:px-12 2xl:px-16 md:grid md:grid-cols-5 md:gap-4 xl:gap-6 2xl:gap-8">
         {BUSINESS_MODELS.map((card, index) => {
