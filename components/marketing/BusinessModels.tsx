@@ -24,27 +24,32 @@ interface BusinessModelsProps {
 const BUSINESS_MODELS: BusinessModelCard[] = [
   {
     id: 1,
-    channel: 'CANAL',
-    name: 'B2C',
-    description: 'VIAJES SORPRESA',
-    descriptionLabel: 'DESCRIPCIÓN',
+    channel: 'Motor 1 – (B2C)',
+    name: 'Escapadas\nsorpresa',
+    description: 'Viajes sorpresa diseñados y vendidos directamente al viajero.\nMotor de volumen, adquisición y aprendizaje del sistema.',
     margin: '22-30%',
     marginLabel: 'MARGEN ESTIMADO',
-    imageUrl: '/images/business-model-1.png', // TODO: Replace with actual image
+    imageUrl: '/images/business-model-1.png',
   },
   {
     id: 2,
-    channel: 'CANAL',
-    name: 'B2B',
-    backgroundColor: '#626B2F', // Dark olive green
-    imageUrl: '/images/business-model-1.png', // TODO: Replace with actual image
+    channel: 'Motor 2 – B2B (Cashflow & escala)',
+    name: 'Corporate & Gift\nExperiences',
+    description: 'Experiencias diseñadas para empresas, regalos y equipos.\nVenta anticipada, menor CAC y tickets más altos.',
+    margin: '22-30%',
+    marginLabel: 'MARGEN ESTIMADO',
+    backgroundColor: '#3B4A3F',
+    imageUrl: '/corporate_img.png',
   },
   {
     id: 3,
-    channel: 'CANAL',
-    name: 'COMUNIDAD TRIPPER',
-    backgroundColor: '#626B2F', // Dark olive green
-    imageUrl: '/images/business-model-1.png', // TODO: Replace with actual image
+    channel: 'Motor 3 – COMUNIDAD TRIPPER',
+    name: 'Signature Routes\n(IP)',
+    description: 'Rutas diseñadas junto a trippers y creadores. Experiencias únicas,\nrepetibles y difíciles de copiar.',
+    margin: '22-30%',
+    marginLabel: 'MARGEN ESTIMADO',
+    backgroundColor: '#3B4A3F',
+    imageUrl: '/signature_img.png',
   },
 ];
 
@@ -74,9 +79,9 @@ function renderCardContent(
   showDetails: boolean = false,
 ) {
   const nameFontSize = calculateFontSize(card.name, isMobile);
-  const shouldShowDetails = isMobile ? showDetails : isHovered;
+  const shouldShowDetails = isMobile ? true : isHovered;
 
-  const shouldShowImage = isMobile ? showDetails : isHovered;
+  const shouldShowImage = isMobile ? true : isHovered;
 
   return (
     <motion.div className="absolute inset-0" transition={{ duration: 0.4 }}>
@@ -112,85 +117,78 @@ function renderCardContent(
       />
 
       {/* Content Overlay */}
-      <div className={`absolute inset-0 text-white grid grid-cols-2 p-6`}>
-        {/* Left Half - Top Section (Desktop) / Top Section (Mobile) */}
-        <div
-          className={`flex flex-col ${
-            isMobile ? 'justify-start' : 'justify-start'
-          }`}
-        >
+      <div className={`absolute inset-0 text-white flex flex-col justify-between ${isMobile ? 'p-4' : 'p-6'}`}>
+        {/* Top: Channel label + Title */}
+        <div>
           <span
-            className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 mb-1 ${
-              isMobile ? 'text-sm' : 'text-base'
+            className={`font-barlow-condensed font-semibold tracking-wide opacity-80 block ${
+              isMobile ? 'text-sm' : 'text-base mb-1'
             }`}
           >
             {card.channel}
           </span>
-          <h3
-            className="font-barlow-condensed leading-none font-bold uppercase tracking-wide"
-            style={{ fontSize: `${nameFontSize}px` }}
+          <motion.h3
+            className="font-barlow-condensed font-bold whitespace-pre-line text-[#FED700] mb-3"
+            animate={
+              isMobile
+                ? { fontSize: '32.58px', lineHeight: '29.7px' }
+                : {
+                    fontSize: shouldShowDetails ? '68px' : '39px',
+                    lineHeight: shouldShowDetails ? '62px' : '40px',
+                  }
+            }
+            transition={{ duration: 0.4 }}
           >
             {card.name}
-          </h3>
+          </motion.h3>
         </div>
 
-        {/* Right Half - Description and Margin (Desktop) / Bottom Section (Mobile) */}
-        <div
-          className={`flex flex-col ${
-            isMobile ? 'justify-end space-y-3' : 'justify-end space-y-4'
-          }`}
-        >
-          {/* Middle Section - Description */}
-          {shouldShowDetails && card.description && (
-            <motion.div
-              className="flex flex-col items-start justify-end"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-            >
-              <span
-                className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 mb-1 ${
-                  isMobile ? 'text-sm' : 'text-base'
-                }`}
-              >
-                {card.descriptionLabel}
-              </span>
+        {/* Bottom: Description (left) + Margin (right) */}
+        {shouldShowDetails && (card.description || card.margin) && (
+          <motion.div
+            className="flex justify-between items-end gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+          >
+            {/* Description - bottom left */}
+            {card.description && (
               <p
-                className={`font-barlow-condensed uppercase tracking-wide text-left ${
-                  isMobile ? 'text-xl' : 'text-4xl'
+                className={`font-barlow text-white/80 text-left max-w-[55%] font-normal whitespace-pre-line ${
+                  isMobile ? '' : ''
                 }`}
+                style={
+                  isMobile
+                    ? { fontSize: '12px', lineHeight: '14px' }
+                    : { fontSize: '18px', lineHeight: '25px' }
+                }
               >
                 {card.description}
               </p>
-            </motion.div>
-          )}
+            )}
 
-          {/* Bottom Section - Margin */}
-          {shouldShowDetails && card.margin && (
-            <motion.div
-              className="flex flex-col items-start w-full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-            >
-              <div className="w-full h-px bg-white/30 mb-4" />
-              <span
-                className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 mb-1 ${
-                  isMobile ? 'text-sm' : 'text-base'
-                }`}
-              >
-                {card.marginLabel}
-              </span>
-              <p
-                className={`font-barlow-condensed uppercase tracking-wide ${
-                  isMobile ? 'text-4xl' : 'text-7xl'
-                }`}
-              >
-                {card.margin}
-              </p>
-            </motion.div>
-          )}
-        </div>
+            {/* Margin - bottom right */}
+            {card.margin && (
+              <div className="flex flex-col items-start text-right">
+                <span
+                  className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 ${
+                    isMobile ? 'text-[10px] mb-0' : 'text-sm mb-1'
+                  }`}
+                >
+                  {card.marginLabel}
+                </span>
+                <p
+                  className={`font-barlow-condensed font-extrabold uppercase ${
+                    isMobile ? '' : 'tracking-wide text-6xl'
+                  }`}
+                  style={isMobile ? { fontSize: '38.32px', lineHeight: '100%' } : undefined}
+                >
+                  {card.margin}
+                </p>
+              </div>
+            )}
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
@@ -204,11 +202,31 @@ export function BusinessModels({ className }: BusinessModelsProps) {
   };
 
   return (
-    <Section
-      className={className}
-      title="Modelo de negocio"
-      description="Nuestros canales de ingresos"
-    >
+    <Section className={className}>
+      {/* Section Header */}
+      <motion.div
+        className="mb-6 text-center xl:mb-8 2xl:mb-10"
+        initial={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <h4
+          className="font-semibold uppercase text-foreground mb-2"
+          style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '10px' }}
+        >
+          Modelo de negocio
+        </h4>
+        <h2
+          className="font-barlow-condensed font-bold text-foreground text-center"
+          style={{ fontSize: '28px', lineHeight: '102%' }}
+        >
+          Tres motores de ingresos.
+          <br />
+          Un solo sistema.
+        </h2>
+      </motion.div>
+
       {/* Desktop: Horizontal Expanding Cards */}
       <div className="hidden md:block">
         <ExpandAnimatedItems
@@ -226,28 +244,23 @@ export function BusinessModels({ className }: BusinessModelsProps) {
         />
       </div>
 
-      {/* Mobile: Vertical Stack - Green Background, Reveal Content on Tap */}
-      <div className="block space-y-4 md:hidden">
-        {BUSINESS_MODELS.map((card, index) => {
-          const isExpanded = mobileExpandedId === card.id;
-
-          return (
-            <motion.div
-              key={card.id}
-              className="relative overflow-hidden rounded-2xl cursor-pointer h-[300px]"
-              initial={{ opacity: 0, y: 20 }}
-              transition={{
-                delay: index * 0.1,
-                duration: 0.4,
-              }}
-              viewport={{ once: true }}
-              whileInView={{ opacity: 1, y: 0 }}
-              onClick={() => handleMobileCardClick(card.id)}
-            >
-              {renderCardContent(card, false, true, isExpanded)}
-            </motion.div>
-          );
-        })}
+      {/* Mobile: Vertical Stack - Always show all content */}
+      <div className="block space-y-6 md:hidden">
+        {BUSINESS_MODELS.map((card, index) => (
+          <motion.div
+            key={card.id}
+            className="relative overflow-hidden rounded-2xl h-[182px]"
+            initial={{ opacity: 0, y: 20 }}
+            transition={{
+              delay: index * 0.1,
+              duration: 0.4,
+            }}
+            viewport={{ once: true }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            {renderCardContent(card, true, true, true)}
+          </motion.div>
+        ))}
       </div>
     </Section>
   );

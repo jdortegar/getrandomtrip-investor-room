@@ -4,6 +4,7 @@ import { ValueProposition } from '@/components/marketing/ValueProposition';
 import { ProblemSolution } from '@/components/marketing/ProblemSolution';
 import { Paragraph } from '@/components/marketing/Paragraph';
 import { ThreeDecisions } from '@/components/marketing/ThreeDecisions';
+import { SystemFeatures } from '@/components/marketing/SystemFeatures';
 import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { BusinessModels } from '@/components/marketing/BusinessModels';
 import { BusinessVerticals } from '@/components/marketing/BusinessVerticals';
@@ -30,9 +31,10 @@ export default function MarketingPage() {
       <ThreeDecisions />
       {/* <HowItWorks /> */}
       <BusinessVerticals />
+      <SystemFeatures />
+      <Community />
       <BusinessModels />
       <Metrics />
-      <Community />
       <Roadmap />
       <Safe />
       <Team />
