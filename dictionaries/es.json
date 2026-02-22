@@ -1,0 +1,195 @@
+{
+  "marketing": {
+    "nav": {
+      "contact": "Contacto",
+      "home": "Inicio",
+      "investorsRoom": "Sala de Inversores",
+      "logIn": "Iniciar sesión"
+    },
+    "footer": {
+      "tagline": "La aventura empieza acá.",
+      "visitButton": "VISITÁ GETRANDOMTRIP.COM"
+    },
+    "paragraph": "Somos la plataforma que conecta viajeros auténticos con aventuras únicas",
+    "howItWorks": {
+      "title": "¿Cómo funciona?",
+      "sectionDescription": "Tres pasos. Cero estrés. Más descubrimiento.",
+      "steps": [
+        {
+          "title": "Planifica",
+          "description": "Elegí fechas, ciudad de origen, duración y presupuesto. Sumá filtros y mood si querés."
+        },
+        {
+          "title": "Recibí la sorpresa",
+          "description": "Recibí tu viaje sorpresa. Solo abrí el sobre y descubrí el destino."
+        },
+        {
+          "title": "Viaja sin estrés",
+          "description": "Hacé la valija. Pasajes y alojamiento listos: soporte humano cuando lo necesites."
+        }
+      ]
+    },
+    "businessVerticals": {
+      "title": "Puntos de partida",
+      "cards": [
+        {
+          "title": "BY TRAVELLER",
+          "description": [
+            "Descubre experiencias auténticas creadas por viajeros reales.",
+            "Cada aventura está diseñada por personas que conocen los destinos."
+          ]
+        },
+        {
+          "title": "Trippers",
+          "description": [
+            "Explora perfiles",
+            "de viajeros expertos",
+            "que curan experiencias",
+            "auténticas y memorables."
+          ]
+        },
+        {
+          "title": "ROADTRIPS",
+          "description": [
+            "Planifica roadtrips épicos con rutas cuidadosamente seleccionadas.",
+            "Descubre destinos fuera de lo común y vive aventuras inolvidables."
+          ]
+        },
+        {
+          "title": "TRIPPERS DECODE",
+          "description": [
+            "Decodifica los mejores destinos con insights de viajeros expertos.",
+            "Accede a información privilegiada sobre lugares y experiencias."
+          ]
+        },
+        {
+          "title": "SUNDAYS\nRANDOMTRIP XSED",
+          "description": [
+            "Experiencias exclusivas diseñadas para domingos especiales.",
+            "Aventuras únicas que transforman tus fines de semana."
+          ]
+        }
+      ]
+    },
+    "businessModels": {
+      "title": "Modelo de negocio",
+      "description": "Nuestros canales de ingresos",
+      "cards": [
+        {
+          "channel": "CANAL",
+          "name": "B2C",
+          "description": "VIAJES SORPRESA",
+          "descriptionLabel": "DESCRIPCIÓN",
+          "margin": "22-30%",
+          "marginLabel": "MARGEN ESTIMADO"
+        },
+        {
+          "channel": "CANAL",
+          "name": "B2B"
+        },
+        {
+          "channel": "CANAL",
+          "name": "COMUNIDAD TRIPPER"
+        }
+      ]
+    },
+    "metrics": {
+      "headline": "CAPTAR EL 0.001% DEL MERCADO YA\nSIGNIFICA TRACCIÓN REAL.",
+      "tamLabel": "TAM:",
+      "tam": "≈ USD 500 mil millones",
+      "samLabel": "SAM:",
+      "sam": "≈ USD 400-450 mil millones",
+      "somLabel": "SOM (Año 1):",
+      "som": "USD 2.55 millones (≈ 0.0005 % del SAM)",
+      "sources": "Fuentes: World Travel & Tourism Council (WTTC, 2024)/ Airbnb - US Hispanic Traveler Report (2024)/ INE España (2023), DATATUR México (2024), Observatorio Turistico Argentina (2024), Mincetur Perú (2024)./ Randomtrip Internal Estimates (2025)."
+    },
+    "community": {
+      "title": "COMUNIDAD TRIPPER",
+      "subtitle": "¿Qué hacen?",
+      "features": [
+        {
+          "title": "RUTAS CON ALMA",
+          "description": "Diseñan itinerarios únicos basados en su experiencia local."
+        },
+        {
+          "title": "CONTENIDO EXCLUSIVO",
+          "description": "Generan videos, fotos y tips que alimentan nuestra plataforma."
+        },
+        {
+          "title": "COMUNIDAD Y CONFIANZA",
+          "description": "Son embajadores que atraen a sus audiencias."
+        }
+      ],
+      "profiles": [
+        {
+          "name": "BRUNO DÍAZ",
+          "role": "TRIPPER & PHOTOGRAPHER",
+          "description": "Es una plataforma que reconoce el trabajo curatorial y potencia nuestra marca personal con verdadera proyección regional."
+        },
+        {
+          "name": "LAURA MENDEZ",
+          "role": "TRIPPER & STORYTELLER",
+          "description": "Randomtrip convierte mi conocimiento local en experiencias reales. Como Tripper, siento que mi trabajo tiene impacto y proyección."
+        },
+        {
+          "name": "DAVID ORTEGA",
+          "role": "TRIPPER & TRAVEL CREATOR",
+          "description": "Randomtrip convierte mi conocimiento local en experiencias reales. Como Tripper, siento que mi trabajo tiene impacto y proyección."
+        }
+      ]
+    },
+    "roadmap": {
+      "title": "TRACCIÓN & ROADMAP",
+      "panels": [
+        {
+          "year": "2025",
+          "items": ["MVP OPERATIVO", "+100 LEADS", "3 SOCIOS FUNDADORES"]
+        },
+        {
+          "year": "2026",
+          "items": ["INTEGRACIÓN DE", "PLANNERS POR TIPO DE", "VIAJE, EXPANSIÓN LATAM"]
+        },
+        {
+          "year": "2026/27",
+          "items": ["IA PREDICTIVA", "+ CRECIMIENTO B2B"]
+        }
+      ]
+    },
+    "inspiration": {
+      "headline": "SI TE INSPIRA LO QUE VISTE,\nSUMATE AL TRIPPER FOUNDERS CIRCLE",
+      "ctaButton": "AGENDA TU VIDEOLLAMADA"
+    },
+    "team": {
+      "title": "EQUIPO",
+      "members": [
+        {
+          "name": "SANTIAGO<br/>SENEGA",
+          "role": "CEO & Fundador (Hospitality / Ops)",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        { "name": "RODRIGO<br/>BENITEZ", "role": "", "description": "" },
+        { "name": "DAVID<br/>ORTEGA", "role": "", "description": "" },
+        { "name": "CARLA<br/>VAZQUEZ", "role": "", "description": "" },
+        { "name": "NICOLÁS<br/>ASMAR", "role": "", "description": "" },
+        {
+          "name": "FABRIZIO<br/>BORDONI",
+          "role": "CEO & Fundador (Hospitality / Ops)",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        { "name": "FEDERICO<br/>BOGADO", "role": "", "description": "" },
+        { "name": "LEONARDO<br/>ALVAREZ", "role": "", "description": "" },
+        { "name": "LEONARDO<br/>ALVAREZ", "role": "", "description": "" },
+        { "name": "NICOLÁS<br/>MARTINEZ", "role": "", "description": "" }
+      ]
+    },
+    "safe": {
+      "title": "USO DE FONDOS & SAFE",
+      "description": "Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount).",
+      "allocations": [
+        { "label": "MARKETING & GROWTH" },
+        { "label": "OPERACIONES" },
+        { "label": "TECH<br/> & PRODUCTO" }
+      ]
+    }
+  }
+}

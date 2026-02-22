@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { signIn } from 'next-auth/react';
+
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -14,9 +13,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
+import type { Locale } from '@/lib/i18n/config';
 
-export default function OnboardingPage() {
+interface OnboardingClientProps {
+  locale: Locale;
+}
+
+export default function OnboardingClient({ locale }: OnboardingClientProps) {
   const router = useRouter();
   const { data: session, status, update } = useSession();
   const [name, setName] = useState('');
@@ -25,24 +31,20 @@ export default function OnboardingPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.replace('/otp');
+      router.replace(pathForLocale(locale, '/otp'));
     }
-  }, [status, router]);
+  }, [locale, status, router]);
 
-  // Redirect if profile is already complete
   useEffect(() => {
     if (status === 'authenticated' && session?.investor?.profileComplete) {
-      router.replace('/room');
+      router.replace(pathForLocale(locale, '/room'));
     }
-  }, [status, session, router]);
+  }, [locale, session, status, router]);
 
-  // Load existing investor data if available
   useEffect(() => {
     if (session?.user?.email) {
-      // Fetch investor data to pre-fill form
       fetch('/api/investor/me')
         .then((res) => res.json())
         .then((data) => {
@@ -52,9 +54,7 @@ export default function OnboardingPage() {
             setCompany(data.investor.company || '');
           }
         })
-        .catch(() => {
-          // Ignore errors, form will be empty
-        });
+        .catch(() => {});
     }
   }, [session]);
 
@@ -66,9 +66,9 @@ export default function OnboardingPage() {
     try {
       const response = await fetch('/api/investor/update', {
         body: JSON.stringify({
+          company: company.trim() || undefined,
           name: name.trim() || undefined,
           phone: phone.trim() || undefined,
-          company: company.trim() || undefined,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -82,21 +82,15 @@ export default function OnboardingPage() {
         throw new Error(data.error || 'Failed to save details');
       }
 
-      // Refresh the session to get updated investor data
-      // This triggers the session callback which will fetch the updated investor from DB
       await update();
-
-      // Use window.location for a hard redirect to ensure fresh session data is loaded
-      // This prevents the redirect loop where room layout sees old session data
-      window.location.href = '/room';
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong. Please try again.');
+      window.location.href = pathForLocale(locale, '/room');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Show loading while checking session
   if (status === 'loading') {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-24">
@@ -109,7 +103,6 @@ export default function OnboardingPage() {
     );
   }
 
-  // Don't render if not authenticated (will redirect)
   if (status === 'unauthenticated') {
     return null;
   }

@@ -13,8 +13,20 @@ interface MarketCircle {
   size: number; // Circle size in pixels
 }
 
+interface MetricsDict {
+  headline: string;
+  tamLabel: string;
+  tam: string;
+  samLabel: string;
+  sam: string;
+  somLabel: string;
+  som: string;
+  sources: string;
+}
+
 interface MetricsProps {
   className?: string;
+  dict: MetricsDict;
 }
 
 const MARKET_CIRCLES: MarketCircle[] = [
@@ -30,7 +42,7 @@ const MARKET_CIRCLES: MarketCircle[] = [
 // Calculate max value for normalization
 const MAX_VALUE = Math.max(...MARKET_CIRCLES.map((circle) => circle.value));
 
-export function Metrics({ className }: MetricsProps) {
+export function Metrics({ className, dict }: MetricsProps) {
   return (
     <Section className={className}>
       <div className="relative mx-auto container">
@@ -48,15 +60,15 @@ export function Metrics({ className }: MetricsProps) {
           <div className="flex flex-col gap-6 lg:hidden">
             {/* Title at top */}
             <motion.h2
-              className="px-6 pt-6 text-2xl font-bold leading-tight text-[#FFD700] font-barlow-condensed"
+              className="whitespace-pre-line px-6 pt-6 text-2xl font-bold leading-tight text-[#FFD700] font-barlow-condensed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              CAPTAR EL <span className="text-[#ffffff]">0.001%</span>
-              <br /> DEL MERCADO YA
-              <br /> SIGNIFICA TRACCIÓN REAL.
+              {dict.headline.split('0.001%')[0]}
+              <span className="text-[#ffffff]">0.001%</span>
+              {dict.headline.split('0.001%')[1]}
             </motion.h2>
 
             {/* Map in middle */}
@@ -126,22 +138,16 @@ export function Metrics({ className }: MetricsProps) {
             >
               <div className="space-y-2">
                 <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
-                  TAM:{' '}
-                  <span className="text-[#ffffff] font-normal">
-                    ≈ USD 500 mil millones
-                  </span>
+                  {dict.tamLabel}{' '}
+                  <span className="font-normal text-[#ffffff]">{dict.tam}</span>
                 </p>
                 <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
-                  SAM:{' '}
-                  <span className="text-[#ffffff] font-normal">
-                    ≈ USD 400-450 mil millones
-                  </span>
+                  {dict.samLabel}{' '}
+                  <span className="font-normal text-[#ffffff]">{dict.sam}</span>
                 </p>
                 <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
-                  SOM (Año 1):{' '}
-                  <span className="text-[#ffffff] font-normal">
-                    USD 2.55 millones (≈ 0.0005 % del SAM)
-                  </span>
+                  {dict.somLabel}{' '}
+                  <span className="font-normal text-[#ffffff]">{dict.som}</span>
                 </p>
               </div>
             </motion.div>
@@ -154,12 +160,7 @@ export function Metrics({ className }: MetricsProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <p className="leading-relaxed">
-                Fuentes: World Travel & Tourism Council (WTTC, 2024)/ Airbnb -
-                US Hispanic Traveler Report (2024)/ INE España (2023), DATATUR
-                México (2024), Observatorio Turistico Argentina (2024), Mincetur
-                Perú (2024)./ Randomtrip Internal Estimates (2025).
-              </p>
+              <p className="leading-relaxed">{dict.sources}</p>
             </motion.div>
           </div>
 
@@ -168,15 +169,15 @@ export function Metrics({ className }: MetricsProps) {
             {/* Left Side - Text Content */}
             <div className="flex flex-col justify-between p-8 lg:p-12 xl:p-16 2xl:p-20">
               <motion.h2
-                className="mb-8 text-3xl font-bold leading-tight text-[#FFD700] lg:text-6xl font-barlow-condensed"
+                className="mb-8 whitespace-pre-line text-3xl font-bold leading-tight text-[#FFD700] font-barlow-condensed lg:text-6xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                CAPTAR EL <span className="text-[#ffffff]">0.001%</span>
-                <br /> DEL MERCADO YA
-                <br /> SIGNIFICA TRACCIÓN REAL.
+                {dict.headline.split('0.001%')[0]}
+                <span className="text-[#ffffff]">0.001%</span>
+                {dict.headline.split('0.001%')[1]}
               </motion.h2>
 
               <motion.div
@@ -188,22 +189,16 @@ export function Metrics({ className }: MetricsProps) {
               >
                 <div className="space-y-2 xl:space-y-3 2xl:space-y-4">
                   <p className="font-barlow-condensed text-3xl font-extrabold text-[#FFD700] tracking-wide">
-                    TAM:{' '}
-                    <span className="text-[#ffffff] font-normal">
-                      ≈ USD 500 mil millones
-                    </span>
+                    {dict.tamLabel}{' '}
+                    <span className="font-normal text-[#ffffff]">{dict.tam}</span>
                   </p>
                   <p className="font-barlow-condensed text-3xl font-extrabold text-[#FFD700] tracking-wide">
-                    SAM:{' '}
-                    <span className="text-[#ffffff] font-normal">
-                      ≈ USD 400-450 mil millones
-                    </span>
+                    {dict.samLabel}{' '}
+                    <span className="font-normal text-[#ffffff]">{dict.sam}</span>
                   </p>
                   <p className="font-barlow-condensed text-3xl font-extrabold text-[#FFD700] tracking-wide">
-                    SOM (Año 1):{' '}
-                    <span className="text-[#ffffff] font-normal">
-                      USD 2.55 millones (≈ 0.0005 % del SAM)
-                    </span>
+                    {dict.somLabel}{' '}
+                    <span className="font-normal text-[#ffffff]">{dict.som}</span>
                   </p>
                 </div>
               </motion.div>
@@ -215,12 +210,7 @@ export function Metrics({ className }: MetricsProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <p className="leading-relaxed">
-                  Fuentes: World Travel & Tourism Council (WTTC, 2024)/ Airbnb -
-                  US Hispanic Traveler Report (2024)/ INE España (2023), DATATUR
-                  México (2024), Observatorio Turistico Argentina (2024),
-                  Mincetur Perú (2024)./ Randomtrip Internal Estimates (2025).
-                </p>
+                <p className="leading-relaxed">{dict.sources}</p>
               </motion.div>
             </div>
 

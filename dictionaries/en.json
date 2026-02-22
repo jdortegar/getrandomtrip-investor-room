@@ -1,0 +1,195 @@
+{
+  "marketing": {
+    "nav": {
+      "contact": "Contact",
+      "home": "Home",
+      "investorsRoom": "Investors Room",
+      "logIn": "Log In"
+    },
+    "footer": {
+      "tagline": "The adventure starts here.",
+      "visitButton": "VISIT GETRANDOMTRIP.COM"
+    },
+    "paragraph": "We are the platform that connects authentic travelers with unique adventures",
+    "howItWorks": {
+      "title": "How does it work?",
+      "sectionDescription": "Three steps. Zero stress. More discovery.",
+      "steps": [
+        {
+          "title": "Plan",
+          "description": "Choose dates, origin city, duration and budget. Add filters and mood if you like."
+        },
+        {
+          "title": "Get the surprise",
+          "description": "Receive your surprise trip. Just open the envelope and discover the destination."
+        },
+        {
+          "title": "Travel stress-free",
+          "description": "Pack your bags. Flights and accommodation ready: human support when you need it."
+        }
+      ]
+    },
+    "businessVerticals": {
+      "title": "Starting points",
+      "cards": [
+        {
+          "title": "BY TRAVELLER",
+          "description": [
+            "Discover authentic experiences created by real travelers.",
+            "Each adventure is designed by people who know the destinations."
+          ]
+        },
+        {
+          "title": "Trippers",
+          "description": [
+            "Explore profiles",
+            "of expert travelers",
+            "who curate",
+            "authentic and memorable experiences."
+          ]
+        },
+        {
+          "title": "ROADTRIPS",
+          "description": [
+            "Plan epic road trips with carefully selected routes.",
+            "Discover off-the-beaten-path destinations and live unforgettable adventures."
+          ]
+        },
+        {
+          "title": "TRIPPERS DECODE",
+          "description": [
+            "Decode the best destinations with insights from expert travelers.",
+            "Access privileged information about places and experiences."
+          ]
+        },
+        {
+          "title": "SUNDAYS\nRANDOMTRIP XSED",
+          "description": [
+            "Exclusive experiences designed for special Sundays.",
+            "Unique adventures that transform your weekends."
+          ]
+        }
+      ]
+    },
+    "businessModels": {
+      "title": "Business model",
+      "description": "Our revenue channels",
+      "cards": [
+        {
+          "channel": "CHANNEL",
+          "name": "B2C",
+          "description": "SURPRISE TRIPS",
+          "descriptionLabel": "DESCRIPTION",
+          "margin": "22-30%",
+          "marginLabel": "ESTIMATED MARGIN"
+        },
+        {
+          "channel": "CHANNEL",
+          "name": "B2B"
+        },
+        {
+          "channel": "CHANNEL",
+          "name": "TRIPPER COMMUNITY"
+        }
+      ]
+    },
+    "metrics": {
+      "headline": "CAPTURING 0.001% OF THE MARKET\nALREADY MEANS REAL TRACTION.",
+      "tamLabel": "TAM:",
+      "tam": "≈ USD 500 billion",
+      "samLabel": "SAM:",
+      "sam": "≈ USD 400-450 billion",
+      "somLabel": "SOM (Year 1):",
+      "som": "USD 2.55 million (≈ 0.0005% of SAM)",
+      "sources": "Sources: World Travel & Tourism Council (WTTC, 2024)/ Airbnb - US Hispanic Traveler Report (2024)/ INE Spain (2023), DATATUR Mexico (2024), Observatorio Turistico Argentina (2024), Mincetur Peru (2024)./ Randomtrip Internal Estimates (2025)."
+    },
+    "community": {
+      "title": "TRIPPER COMMUNITY",
+      "subtitle": "What do they do?",
+      "features": [
+        {
+          "title": "ROUTES WITH SOUL",
+          "description": "They design unique itineraries based on their local experience."
+        },
+        {
+          "title": "EXCLUSIVE CONTENT",
+          "description": "They create videos, photos and tips that feed our platform."
+        },
+        {
+          "title": "COMMUNITY & TRUST",
+          "description": "They are ambassadors who attract their audiences."
+        }
+      ],
+      "profiles": [
+        {
+          "name": "BRUNO DÍAZ",
+          "role": "TRIPPER & PHOTOGRAPHER",
+          "description": "It is a platform that recognizes curatorial work and boosts our personal brand with real regional reach."
+        },
+        {
+          "name": "LAURA MENDEZ",
+          "role": "TRIPPER & STORYTELLER",
+          "description": "Randomtrip turns my local knowledge into real experiences. As a Tripper, I feel my work has impact and reach."
+        },
+        {
+          "name": "DAVID ORTEGA",
+          "role": "TRIPPER & TRAVEL CREATOR",
+          "description": "Randomtrip turns my local knowledge into real experiences. As a Tripper, I feel my work has impact and reach."
+        }
+      ]
+    },
+    "roadmap": {
+      "title": "TRACTION & ROADMAP",
+      "panels": [
+        {
+          "year": "2025",
+          "items": ["MVP LIVE", "+100 LEADS", "3 FOUNDING PARTNERS"]
+        },
+        {
+          "year": "2026",
+          "items": ["INTEGRATION OF", "PLANNERS BY TRIP TYPE,", "LATAM EXPANSION"]
+        },
+        {
+          "year": "2026/27",
+          "items": ["PREDICTIVE AI", "+ B2B GROWTH"]
+        }
+      ]
+    },
+    "inspiration": {
+      "headline": "IF WHAT YOU SAW INSPIRES YOU,\nJOIN THE TRIPPER FOUNDERS CIRCLE",
+      "ctaButton": "SCHEDULE YOUR VIDEO CALL"
+    },
+    "team": {
+      "title": "TEAM",
+      "members": [
+        {
+          "name": "SANTIAGO<br/>SENEGA",
+          "role": "CEO & Founder (Hospitality / Ops)",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        { "name": "RODRIGO<br/>BENITEZ", "role": "", "description": "" },
+        { "name": "DAVID<br/>ORTEGA", "role": "", "description": "" },
+        { "name": "CARLA<br/>VAZQUEZ", "role": "", "description": "" },
+        { "name": "NICOLÁS<br/>ASMAR", "role": "", "description": "" },
+        {
+          "name": "FABRIZIO<br/>BORDONI",
+          "role": "CEO & Founder (Hospitality / Ops)",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        { "name": "FEDERICO<br/>BOGADO", "role": "", "description": "" },
+        { "name": "LEONARDO<br/>ALVAREZ", "role": "", "description": "" },
+        { "name": "LEONARDO<br/>ALVAREZ", "role": "", "description": "" },
+        { "name": "NICOLÁS<br/>MARTINEZ", "role": "", "description": "" }
+      ]
+    },
+    "safe": {
+      "title": "USE OF FUNDS & SAFE",
+      "description": "Pre-Seed Round (Friends & Family): USD 100K under SAFE (20% discount).",
+      "allocations": [
+        { "label": "MARKETING & GROWTH" },
+        { "label": "OPERATIONS" },
+        { "label": "TECH<br/> & PRODUCT" }
+      ]
+    }
+  }
+}

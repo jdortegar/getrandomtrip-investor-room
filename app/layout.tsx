@@ -4,11 +4,8 @@ import {
   Barlow_Condensed,
   Nothing_You_Could_Do,
 } from 'next/font/google';
-import { Suspense } from 'react';
+
 import './globals.css';
-import { SessionProvider } from '@/components/providers/SessionProvider';
-import AppTracking from '@/components/tracking/AppTracking';
-import ScrollDepthTracker from '@/components/tracking/ScrollDepthTracker';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -32,8 +29,11 @@ const nothingYouCouldDo = Nothing_You_Could_Do({
 });
 
 export const metadata: Metadata = {
-  title: 'RandomTrip Investor Room',
   description: 'Private investor space for RandomTrip',
+  icons: {
+    icon: '/favicon.png',
+  },
+  title: 'RandomTrip Investor Room',
 };
 
 export default function RootLayout({
@@ -44,18 +44,10 @@ export default function RootLayout({
   return (
     <html
       className={`${barlow.variable} ${barlowCondensed.variable} ${nothingYouCouldDo.variable}`}
-      lang="en"
+      lang="es"
       suppressHydrationWarning
     >
-      <body className={`${barlow.className} antialiased py-4`}>
-        <SessionProvider>
-          <Suspense fallback={null}>
-            <AppTracking />
-            <ScrollDepthTracker />
-          </Suspense>
-          {children}
-        </SessionProvider>
-      </body>
+      <body className={`${barlow.className} antialiased py-4`}>{children}</body>
     </html>
   );
 }

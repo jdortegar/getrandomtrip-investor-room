@@ -5,48 +5,46 @@ import { useState } from 'react';
 import { Section } from './Section';
 import { ExpandAnimatedItems } from './ExpandAnimatedItems';
 
+const BUSINESS_MODEL_IMAGE = '/images/business-model-1.png';
+
 interface BusinessModelCard {
-  id: number;
+  backgroundColor?: string;
   channel: string;
-  name: string;
   description?: string;
   descriptionLabel?: string;
+  id: number;
+  imageUrl: string;
   margin?: string;
   marginLabel?: string;
-  imageUrl: string;
-  backgroundColor?: string;
+  name: string;
+}
+
+interface BusinessModelsDict {
+  cards: Array<{
+    channel: string;
+    description?: string;
+    descriptionLabel?: string;
+    margin?: string;
+    marginLabel?: string;
+    name: string;
+  }>;
+  description: string;
+  title: string;
 }
 
 interface BusinessModelsProps {
   className?: string;
+  dict: BusinessModelsDict;
 }
 
-const BUSINESS_MODELS: BusinessModelCard[] = [
-  {
-    id: 1,
-    channel: 'CANAL',
-    name: 'B2C',
-    description: 'VIAJES SORPRESA',
-    descriptionLabel: 'DESCRIPCIÓN',
-    margin: '22-30%',
-    marginLabel: 'MARGEN ESTIMADO',
-    imageUrl: '/images/business-model-1.png', // TODO: Replace with actual image
-  },
-  {
-    id: 2,
-    channel: 'CANAL',
-    name: 'B2B',
-    backgroundColor: '#626B2F', // Dark olive green
-    imageUrl: '/images/business-model-1.png', // TODO: Replace with actual image
-  },
-  {
-    id: 3,
-    channel: 'CANAL',
-    name: 'COMUNIDAD TRIPPER',
-    backgroundColor: '#626B2F', // Dark olive green
-    imageUrl: '/images/business-model-1.png', // TODO: Replace with actual image
-  },
-];
+function buildBusinessModelCards(dict: BusinessModelsDict): BusinessModelCard[] {
+  return dict.cards.slice(0, 3).map((card, i) => ({
+    ...card,
+    backgroundColor: i === 0 ? undefined : '#626B2F',
+    id: i + 1,
+    imageUrl: BUSINESS_MODEL_IMAGE,
+  }));
+}
 
 function calculateFontSize(name: string, isMobile: boolean = false): number {
   const minSize = isMobile ? 24 : 40;
@@ -196,7 +194,8 @@ function renderCardContent(
   );
 }
 
-export function BusinessModels({ className }: BusinessModelsProps) {
+export function BusinessModels({ className, dict }: BusinessModelsProps) {
+  const items = buildBusinessModelCards(dict);
   const [mobileExpandedId, setMobileExpandedId] = useState<number | null>(null);
 
   const handleMobileCardClick = (cardId: number) => {
@@ -206,8 +205,8 @@ export function BusinessModels({ className }: BusinessModelsProps) {
   return (
     <Section
       className={className}
-      title="Modelo de negocio"
-      description="Nuestros canales de ingresos"
+      description={dict.description}
+      title={dict.title}
     >
       {/* Desktop: Horizontal Expanding Cards */}
       <div className="hidden md:block">
@@ -217,7 +216,7 @@ export function BusinessModels({ className }: BusinessModelsProps) {
           collapsedWidth="25%"
           getItemId={(item) => item.id}
           itemClassName="group relative overflow-hidden rounded-2xl h-[400px] cursor-pointer"
-          items={BUSINESS_MODELS}
+          items={items}
           renderItem={(card, isHovered) => (
             <div className="relative h-full w-full">
               {renderCardContent(card, isHovered, false, false)}
@@ -228,7 +227,7 @@ export function BusinessModels({ className }: BusinessModelsProps) {
 
       {/* Mobile: Vertical Stack - Green Background, Reveal Content on Tap */}
       <div className="block space-y-4 md:hidden">
-        {BUSINESS_MODELS.map((card, index) => {
+        {items.map((card, index) => {
           const isExpanded = mobileExpandedId === card.id;
 
           return (

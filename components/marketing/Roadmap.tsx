@@ -4,46 +4,30 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Section } from './Section';
 
-interface RoadmapPanel {
-  id: number;
-  year: string;
-  items: string[];
-  imageUrl: string;
+const ROADMAP_IMAGES = [
+  '/images/roadmap-1.png',
+  '/images/roadmap-2.png',
+  '/images/roadmap-3.png',
+];
+
+interface RoadmapDict {
+  panels: Array<{ items: string[]; year: string }>;
+  title: string;
 }
 
 interface RoadmapProps {
   className?: string;
+  dict: RoadmapDict;
 }
 
-const ROADMAP_PANELS: RoadmapPanel[] = [
-  {
-    id: 1,
-    year: '2025',
-    items: ['MVP OPERATIVO', '+100 LEADS', '3 SOCIOS FUNDADORES'],
-    imageUrl: '/images/roadmap-1.png',
-  },
-  {
-    id: 2,
-    year: '2026',
-    items: ['INTEGRACIÓN DE', 'PLANNERS POR TIPO DE', 'VIAJE, EXPANSIÓN LATAM'],
-    imageUrl: '/images/roadmap-2.png',
-  },
-  {
-    id: 3,
-    year: '2026/27',
-    items: ['IA PREDICTIVA', '+ CRECIMIENTO B2B'],
-    imageUrl: '/images/roadmap-3.png',
-  },
-];
-
-export function Roadmap({ className }: RoadmapProps) {
+export function Roadmap({ className, dict }: RoadmapProps) {
   return (
-    <Section className={className} title="TRACCIÓN & ROADMAP">
-      <div className="mx-auto container">
+    <Section className={className} title={dict.title}>
+      <div className="container mx-auto">
         <div className="grid gap-6 md:grid-cols-3 xl:gap-8 2xl:gap-10">
-          {ROADMAP_PANELS.map((panel, index) => (
+          {dict.panels.map((panel, index) => (
             <motion.div
-              key={panel.id}
+              key={panel.year}
               className="group relative overflow-hidden rounded-2xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -55,7 +39,7 @@ export function Roadmap({ className }: RoadmapProps) {
                   alt={`Roadmap ${panel.year}`}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   fill
-                  src={panel.imageUrl}
+                  src={ROADMAP_IMAGES[index]}
                 />
 
                 {/* Dark Overlay for better text readability */}

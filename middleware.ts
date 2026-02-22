@@ -1,50 +1,38 @@
-import { withAuth } from 'next-auth/middleware';
+import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 
-export default withAuth(
-  function middleware(req) {
-    // Check if user is accessing /room routes
-    if (req.nextUrl.pathname.startsWith('/room')) {
-      const token = req.nextauth.token;
+import { handleI18n } from '@/lib/i18n/middleware';
 
-      // If no token, redirect to OTP
-      if (!token) {
-        return NextResponse.redirect(new URL('/otp', req.url));
-      }
+export default async function middleware(req: Request) {
+  const request = req as import('next/server').NextRequest;
+  const pathname = request.nextUrl.pathname;
 
-      // Check if user is an approved investor (from token or session)
-      // With database sessions, investor data is in the session callback
-      // The token might not have it, so we'll check in the route handler instead
-      // For now, just check if token exists (auth check happens in layout)
-      return NextResponse.next();
+  const isRoomPath =
+    pathname === '/room' ||
+    pathname.startsWith('/room/') ||
+    pathname === '/en/room' ||
+    pathname.startsWith('/en/room/');
+
+  if (isRoomPath) {
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
+    if (!token) {
+      const isEn = pathname.startsWith('/en/');
+      const otpPath = isEn ? '/en/otp' : '/otp';
+      return NextResponse.redirect(new URL(otpPath, request.url));
     }
+  }
 
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token, req }) => {
-        // Allow access to public routes
-        if (
-          req.nextUrl.pathname === '/' ||
-          req.nextUrl.pathname.startsWith('/api') ||
-          req.nextUrl.pathname === '/otp' ||
-          req.nextUrl.pathname === '/onboarding'
-        ) {
-          return true;
-        }
+  const i18nResponse = handleI18n(request);
+  if (i18nResponse) return i18nResponse;
 
-        // Require auth for /room routes
-        if (req.nextUrl.pathname.startsWith('/room')) {
-          return !!token;
-        }
-
-        return true;
-      },
-    },
-  },
-);
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ['/room/:path*'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon|api|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|mp4)$).*)',
+  ],
 };

@@ -1,14 +1,22 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
+
+import { cn } from '@/lib/utils';
+
+interface FooterDict {
+  tagline: string;
+  visitButton: string;
+}
 
 interface FooterProps {
   className?: string;
+  dict: FooterDict;
+  locale?: string;
 }
 
-export function Footer({ className }: FooterProps) {
+export function Footer({ className, dict }: FooterProps) {
   const handleVisitClick = () => {
     window.open('https://getrandomtrip.com', '_blank');
   };
@@ -29,7 +37,7 @@ export function Footer({ className }: FooterProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          La aventura empieza acá.
+          {dict.tagline}
         </motion.p>
 
         {/* Visit Button */}
@@ -45,7 +53,7 @@ export function Footer({ className }: FooterProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          VISITÁ GETRANDOMTRIP.COM
+          {dict.visitButton}
         </motion.button>
 
         {/* Logo and Branding */}

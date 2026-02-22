@@ -1,10 +1,13 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/config';
-import { prisma } from '@/lib/api/prisma';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import dynamicImport from 'next/dynamic';
+
 import { Badge } from '@/components/ui/badge';
+import { authOptions } from '@/lib/auth/config';
+import { prisma } from '@/lib/api/prisma';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
+import { hasLocale } from '@/lib/i18n/dictionaries';
 
 const ApproveInvestorButton = dynamicImport(
   () =>
@@ -24,7 +27,14 @@ const ResendInvitationButton = dynamicImport(
 
 export const dynamic = 'force-dynamic';
 
-export default async function AdminInvestorsPage() {
+export default async function AdminInvestorsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(locale)) notFound();
+
   const session = await getServerSession(authOptions);
   const founders = (process.env.FOUNDER_EMAIL || '')
     .split(',')
@@ -110,7 +120,10 @@ export default async function AdminInvestorsPage() {
       )}
 
       <div className="mt-6">
-        <Link href="/" className="text-sm text-primary">
+        <Link
+          className="text-sm text-primary"
+          href={pathForLocale(locale, '/')}
+        >
           Volver al sitio
         </Link>
       </div>

@@ -5,47 +5,49 @@ import { motion } from 'framer-motion';
 import { Section } from '@/components/marketing/Section';
 import { cn } from '@/lib/utils';
 
-interface SafeProps {
-  className?: string;
-}
-
-interface FundAllocation {
-  label: string;
-  percentage: number;
-  color: string;
-  textColor: string;
-  icon: string;
-}
-
-const FUND_ALLOCATIONS: FundAllocation[] = [
-  {
-    label: 'MARKETING & GROWTH',
-    percentage: 45,
-    color: '#FED700', // Yellow
-    textColor: '#1C2B35', // Blue text
-    icon: '/assets/svg/marketing.svg',
-  },
-  {
-    label: 'OPERACIONES',
-    percentage: 35,
-    color: '#6B7E3F', // Olive green
-    textColor: '#FED700', // Yellow text
-    icon: '/assets/svg/operations.svg',
-  },
-  {
-    label: 'TECH<br/> & PRODUCTO',
-    percentage: 20,
-    color: '#1C2B35', // Dark blue/teal
-    textColor: '#FFFFFF', // White text
-    icon: '/assets/svg/tech.svg',
-  },
+const PERCENTAGES = [45, 35, 20];
+const COLORS = ['#FED700', '#6B7E3F', '#1C2B35'];
+const TEXT_COLORS = ['#1C2B35', '#FED700', '#FFFFFF'];
+const ICONS = [
+  '/assets/svg/marketing.svg',
+  '/assets/svg/operations.svg',
+  '/assets/svg/tech.svg',
 ];
 
-function getConicGradient(): string {
+interface FundAllocation {
+  color: string;
+  icon: string;
+  label: string;
+  percentage: number;
+  textColor: string;
+}
+
+interface SafeDict {
+  allocations: Array<{ label: string }>;
+  description: string;
+  title: string;
+}
+
+interface SafeProps {
+  className?: string;
+  dict: SafeDict;
+}
+
+function buildAllocations(dict: SafeDict): FundAllocation[] {
+  return dict.allocations.slice(0, 3).map((a, i) => ({
+    label: a.label,
+    percentage: PERCENTAGES[i] ?? 0,
+    color: COLORS[i] ?? '#1C2B35',
+    textColor: TEXT_COLORS[i] ?? '#FFFFFF',
+    icon: ICONS[i] ?? '/assets/svg/tech.svg',
+  }));
+}
+
+function getConicGradient(allocations: FundAllocation[]): string {
   let currentAngle = 0;
   const gradients: string[] = [];
 
-  FUND_ALLOCATIONS.forEach((allocation) => {
+  allocations.forEach((allocation) => {
     const startAngle = currentAngle;
     const endAngle = currentAngle + (allocation.percentage / 100) * 360;
     gradients.push(`${allocation.color} ${startAngle}deg ${endAngle}deg`);
@@ -88,14 +90,15 @@ function renderLabel(label: string) {
   );
 }
 
-export function Safe({ className }: SafeProps) {
-  const conicGradient = getConicGradient();
+export function Safe({ className, dict }: SafeProps) {
+  const allocations = buildAllocations(dict);
+  const conicGradient = getConicGradient(allocations);
 
   return (
     <Section
       className={className}
-      description="Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount)."
-      title="USO DE FONDOS & SAFE"
+      description={dict.description}
+      title={dict.title}
     >
       <div className="flex flex-col items-center">
         <div className="relative w-full max-w-[600px] xl:max-w-[700px] 2xl:max-w-[800px] aspect-square">
@@ -114,7 +117,7 @@ export function Safe({ className }: SafeProps) {
           >
             {/* Marketing & Growth - 45% */}
             {(() => {
-              const allocation = FUND_ALLOCATIONS[0];
+              const allocation = allocations[0];
               const startAngle = 0;
               const radius = 0.685; // Larger radius for larger slice
               const { x, y } = calculatePosition(
@@ -177,8 +180,8 @@ export function Safe({ className }: SafeProps) {
 
             {/* Operaciones - 35% */}
             {(() => {
-              const allocation = FUND_ALLOCATIONS[1];
-              const startAngle = (FUND_ALLOCATIONS[0].percentage / 100) * 360;
+              const allocation = allocations[1];
+              const startAngle = (allocations[0].percentage / 100) * 360;
               const radius = 0.655; // Medium radius
               const { x, y } = calculatePosition(
                 startAngle,
@@ -242,10 +245,10 @@ export function Safe({ className }: SafeProps) {
 
             {/* Tech & Producto - 20% */}
             {(() => {
-              const allocation = FUND_ALLOCATIONS[2];
+              const allocation = allocations[2];
               const startAngle =
-                (FUND_ALLOCATIONS[0].percentage / 100) * 360 +
-                (FUND_ALLOCATIONS[1].percentage / 100) * 360;
+                (allocations[0].percentage / 100) * 360 +
+                (allocations[1].percentage / 100) * 360;
               const radius = 0.61; // Smaller radius for smaller slice
               const { x, y } = calculatePosition(
                 startAngle,

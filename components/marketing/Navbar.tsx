@@ -2,14 +2,39 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
-export function Navbar() {
+import { cn } from '@/lib/utils';
+import { COOKIE_LOCALE, LOCALE_LABELS } from '@/lib/i18n/config';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
+import type { Locale } from '@/lib/i18n/config';
+
+interface NavbarDict {
+  contact: string;
+  home: string;
+  investorsRoom: string;
+  logIn: string;
+}
+
+interface NavbarProps {
+  dict: NavbarDict;
+  locale: Locale;
+}
+
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+
+export function Navbar({ dict, locale }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
   const { data: session } = useSession();
   const approved = !!(session as any)?.investor?.approved;
+
+  const otherLocale: Locale = locale === 'es' ? 'en' : 'es';
+  const basePath = pathname?.startsWith('/en') ? pathname.slice(3) || '/' : pathname ?? '/';
+  const localeSwitchPath = pathForLocale(otherLocale, basePath);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -19,13 +44,19 @@ export function Navbar() {
     setIsMobileMenuOpen(false);
   };
 
+  const handleLocaleSwitch = () => {
+    document.cookie = `${COOKIE_LOCALE}=${otherLocale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+    router.push(localeSwitchPath);
+    closeMobileMenu();
+  };
+
   return (
     <>
       <nav className="absolute left-0 right-0 top-0 z-50 w-full">
         <div className="mx-auto flex max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px] items-center justify-between px-12 py-8 text-white md:px-16 md:py-10 xl:px-20 xl:py-12 2xl:px-24 2xl:py-14">
           <Link
             className="flex items-center gap-2"
-            href="/"
+            href={pathForLocale(locale, '/')}
             onClick={closeMobileMenu}
           >
             <img
@@ -39,29 +70,36 @@ export function Navbar() {
           <div className="hidden items-center gap-[100px] xl:gap-[120px] 2xl:gap-[150px] md:flex">
             <Link
               className="text-xl transition-colors hover:text-white hover:font-bold"
-              href="/"
+              href={pathForLocale(locale, '/')}
             >
-              Home
+              {dict.home}
             </Link>
             <Link
               className="text-xl transition-colors hover:text-white hover:font-bold"
-              href="/contact"
+              href={pathForLocale(locale, '/contact')}
             >
-              Contact
+              {dict.contact}
             </Link>
             {/* Disable Investors Room until investor is approved */}
             {!approved ? (
               <div className="text-xl transition-colors text-white/60 cursor-not-allowed">
-                Investors Room
+                {dict.investorsRoom}
               </div>
             ) : (
               <Link
                 className="text-xl transition-colors hover:text-white hover:font-bold"
-                href="/room"
+                href={pathForLocale(locale, '/room')}
               >
-                Investors Room
+                {dict.investorsRoom}
               </Link>
             )}
+            <button
+              className="text-xl transition-colors hover:text-white hover:font-bold"
+              onClick={handleLocaleSwitch}
+              type="button"
+            >
+              {LOCALE_LABELS[otherLocale]}
+            </button>
           </div>
 
           {/* Mobile Hamburger Menu Button */}
@@ -100,37 +138,44 @@ export function Navbar() {
         <div className="flex flex-col gap-6 pt-16">
           <Link
             className="text-xl text-white transition-colors hover:text-white/80"
-            href="/"
+            href={pathForLocale(locale, '/')}
             onClick={closeMobileMenu}
           >
-            Home
+            {dict.home}
           </Link>
           <Link
             className="text-xl text-white transition-colors hover:text-white/80"
-            href="/contact"
+            href={pathForLocale(locale, '/contact')}
             onClick={closeMobileMenu}
           >
-            Contact
+            {dict.contact}
           </Link>
           {!approved ? (
             <span className="cursor-not-allowed text-xl text-white/60">
-              Investors Room
+              {dict.investorsRoom}
             </span>
           ) : (
             <Link
               className="text-xl text-white transition-colors hover:text-white/80"
-              href="/room"
+              href={pathForLocale(locale, '/room')}
               onClick={closeMobileMenu}
             >
-              Investors Room
+              {dict.investorsRoom}
             </Link>
           )}
+          <button
+            className="text-xl font-bold text-white transition-colors hover:text-white/80"
+            onClick={handleLocaleSwitch}
+            type="button"
+          >
+            {LOCALE_LABELS[otherLocale]}
+          </button>
           <Link
             className="text-xl font-bold text-white transition-colors hover:text-white/80"
-            href="/login"
+            href={pathForLocale(locale, '/login')}
             onClick={closeMobileMenu}
           >
-            Log In
+            {dict.logIn}
           </Link>
         </div>
       </div>
