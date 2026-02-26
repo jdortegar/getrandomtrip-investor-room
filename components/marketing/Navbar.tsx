@@ -95,9 +95,10 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
                 {dict.investorsRoom}
               </Link>
             )}
-            <Link
-              className="text-xl font-bold transition-colors hover:text-white/80"
-              href={pathForLocale(locale, '/login')}
+            <button
+              className="text-xl transition-colors hover:text-white hover:font-bold"
+              onClick={handleLocaleSwitch}
+              type="button"
             >
               {LOCALE_LABELS[otherLocale]}
             </button>
