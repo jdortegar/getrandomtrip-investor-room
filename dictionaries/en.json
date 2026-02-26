@@ -190,6 +190,23 @@
         { "label": "OPERATIONS" },
         { "label": "TECH<br/> & PRODUCT" }
       ]
+    },
+    "waitlist": {
+      "headline": "Get early access to RandomTrip's launch",
+      "subheadline": "Join the list and we'll notify you when we're ready.",
+      "namePlaceholder": "First name",
+      "lastNamePlaceholder": "Last name",
+      "emailPlaceholder": "you@email.com",
+      "submitButton": "I want early access",
+      "successMessage": "You're in! We'll notify you when it's your turn.",
+      "adminLoginLabel": "Admin? Log in",
+      "loginModal": {
+        "description": "Enter username and password to access.",
+        "passwordPlaceholder": "Password",
+        "submitButton": "Sign in",
+        "title": "Admin access",
+        "usernamePlaceholder": "Username"
+      }
     }
   }
 }

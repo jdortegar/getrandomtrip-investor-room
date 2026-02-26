@@ -1,9 +1,14 @@
 import { type NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/api/prisma';
 import { Resend } from 'resend';
 import type { Adapter } from 'next-auth/adapters';
+
+// WIP gate: single hardcoded admin user (no DB)
+const ADMIN_USERNAME = 'admin';
+const ADMIN_PASSWORD = 'randomtrip2026';
 
 // Create base adapter
 const baseAdapter = PrismaAdapter(prisma) as Adapter;
@@ -82,6 +87,23 @@ function getResend() {
 export const authOptions: NextAuthOptions = {
   adapter,
   providers: [
+    CredentialsProvider({
+      credentials: {
+        password: { label: 'Password', type: 'password' },
+        username: { label: 'Username', type: 'text' },
+      },
+      async authorize(credentials) {
+        if (
+          credentials?.username === ADMIN_USERNAME &&
+          credentials?.password === ADMIN_PASSWORD
+        ) {
+          return { id: 'admin', email: 'admin', name: 'Admin' };
+        }
+        return null;
+      },
+      id: 'credentials',
+      name: 'Username & password',
+    }),
     EmailProvider({
       from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
       maxAge: 10 * 60, // 10 minutes

@@ -48,6 +48,7 @@ model User {
   email          String    @unique
   emailVerified DateTime?
   image          String?
+  password       String?   // Hashed; for credentials login
   accounts       Account[]
   sessions       Session[]
 
@@ -206,5 +207,15 @@ model AnalyticsEvent {
 
   @@index([investorId, createdAt])
   @@index([event, createdAt])
+}
+
+model WaitlistEntry {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  lastName  String?
+  name      String?
+  createdAt DateTime @default(now())
+
+  @@index([email])
 }
 

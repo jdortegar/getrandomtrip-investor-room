@@ -21,11 +21,12 @@ interface NavbarDict {
 interface NavbarProps {
   dict: NavbarDict;
   locale: Locale;
+  onLogInClick?: () => void;
 }
 
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
-export function Navbar({ dict, locale }: NavbarProps) {
+export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -100,6 +101,22 @@ export function Navbar({ dict, locale }: NavbarProps) {
             >
               {LOCALE_LABELS[otherLocale]}
             </button>
+            {onLogInClick ? (
+              <button
+                className="text-xl transition-colors hover:text-white hover:font-bold"
+                onClick={onLogInClick}
+                type="button"
+              >
+                {dict.logIn}
+              </button>
+            ) : (
+              <Link
+                className="text-xl transition-colors hover:text-white hover:font-bold"
+                href={pathForLocale(locale, '/login')}
+              >
+                {dict.logIn}
+              </Link>
+            )}
           </div>
 
           {/* Mobile Hamburger Menu Button */}
@@ -170,13 +187,26 @@ export function Navbar({ dict, locale }: NavbarProps) {
           >
             {LOCALE_LABELS[otherLocale]}
           </button>
-          <Link
-            className="text-xl font-bold text-white transition-colors hover:text-white/80"
-            href={pathForLocale(locale, '/login')}
-            onClick={closeMobileMenu}
-          >
-            {dict.logIn}
-          </Link>
+          {onLogInClick ? (
+            <button
+              className="text-xl font-bold text-white transition-colors hover:text-white/80"
+              onClick={() => {
+                onLogInClick();
+                closeMobileMenu();
+              }}
+              type="button"
+            >
+              {dict.logIn}
+            </button>
+          ) : (
+            <Link
+              className="text-xl font-bold text-white transition-colors hover:text-white/80"
+              href={pathForLocale(locale, '/login')}
+              onClick={closeMobileMenu}
+            >
+              {dict.logIn}
+            </Link>
+          )}
         </div>
       </div>
     </>

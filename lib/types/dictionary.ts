@@ -81,4 +81,21 @@ export interface MarketingDictionary {
     }>;
     title: string;
   };
+  waitlist: {
+    adminLoginLabel: string;
+    emailPlaceholder: string;
+    headline: string;
+    lastNamePlaceholder: string;
+    loginModal: {
+      description: string;
+      passwordPlaceholder: string;
+      submitButton: string;
+      title: string;
+      usernamePlaceholder: string;
+    };
+    namePlaceholder: string;
+    subheadline: string;
+    submitButton: string;
+    successMessage: string;
+  };
 }
