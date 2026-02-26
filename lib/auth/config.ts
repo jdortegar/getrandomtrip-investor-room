@@ -10,6 +10,15 @@ import type { Adapter } from 'next-auth/adapters';
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'randomtrip2026';
 
+if (
+  typeof process.env.NEXTAUTH_SECRET === 'undefined' &&
+  process.env.NODE_ENV === 'production'
+) {
+  console.warn(
+    '[NextAuth] NEXTAUTH_SECRET is not set in production. Admin login may not persist. Set NEXTAUTH_SECRET in your host environment (e.g. Netlify env vars).',
+  );
+}
+
 // Create base adapter
 const baseAdapter = PrismaAdapter(prisma) as Adapter;
 
