@@ -8,6 +8,7 @@ import { Section } from './Section';
 interface InspirationDict {
   ctaButton: string;
   headline: string;
+  subtext?: string;
 }
 
 interface InspirationProps {
@@ -23,7 +24,7 @@ export function Inspiration({ className, dict }: InspirationProps) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 1 }}
       >
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 hover:scale-105"
@@ -42,7 +43,7 @@ export function Inspiration({ className, dict }: InspirationProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h2 className="mb-8 whitespace-pre-line font-barlow-condensed text-xl font-semibold uppercase leading-tight tracking-wide text-[#FED700] md:mb-20 md:text-4xl">
+            <h2 className="mb-6 whitespace-pre-line font-barlow-condensed text-2xl font-semibold leading-tight text-[#FED700] md:mb-10 md:text-5xl">
               {dict.headline}
             </h2>
 
@@ -53,12 +54,17 @@ export function Inspiration({ className, dict }: InspirationProps) {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <BookMeetingButton
-                className="rounded-md border border-[#FED700] bg-transparent px-6 py-3 font-barlow-condensed text-sm font-semibold uppercase tracking-wide text-white transition-all hover:scale-105 hover:bg-black/60 md:px-8 md:py-4 md:text-lg"
+                className="rounded-md border border-[#FED700] bg-transparent px-8 py-5 font-barlow-condensed text-sm font-semibold uppercase tracking-wide text-white transition-all hover:scale-105 hover:bg-black/60 md:px-10 md:py-6 md:text-lg"
                 size="lg"
                 variant="secondary"
               >
                 {dict.ctaButton}
               </BookMeetingButton>
+              {dict.subtext && (
+                <p className="mt-4 text-white/70 text-xs md:text-sm tracking-wide">
+                  {dict.subtext}
+                </p>
+              )}
             </motion.div>
           </motion.div>
         </div>

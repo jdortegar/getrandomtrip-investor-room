@@ -11,6 +11,7 @@ interface MobileCarouselProps<T> {
   itemClassName?: string;
   slideWidth?: string;
   showDots?: boolean;
+  dotColor?: string;
 }
 
 export function MobileCarousel<T>({
@@ -20,6 +21,7 @@ export function MobileCarousel<T>({
   itemClassName = '',
   slideWidth = '90%',
   showDots = false,
+  dotColor,
 }: MobileCarouselProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -44,10 +46,14 @@ export function MobileCarousel<T>({
   };
 
   const translateX = useMemo(() => {
-    if (currentIndex === 0) return '0%';
-    // Calculate: slideWidth per slide + 1rem gap per slide (except first)
+    if (currentIndex === 0) return '0px';
+    const isPx = slideWidth.endsWith('px');
+    if (isPx) {
+      const widthPx = parseFloat(slideWidth);
+      return `calc(-${currentIndex * widthPx}px - ${currentIndex * 16}px)`;
+    }
     const widthPercent = parseFloat(slideWidth);
-    return `calc(-${currentIndex * widthPercent}% - ${currentIndex * 1}rem)`;
+    return `calc(-${currentIndex * widthPercent}% - ${currentIndex * 16}px)`;
   }, [currentIndex, slideWidth]);
 
   const handleDotClick = (index: number) => {
@@ -56,7 +62,7 @@ export function MobileCarousel<T>({
 
   return (
     <div className={cn('relative w-full', className)}>
-      <div className="relative overflow-hidden pl-4">
+      <div className="relative overflow-hidden">
         <motion.div
           animate={{
             x: translateX,
@@ -83,9 +89,6 @@ export function MobileCarousel<T>({
             </div>
           ))}
         </motion.div>
-
-        {/* Right gradient overlay for endless effect */}
-        <div className="absolute right-0 top-0 bottom-0 w-20 pointer-events-none bg-gradient-to-r from-transparent to-background" />
       </div>
 
       {/* Dots Indicator */}
@@ -99,10 +102,12 @@ export function MobileCarousel<T>({
                 aria-label={`Go to slide ${index + 1}`}
                 className={cn(
                   'h-2 rounded-full transition-all duration-300',
-                  isActive ? 'w-8 bg-foreground' : 'w-2 bg-foreground/30',
+                  !dotColor && (isActive ? 'w-8 bg-foreground' : 'w-2 bg-foreground/30'),
+                  dotColor && (isActive ? 'w-8' : 'w-2'),
                 )}
                 key={index}
                 onClick={() => handleDotClick(index)}
+                style={dotColor ? { backgroundColor: isActive ? dotColor : `${dotColor}40` } : undefined}
                 type="button"
               />
             );

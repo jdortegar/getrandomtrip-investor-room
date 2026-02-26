@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { Menu, X } from 'lucide-react';
+import { LocaleSwitcher } from '@/components/navigation/LocaleSwitcher';
 
 import { cn } from '@/lib/utils';
 import { COOKIE_LOCALE, LOCALE_LABELS } from '@/lib/i18n/config';
@@ -94,10 +95,9 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
                 {dict.investorsRoom}
               </Link>
             )}
-            <button
-              className="text-xl transition-colors hover:text-white hover:font-bold"
-              onClick={handleLocaleSwitch}
-              type="button"
+            <Link
+              className="text-xl font-bold transition-colors hover:text-white/80"
+              href={pathForLocale(locale, '/login')}
             >
               {LOCALE_LABELS[otherLocale]}
             </button>
@@ -119,19 +119,22 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
             )}
           </div>
 
-          {/* Mobile Hamburger Menu Button */}
-          <button
-            aria-label="Toggle menu"
-            className="flex items-center justify-center md:hidden"
-            onClick={toggleMobileMenu}
-            type="button"
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          {/* Mobile: Hamburger + Locale Switcher */}
+          <div className="flex items-center gap-4 md:hidden">
+            <button
+              aria-label="Toggle menu"
+              className="flex items-center justify-center"
+              onClick={toggleMobileMenu}
+              type="button"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+            <LocaleSwitcher locale={locale} />
+          </div>
         </div>
       </nav>
 

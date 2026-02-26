@@ -44,8 +44,8 @@ const MAX_VALUE = Math.max(...MARKET_CIRCLES.map((circle) => circle.value));
 
 export function Metrics({ className, dict }: MetricsProps) {
   return (
-    <Section className={className}>
-      <div className="relative mx-auto container">
+    <Section className={`${className || ''} !pt-4`}>
+      <div className="relative mx-auto w-full">
         <div
           className="relative overflow-hidden rounded-2xl bg-[#0F2D37]"
           style={{
@@ -64,7 +64,7 @@ export function Metrics({ className, dict }: MetricsProps) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1 }}
             >
               {dict.headline.split('0.001%')[0]}
               <span className="text-[#ffffff]">0.001%</span>
@@ -134,7 +134,7 @@ export function Metrics({ className, dict }: MetricsProps) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 1, delay: 0.2 }}
             >
               <div className="space-y-2">
                 <p className="font-barlow-condensed text-xl font-extrabold text-[#FFD700] tracking-wide">
@@ -158,7 +158,7 @@ export function Metrics({ className, dict }: MetricsProps) {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 1, delay: 0.4 }}
             >
               <p className="leading-relaxed">{dict.sources}</p>
             </motion.div>
@@ -173,7 +173,7 @@ export function Metrics({ className, dict }: MetricsProps) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 1 }}
               >
                 {dict.headline.split('0.001%')[0]}
                 <span className="text-[#ffffff]">0.001%</span>
@@ -185,7 +185,7 @@ export function Metrics({ className, dict }: MetricsProps) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 1, delay: 0.2 }}
               >
                 <div className="space-y-2 xl:space-y-3 2xl:space-y-4">
                   <p className="font-barlow-condensed text-3xl font-extrabold text-[#FFD700] tracking-wide">
@@ -208,7 +208,7 @@ export function Metrics({ className, dict }: MetricsProps) {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 1, delay: 0.4 }}
               >
                 <p className="leading-relaxed">{dict.sources}</p>
               </motion.div>

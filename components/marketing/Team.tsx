@@ -6,44 +6,84 @@ import Image from 'next/image';
 import { Section } from './Section';
 import { MobileCarousel } from './MobileCarousel';
 
-const LINKEDIN_URLS: (string | undefined)[] = [
-  'https://www.linkedin.com/in/santiago-senega/',
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  'https://www.linkedin.com/in/santiago-senega/',
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-];
-
 interface TeamMember {
-  description: string;
   id: number;
-  linkedinUrl?: string;
   name: string;
   role: string;
-}
-
-interface TeamDict {
-  members: Array<{ description: string; name: string; role: string }>;
-  title: string;
+  description: string;
+  linkedinUrl?: string;
 }
 
 interface TeamProps {
   className?: string;
-  dict: TeamDict;
 }
 
-function buildTeamMembers(dict: TeamDict): TeamMember[] {
-  return dict.members.slice(0, 10).map((m, i) => ({
-    ...m,
-    id: i + 1,
-    linkedinUrl: LINKEDIN_URLS[i],
-  }));
-}
+const TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: 1,
+    name: 'SANTIAGO<br/>SENEGA',
+    role: 'CEO & Fundador (Hospitality / Ops)',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    linkedinUrl: 'https://www.linkedin.com/in/santiago-senega/',
+  },
+  {
+    id: 2,
+    name: 'RODRIGO<br/>BENITEZ',
+    role: '',
+    description: '',
+  },
+  {
+    id: 3,
+    name: 'DAVID<br/>ORTEGA',
+    role: '',
+    description: '',
+  },
+  {
+    id: 4,
+    name: 'CARLA<br/>VAZQUEZ',
+    role: '',
+    description: '',
+  },
+  {
+    id: 5,
+    name: 'NICOLÁS<br/>ASMAR',
+    role: '',
+    description: '',
+  },
+  {
+    id: 6,
+    name: 'FABRIZIO<br/>BORDONI',
+    role: 'CEO & Fundador (Hospitality / Ops)',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    linkedinUrl: 'https://www.linkedin.com/in/santiago-senega/',
+  },
+  {
+    id: 7,
+    name: 'FEDERICO<br/>BOGADO',
+    role: '',
+    description: '',
+  },
+  {
+    id: 8,
+    name: 'LEONARDO<br/>ALVAREZ',
+    role: '',
+    description: '',
+  },
+  {
+    id: 9,
+    name: 'LEONARDO<br/>ALVAREZ',
+    role: '',
+    description: '',
+  },
+  {
+    id: 10,
+    name: 'NICOLÁS<br/>MARTINEZ',
+    role: '',
+    description: '',
+  },
+];
 
 function renderNameWithBreaks(name: string) {
   const parts = name.split('<br/>');
@@ -123,8 +163,7 @@ function renderCardBack(member: TeamMember) {
   );
 }
 
-export function Team({ className, dict }: TeamProps) {
-  const members = buildTeamMembers(dict);
+export function Team({ className }: TeamProps) {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
   const [mobileFlippedCard, setMobileFlippedCard] = useState<number | null>(
     null,
@@ -139,15 +178,15 @@ export function Team({ className, dict }: TeamProps) {
   };
 
   return (
-    <Section className={className} title={dict.title}>
-      <div className="container mx-auto">
+    <Section className={className} title="EQUIPO">
+      <div>
         {/* Desktop: Carousel with 5 visible slides */}
         <div className="hidden md:block">
           <MobileCarousel
             itemClassName="h-[400px]"
-            items={members}
-            showDots
-            slideWidth="18.5%"
+            items={TEAM_MEMBERS}
+
+            slideWidth="22%"
             renderItem={(member) => {
               const isFlipped = flippedCard === member.id;
 
@@ -165,7 +204,7 @@ export function Team({ className, dict }: TeamProps) {
                     className="relative h-full w-full"
                     style={{ transformStyle: 'preserve-3d' }}
                     transition={{
-                      duration: 0.6,
+                      duration: 1,
                       ease: 'easeInOut',
                     }}
                   >
@@ -202,8 +241,8 @@ export function Team({ className, dict }: TeamProps) {
         <div className="block md:hidden">
           <MobileCarousel
             itemClassName="h-[400px]"
-            items={members}
-            showDots
+            items={TEAM_MEMBERS}
+
             slideWidth="80%"
             renderItem={(member) => {
               const isFlipped = mobileFlippedCard === member.id;
@@ -221,7 +260,7 @@ export function Team({ className, dict }: TeamProps) {
                     className="relative h-full w-full"
                     style={{ transformStyle: 'preserve-3d' }}
                     transition={{
-                      duration: 0.6,
+                      duration: 1,
                       ease: 'easeInOut',
                     }}
                   >

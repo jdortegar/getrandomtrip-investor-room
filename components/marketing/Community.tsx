@@ -32,7 +32,7 @@ export function Community({ className, dict }: CommunityProps) {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 1 }}
         >
           {/* Background Image - Mobile */}
           <div
@@ -114,7 +114,7 @@ export function Community({ className, dict }: CommunityProps) {
         {/* Profile Cards Section - Mobile Carousel on mobile, grid on desktop */}
         <div className="md:hidden">
           <MobileCarousel
-            className="pr-4"
+            className=""
             itemClassName="h-full"
             items={dict.profiles}
             renderItem={(profile, index) => (
@@ -124,7 +124,7 @@ export function Community({ className, dict }: CommunityProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
-                  duration: 0.6,
+                  duration: 1,
                   delay: index * 0.1,
                 }}
               >
@@ -145,7 +145,7 @@ export function Community({ className, dict }: CommunityProps) {
                     </p>
                   </div>
                 </div>
-                <p className="font-barlow-condensed text-sm leading-relaxed text-foreground font-light">
+                <p className="font-barlow-condensed text-[13px] leading-relaxed text-foreground font-light">
                   {profile.description}
                 </p>
               </motion.div>
@@ -163,28 +163,28 @@ export function Community({ className, dict }: CommunityProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{
-                duration: 0.6,
+                duration: 1,
                 delay: index * 0.1,
               }}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-center gap-4">
                 {/* Profile Picture Placeholder */}
-                <div className="shrink-0 w-16 h-16 rounded-full bg-white" />
+                <div className="shrink-0 w-[42px] h-[42px] rounded-full bg-white" />
 
                 {/* Profile Info */}
-                <div className="flex-1 space-y-2">
-                  <h4 className="font-barlow-condensed text-xl font-bold uppercase tracking-wide text-foreground leading-none">
+                <div className="flex-1 space-y-1">
+                  <h4 className="font-barlow-condensed font-bold uppercase tracking-wide text-foreground leading-none" style={{ fontSize: '22px' }}>
                     {profile.name}
                   </h4>
                   <p
-                    className="font-barlow-condensed text-[12px] uppercase tracking-wide text-foreground"
-                    style={{ letterSpacing: '0.25em' }}
+                    className="font-barlow-condensed uppercase tracking-wide text-foreground"
+                    style={{ fontSize: '11px', letterSpacing: '0.25em' }}
                   >
                     {profile.role}
                   </p>
                 </div>
               </div>
-              <p className="font-barlow-condensed text-base leading-relaxed text-foreground font-light">
+              <p className="font-barlow-condensed leading-relaxed text-foreground font-light" style={{ fontSize: '15px' }}>
                 {profile.description}
               </p>
             </motion.div>

@@ -5,80 +5,95 @@ import { useState } from 'react';
 import { Section } from './Section';
 import { MobileCarousel } from './MobileCarousel';
 
-const IMAGE_URLS = [
-  '/images/business-1.png',
-  '/images/business-2.png',
-  '/images/business-3.png',
-  '/images/business-4.png',
-  '/images/business-5.png',
-];
-
-const COMPASS_ICON = (
-  <svg
-    className="h-12 w-12 text-white"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <circle cx="12" cy="12" r="10" strokeWidth="2" />
-    <path
-      d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-    />
-    <circle cx="12" cy="12" r="3" strokeWidth="2" />
-  </svg>
-);
-
 interface BusinessModelCard {
-  backgroundColor?: string;
-  description: string[];
-  icon?: React.ReactNode;
   id: number;
-  imageUrl: string;
   title: string;
+  description: string[];
+  imageUrl?: string;
 }
 
 interface BusinessVerticalsDict {
-  cards: Array<{ description: string[]; title: string }>;
   title: string;
 }
 
 interface BusinessVerticalsProps {
   className?: string;
-  dict: BusinessVerticalsDict;
+  dict?: BusinessVerticalsDict;
 }
 
-function buildCards(dict: BusinessVerticalsDict): BusinessModelCard[] {
-  return dict.cards.slice(0, 5).map((card, i) => ({
-    ...card,
-    backgroundColor: i === 1 || i === 4 ? '#FFD700' : undefined,
-    icon: i === 1 || i === 4 ? COMPASS_ICON : undefined,
-    id: i + 1,
-    imageUrl: IMAGE_URLS[i] ?? '/images/business-1.png',
-  }));
-}
+const BUSINESS_MODELS: BusinessModelCard[] = [
+  {
+    id: 1,
+    title: 'BY TRAVELLER',
+    description: [
+      'Descubre experiencias',
+      'auténticas creadas',
+      'por viajeros reales.',
+    ],
+    imageUrl: '/images/business-1.png',
+  },
+  {
+    id: 2,
+    title: 'BY TRIPPER',
+    description: [
+      'Explora perfiles',
+      'de viajeros expertos',
+      'que curan experiencias',
+      'auténticas y memorables',
+    ],
+    imageUrl: '/images/business-1.png',
+  },
+  {
+    id: 3,
+    title: 'ROADTRIPS',
+    description: [
+      'Planifica roadtrips épicos',
+      'con rutas cuidadosamente',
+      'seleccionadas.',
+    ],
+    imageUrl: '/images/business-3.png',
+  },
+  {
+    id: 4,
+    title: 'TRIPPERS DECODE',
+    description: [
+      'Decodifica los mejores',
+      'destinos con insights',
+      'de viajeros expertos.',
+    ],
+    imageUrl: '/images/business-4.png',
+  },
+  {
+    id: 5,
+    title: 'SUNDAYS\nRANDOMTRIP XSED',
+    description: [
+      'Experiencias exclusivas',
+      'diseñadas para domingos',
+      'especiales.',
+    ],
+    imageUrl: '/images/business-5.png',
+  },
+];
 
 function renderCardContent(card: BusinessModelCard, showBack: boolean) {
   if (showBack) {
-    // Back of Card (Yellow background with text)
     return (
-      <div
-        className="relative h-full w-full rounded-2xl overflow-hidden flex flex-col items-start justify-between p-6 aspect-square"
-        style={{
-          backgroundColor: card.backgroundColor || '#FFD700',
-        }}
-      >
-        {card.icon && <div className="self-end opacity-20">{card.icon}</div>}
+      <div className="relative h-full w-full rounded-2xl overflow-hidden flex flex-col items-start justify-between p-6 aspect-square bg-[#FFD700]">
+        <div className="self-end">
+          <img
+            src="/assets/logos/logo_random_white.svg"
+            alt="Randomtrip"
+            className="w-16 h-16 opacity-80"
+          />
+        </div>
         <div>
-          <h3 className="font-barlow-condensed text-lg font-semibold leading-tight uppercase tracking-wide text-foreground whitespace-pre-line">
-            -
-          </h3>
+          <p className="font-barlow-condensed text-lg font-semibold leading-tight text-[#0F2D37] mb-0">
+            —
+          </p>
           {card.description.map((line, idx) => (
             <p
               key={idx}
-              className="font-barlow-condensed text-lg leading-tight text-foreground font-semibold uppercase"
+              className="font-barlow-condensed text-lg leading-tight text-[#0F2D37] font-semibold uppercase"
             >
               {line}
             </p>
@@ -88,7 +103,6 @@ function renderCardContent(card: BusinessModelCard, showBack: boolean) {
     );
   }
 
-  // Front of Card (Image with title)
   return (
     <div className="relative h-full w-full rounded-2xl overflow-hidden">
       <div
@@ -108,7 +122,6 @@ function renderCardContent(card: BusinessModelCard, showBack: boolean) {
 }
 
 export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
-  const cards = buildCards(dict);
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
   const [mobileFlippedCard, setMobileFlippedCard] = useState<number | null>(
     null,
@@ -122,25 +135,35 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
     <Section
       className={className}
       noContainerPadding
-      title={dict.title}
     >
+      <motion.h3
+        className="font-barlow-condensed font-semibold text-[#0F2D37] px-4 md:px-8 xl:px-12 2xl:px-16 mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        style={{ fontSize: '28px', lineHeight: '100%' }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        {dict?.title || 'Puntos de partida'}
+      </motion.h3>
       {/* Desktop: Grid with Flip Cards */}
       <div className="hidden px-8 xl:px-12 2xl:px-16 md:grid md:grid-cols-5 md:gap-4 xl:gap-6 2xl:gap-8">
-        {cards.map((card, index) => {
+        {BUSINESS_MODELS.map((card, index) => {
           const isFlipped = flippedCard === card.id;
 
           return (
             <motion.div
               key={card.id}
               className="relative aspect-square"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               style={{ perspective: '1000px' }}
               transition={{
                 delay: index * 0.1,
-                duration: 0.6,
+                duration: 0.5,
+                ease: 'easeOut',
               }}
               viewport={{ once: true }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               onHoverEnd={() => setFlippedCard(null)}
               onHoverStart={() => setFlippedCard(card.id)}
             >
@@ -151,7 +174,7 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
                 className="relative h-full w-full"
                 style={{ transformStyle: 'preserve-3d' }}
                 transition={{
-                  duration: 0.6,
+                  duration: 1,
                   ease: 'easeInOut',
                 }}
               >
@@ -184,10 +207,11 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
       </div>
 
       {/* Mobile: Carousel with Flip Cards */}
-      <div className="block md:hidden">
+      <div className="block md:hidden px-4">
         <MobileCarousel
           itemClassName="h-auto aspect-square"
-          items={cards}
+          items={BUSINESS_MODELS}
+          slideWidth="70%"
           renderItem={(card) => {
             const isFlipped = mobileFlippedCard === card.id;
 
@@ -204,7 +228,7 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
                   className="relative h-full w-full"
                   style={{ transformStyle: 'preserve-3d' }}
                   transition={{
-                    duration: 0.6,
+                    duration: 1,
                     ease: 'easeInOut',
                   }}
                 >

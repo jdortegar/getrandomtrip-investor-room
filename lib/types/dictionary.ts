@@ -1,4 +1,63 @@
 export interface MarketingDictionary {
+  valueProposition: {
+    title: string;
+    titleBold: string;
+    description: string;
+    descriptionBold: string;
+    descriptionBody: string;
+    bullets: string[];
+    foundingRound: string;
+    ctaButton: string;
+  };
+  problemSolution: {
+    problem: {
+      title: string;
+      description: string;
+      highlight: string;
+      highlightSuffix: string;
+    };
+    solution: {
+      title: string;
+      description: string;
+      highlight: string;
+      highlightSuffix: string;
+    };
+    whyNow: {
+      title: string;
+      lines: string[];
+    };
+  };
+  paragraph: string;
+  paragraphBold: string;
+  paragraphMobile: {
+    line1: string;
+    line2: string;
+    line3: string;
+    bold: string;
+  };
+  paragraphDesktop: {
+    line1: string;
+    bold: string;
+  };
+  threeDecisions: {
+    sectionTitle: string;
+    headline: string;
+    headlineBold: string;
+    subtitle: string;
+    subtitleBold: string;
+    decisions: Array<{ label: string; title: string }>;
+  };
+  systemFeatures: {
+    headline: string;
+    headlineBold: string;
+    subtitle: string;
+    subtitleBold: string;
+    features: Array<{
+      title: string;
+      description: string;
+      descriptionBold: string;
+    }>;
+  };
   businessModels: {
     cards: Array<{
       channel: string;
@@ -7,8 +66,12 @@ export interface MarketingDictionary {
       margin?: string;
       marginLabel?: string;
       name: string;
+      imageUrl: string;
+      backgroundColor?: string | null;
     }>;
     description: string;
+    headline1: string;
+    headline2: string;
     title: string;
   };
   businessVerticals: {
@@ -43,6 +106,7 @@ export interface MarketingDictionary {
   inspiration: {
     ctaButton: string;
     headline: string;
+    subtext?: string;
   };
   metrics: {
     headline: string;
@@ -60,18 +124,23 @@ export interface MarketingDictionary {
     investorsRoom: string;
     logIn: string;
   };
-  paragraph: string;
   roadmap: {
-    panels: Array<{
-      items: string[];
-      year: string;
-    }>;
     title: string;
+    phases: Array<{
+      period: string;
+      subtitle?: string;
+      items: string[];
+    }>;
   };
   safe: {
-    allocations: Array<{ label: string }>;
-    description: string;
     title: string;
+    description: string;
+    marketingLabel: string;
+    operationsLabel: string;
+    techLabel: string;
+    marketingItems: string[];
+    operationsItems: string[];
+    techItems: string[];
   };
   team: {
     members: Array<{

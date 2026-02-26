@@ -10,7 +10,89 @@
       "tagline": "La aventura empieza acá.",
       "visitButton": "VISITÁ GETRANDOMTRIP.COM"
     },
-    "paragraph": "Somos la plataforma que conecta viajeros auténticos con aventuras únicas",
+    "valueProposition": {
+      "title": "DEVOLVERLE TIEMPO AL VIAJERO",
+      "titleBold": "ES EL NUEVO LUJO",
+      "description": "La industria resolvió cómo reservar.",
+      "descriptionBold": "Nadie resolvió cómo decidir.",
+      "descriptionBody": "Randomtrip diseña escapadas sorpresa con precisión operativa: tú defines lo esencial, nosotros diseñamos el resto.",
+      "bullets": [
+        "Menos tiempo eligiendo, más tiempo viviendo.",
+        "Tecnología + curación humana para acertar en gustos, ritmo y energía.",
+        "Comunidad Tripper creando \"rutas con alma\" (IP de experiencias)."
+      ],
+      "foundingRound": "Founding Round abierto para early believers.",
+      "ctaButton": "Agenda 30 min con founders"
+    },
+    "problemSolution": {
+      "problem": {
+        "title": "EL PROBLEMA",
+        "description": "Hoy viajar implica comparar cientos de opciones, pestañas abiertas, reseñas contradictorias y decisiones agotadoras.",
+        "highlight": "Más opciones no significaron mejores experiencias.",
+        "highlightSuffix": "Significaron más fricción."
+      },
+      "solution": {
+        "title": "LA SOLUCIÓN",
+        "description": "Randomtrip diseña escapadas sorpresa combinando tecnología, criterio humano y curaduría local.",
+        "highlight": "El viajero decide sólo lo esencial.",
+        "highlightSuffix": "El sistema diseña el resto."
+      },
+      "whyNow": {
+        "title": "WHY NOW",
+        "lines": [
+          "La inspiración ya es creator-led.",
+          "La reserva ya está comoditizada.",
+          "La decisión sigue rota."
+        ]
+      }
+    },
+    "paragraph": "Construimos el sistema para diseñar viajes cómo se diseñan productos:",
+    "paragraphBold": "CON INTENCIÓN, DATA Y CRITERIO.",
+    "paragraphMobile": {
+      "line1": "CONSTRUIMOS EL SISTEMA PARA",
+      "line2": "DISEÑAR VIAJES CÓMO SE",
+      "line3": "DISEÑAN PRODUCTOS:",
+      "bold": "CON INTENCIÓN, DATA Y CRITERIO."
+    },
+    "paragraphDesktop": {
+      "line1": "CONSTRUIMOS EL SISTEMA PARA DISEÑAR VIAJES CÓMO SE DISEÑAN PRODUCTOS:",
+      "bold": "CON INTENCIÓN, DATA Y CRITERIO."
+    },
+    "threeDecisions": {
+      "sectionTitle": "¿Cómo funciona?",
+      "headline": "Tres decisiones.",
+      "headlineBold": "Cero estrés.",
+      "subtitle": "El viajero no planifica.",
+      "subtitleBold": "Define lo esencial.",
+      "decisions": [
+        { "label": "Cuándo", "title": "Fechas y duración" },
+        { "label": "Estilo", "title": "MOOD, RITMO y ENERGÍA" },
+        { "label": "Confort", "title": "Nivel de estadía" }
+      ]
+    },
+    "systemFeatures": {
+      "headline": "No es una agencia.",
+      "headlineBold": "Es un sistema.",
+      "subtitle": "Diseñado para escalar criterio, no improvisación.",
+      "subtitleBold": "El sistema aprende con cada viaje.",
+      "features": [
+        {
+          "title": "Decision Engine",
+          "description": "Algoritmos y reglas propias que combinan preferencias, timing y contexto para reducir fricción y aumentar acierto.",
+          "descriptionBold": "No recomendamos destinos. Diseñamos combinaciones."
+        },
+        {
+          "title": "Curación con criterio",
+          "description": "Expertos locales y trippers diseñan rutas bajo frameworks\nclaros. No es gusto personal:",
+          "descriptionBold": "es criterio sistematizado."
+        },
+        {
+          "title": "Rutas con alma (IP)",
+          "description": "Cada viaje diseñado alimenta una librería propietaria de\nrutas, patrones y aprendizajes.",
+          "descriptionBold": "Más uso = mejor sistema."
+        }
+      ]
+    },
     "howItWorks": {
       "title": "¿Cómo funciona?",
       "sectionDescription": "Tres pasos. Cero estrés. Más descubrimiento.",
@@ -74,22 +156,35 @@
     "businessModels": {
       "title": "Modelo de negocio",
       "description": "Nuestros canales de ingresos",
+      "headline1": "Tres motores de ingresos.",
+      "headline2": "Un solo sistema.",
       "cards": [
         {
-          "channel": "CANAL",
-          "name": "B2C",
-          "description": "VIAJES SORPRESA",
-          "descriptionLabel": "DESCRIPCIÓN",
+          "channel": "Motor 1 – (B2C)",
+          "name": "Escapadas\nsorpresa",
+          "description": "Viajes sorpresa diseñados y vendidos directamente al viajero.\nMotor de volumen, adquisición y aprendizaje del sistema.",
           "margin": "22-30%",
-          "marginLabel": "MARGEN ESTIMADO"
+          "marginLabel": "MARGEN ESTIMADO",
+          "imageUrl": "/images/business-model-1.png",
+          "backgroundColor": null
         },
         {
-          "channel": "CANAL",
-          "name": "B2B"
+          "channel": "Motor 2 – B2B (Cashflow & escala)",
+          "name": "Corporate & Gift\nExperiences",
+          "description": "Experiencias diseñadas para empresas, regalos y equipos.\nVenta anticipada, menor CAC y tickets más altos.",
+          "margin": "22-30%",
+          "marginLabel": "MARGEN ESTIMADO",
+          "imageUrl": "/corporate_img.png",
+          "backgroundColor": "#626B2F"
         },
         {
-          "channel": "CANAL",
-          "name": "COMUNIDAD TRIPPER"
+          "channel": "Motor 3 – COMUNIDAD TRIPPER",
+          "name": "Signature Routes\n(IP)",
+          "description": "Rutas diseñadas junto a trippers y creadores. Experiencias únicas,\nrepetibles y difíciles de copiar.",
+          "margin": "22-30%",
+          "marginLabel": "MARGEN ESTIMADO",
+          "imageUrl": "/signature_img.png",
+          "backgroundColor": "#626B2F"
         }
       ]
     },
@@ -140,24 +235,38 @@
     },
     "roadmap": {
       "title": "TRACCIÓN & ROADMAP",
-      "panels": [
+      "phases": [
         {
-          "year": "2025",
-          "items": ["MVP OPERATIVO", "+100 LEADS", "3 SOCIOS FUNDADORES"]
+          "period": "Q1-Q2 2026",
+          "subtitle": "El milestone del Founding Round",
+          "items": [
+            "Producto base + curación inicial.",
+            "Activación Trippers + primeras rutas.",
+            "Pilotos pagos + aprendizaje del sistema.",
+            "Optimización de experiencia y operación."
+          ]
         },
         {
-          "year": "2026",
-          "items": ["INTEGRACIÓN DE", "PLANNERS POR TIPO DE", "VIAJE, EXPANSIÓN LATAM"]
+          "period": "H2 2026",
+          "items": [
+            "Narrativa + métricas para siguiente ronda.",
+            "Expansión LATAM"
+          ]
         },
         {
-          "year": "2026/27",
-          "items": ["IA PREDICTIVA", "+ CRECIMIENTO B2B"]
+          "period": "2026/2027",
+          "items": [
+            "IA Predictiva",
+            "Crecimiento B2B",
+            "Lanzamiento nuevos productos"
+          ]
         }
       ]
     },
     "inspiration": {
-      "headline": "SI TE INSPIRA LO QUE VISTE,\nSUMATE AL TRIPPER FOUNDERS CIRCLE",
-      "ctaButton": "AGENDA TU VIDEOLLAMADA"
+      "headline": "Founding Round abierto para early believers.",
+      "ctaButton": "AGENDÁ TU VIDEOLLAMADA",
+      "subtext": "Founder to founder · Respuesta 24–48h · Acceso por invitación"
     },
     "team": {
       "title": "EQUIPO",
@@ -184,12 +293,13 @@
     },
     "safe": {
       "title": "USO DE FONDOS & SAFE",
-      "description": "Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount).",
-      "allocations": [
-        { "label": "MARKETING & GROWTH" },
-        { "label": "OPERACIONES" },
-        { "label": "TECH<br/> & PRODUCTO" }
-      ]
+      "description": "\"Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount).\"",
+      "marketingLabel": "MARKETING &\nGROWTH",
+      "operationsLabel": "OPERACIONES",
+      "techLabel": "TECH &\nPRODUCTO",
+      "marketingItems": ["Creators", "Growth loops", "Pilotos de adquisición"],
+      "operationsItems": ["Supply", "QA", "Operación de rutas", "Playbooks"],
+      "techItems": ["Producto", "Automatizaciones,", "Experiencia usuario."]
     },
     "waitlist": {
       "headline": "Accedé antes que nadie al lanzamiento de RandomTrip",

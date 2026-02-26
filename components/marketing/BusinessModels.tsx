@@ -5,46 +5,67 @@ import { useState } from 'react';
 import { Section } from './Section';
 import { ExpandAnimatedItems } from './ExpandAnimatedItems';
 
-const BUSINESS_MODEL_IMAGE = '/images/business-model-1.png';
-
 interface BusinessModelCard {
-  backgroundColor?: string;
+  id: number;
   channel: string;
+  name: string;
   description?: string;
   descriptionLabel?: string;
-  id: number;
-  imageUrl: string;
   margin?: string;
   marginLabel?: string;
-  name: string;
+  imageUrl: string;
+  backgroundColor?: string;
 }
 
 interface BusinessModelsDict {
+  title: string;
+  headline1: string;
+  headline2: string;
   cards: Array<{
     channel: string;
+    name: string;
     description?: string;
-    descriptionLabel?: string;
     margin?: string;
     marginLabel?: string;
-    name: string;
   }>;
-  description: string;
-  title: string;
 }
 
 interface BusinessModelsProps {
   className?: string;
-  dict: BusinessModelsDict;
+  dict?: BusinessModelsDict;
 }
 
-function buildBusinessModelCards(dict: BusinessModelsDict): BusinessModelCard[] {
-  return dict.cards.slice(0, 3).map((card, i) => ({
-    ...card,
-    backgroundColor: i === 0 ? undefined : '#626B2F',
-    id: i + 1,
-    imageUrl: BUSINESS_MODEL_IMAGE,
-  }));
-}
+const BUSINESS_MODELS: BusinessModelCard[] = [
+  {
+    id: 1,
+    channel: 'Motor 1 – (B2C)',
+    name: 'Escapadas\nsorpresa',
+    description: 'Viajes sorpresa diseñados y vendidos directamente al viajero.\nMotor de volumen, adquisición y aprendizaje del sistema.',
+    margin: '22-30%',
+    marginLabel: 'MARGEN ESTIMADO',
+    imageUrl: '/images/business-model-1.png',
+  },
+  {
+    id: 2,
+    channel: 'Motor 2 – B2B (Cashflow & escala)',
+    name: 'Corporate & Gift\nExperiences',
+    description: 'Experiencias diseñadas para empresas, regalos y equipos.\nVenta anticipada, menor CAC y tickets más altos.',
+    margin: '22-30%',
+    marginLabel: 'MARGEN ESTIMADO',
+    backgroundColor: '#3B4A3F',
+    imageUrl: '/corporate_img.png',
+  },
+  {
+    id: 3,
+    channel: 'Motor 3 – COMUNIDAD TRIPPER',
+    name: 'Signature Routes\n(IP)',
+    description: 'Rutas diseñadas junto a trippers y creadores. Experiencias únicas,\nrepetibles y difíciles de copiar.',
+    margin: '22-30%',
+    marginLabel: 'MARGEN ESTIMADO',
+    backgroundColor: '#3B4A3F',
+    imageUrl: '/signature_img.png',
+  },
+];
 
 function calculateFontSize(name: string, isMobile: boolean = false): number {
   const minSize = isMobile ? 24 : 40;
@@ -72,9 +93,9 @@ function renderCardContent(
   showDetails: boolean = false,
 ) {
   const nameFontSize = calculateFontSize(card.name, isMobile);
-  const shouldShowDetails = isMobile ? showDetails : isHovered;
+  const shouldShowDetails = isMobile ? true : isHovered;
 
-  const shouldShowImage = isMobile ? showDetails : isHovered;
+  const shouldShowImage = isMobile ? true : isHovered;
 
   return (
     <motion.div className="absolute inset-0" transition={{ duration: 0.4 }}>
@@ -110,104 +131,134 @@ function renderCardContent(
       />
 
       {/* Content Overlay */}
-      <div className={`absolute inset-0 text-white grid grid-cols-2 p-6`}>
-        {/* Left Half - Top Section (Desktop) / Top Section (Mobile) */}
-        <div
-          className={`flex flex-col ${
-            isMobile ? 'justify-start' : 'justify-start'
-          }`}
-        >
+      <div className={`absolute inset-0 text-white flex flex-col justify-between ${isMobile ? 'p-3' : 'p-6'}`}>
+        {/* Top: Channel label + Title */}
+        <div>
           <span
-            className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 mb-1 ${
-              isMobile ? 'text-sm' : 'text-base'
+            className={`font-barlow-condensed font-semibold tracking-wide opacity-80 block ${
+              isMobile ? 'text-sm' : 'text-base mb-1'
             }`}
           >
             {card.channel}
           </span>
-          <h3
-            className="font-barlow-condensed leading-none font-bold uppercase tracking-wide"
-            style={{ fontSize: `${nameFontSize}px` }}
+          <motion.h3
+            className="font-barlow-condensed font-bold whitespace-pre-line text-[#FED700] mb-5"
+            animate={
+              isMobile
+                ? { fontSize: '32.58px', lineHeight: '29.7px' }
+                : {
+                    fontSize: shouldShowDetails ? '68px' : '39px',
+                    lineHeight: shouldShowDetails ? '62px' : '40px',
+                  }
+            }
+            transition={{ duration: 0.4 }}
           >
             {card.name}
-          </h3>
+          </motion.h3>
         </div>
 
-        {/* Right Half - Description and Margin (Desktop) / Bottom Section (Mobile) */}
-        <div
-          className={`flex flex-col ${
-            isMobile ? 'justify-end space-y-3' : 'justify-end space-y-4'
-          }`}
-        >
-          {/* Middle Section - Description */}
-          {shouldShowDetails && card.description && (
-            <motion.div
-              className="flex flex-col items-start justify-end"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-            >
-              <span
-                className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 mb-1 ${
-                  isMobile ? 'text-sm' : 'text-base'
-                }`}
-              >
-                {card.descriptionLabel}
-              </span>
+        {/* Bottom: Description (left) + Margin (right) */}
+        {shouldShowDetails && (card.description || card.margin) && (
+          <motion.div
+            className="flex justify-between items-end gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.45 }}
+          >
+            {/* Description - bottom left */}
+            {card.description && (
               <p
-                className={`font-barlow-condensed uppercase tracking-wide text-left ${
-                  isMobile ? 'text-xl' : 'text-4xl'
+                className={`font-barlow text-white/80 text-left max-w-[55%] font-normal whitespace-pre-line ${
+                  isMobile ? '' : ''
                 }`}
+                style={
+                  isMobile
+                    ? { fontSize: '12px', lineHeight: '14px' }
+                    : { fontSize: '18px', lineHeight: '25px' }
+                }
               >
                 {card.description}
               </p>
-            </motion.div>
-          )}
+            )}
 
-          {/* Bottom Section - Margin */}
-          {shouldShowDetails && card.margin && (
-            <motion.div
-              className="flex flex-col items-start w-full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-            >
-              <div className="w-full h-px bg-white/30 mb-4" />
-              <span
-                className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 mb-1 ${
-                  isMobile ? 'text-sm' : 'text-base'
-                }`}
-              >
-                {card.marginLabel}
-              </span>
-              <p
-                className={`font-barlow-condensed uppercase tracking-wide ${
-                  isMobile ? 'text-4xl' : 'text-7xl'
-                }`}
-              >
-                {card.margin}
-              </p>
-            </motion.div>
-          )}
-        </div>
+            {/* Margin - bottom right */}
+            {card.margin && (
+              <div className="flex flex-col items-start text-right">
+                <motion.span
+                  className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 ${
+                    isMobile ? 'text-[10px] mb-0' : 'text-sm mb-1'
+                  }`}
+                  initial={isMobile ? undefined : { opacity: 0, y: 10 }}
+                  animate={isMobile ? undefined : { opacity: 0.8, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.55 }}
+                >
+                  {card.marginLabel}
+                </motion.span>
+                <motion.p
+                  className={`font-barlow-condensed font-extrabold uppercase ${
+                    isMobile ? '' : 'tracking-wide text-6xl'
+                  }`}
+                  style={isMobile ? { fontSize: '38.32px', lineHeight: '100%' } : undefined}
+                  initial={isMobile ? undefined : { opacity: 0, y: 8 }}
+                  animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
+                >
+                  {card.margin}
+                </motion.p>
+              </div>
+            )}
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
 }
 
 export function BusinessModels({ className, dict }: BusinessModelsProps) {
-  const items = buildBusinessModelCards(dict);
   const [mobileExpandedId, setMobileExpandedId] = useState<number | null>(null);
+
+  // Merge dict cards with static data
+  const cards: BusinessModelCard[] = BUSINESS_MODELS.map((card, i) => ({
+    ...card,
+    ...(dict?.cards?.[i] ? {
+      channel: dict.cards[i].channel,
+      name: dict.cards[i].name,
+      description: dict.cards[i].description,
+      margin: dict.cards[i].margin,
+      marginLabel: dict.cards[i].marginLabel,
+    } : {}),
+  }));
 
   const handleMobileCardClick = (cardId: number) => {
     setMobileExpandedId((prev) => (prev === cardId ? null : cardId));
   };
 
   return (
-    <Section
-      className={className}
-      description={dict.description}
-      title={dict.title}
-    >
+    <Section className={`${className || ''} !pb-4`}>
+      {/* Section Header */}
+      <motion.div
+        className="mb-6 text-center xl:mb-8 2xl:mb-10"
+        initial={{ opacity: 0, y: 20 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <h4
+          className="font-semibold uppercase text-foreground mb-2"
+          style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '10px' }}
+        >
+          {dict?.title || 'Modelo de negocio'}
+        </h4>
+        <h2
+          className="font-barlow-condensed font-bold text-foreground text-center md:!text-[45px]"
+          style={{ fontSize: '28px', lineHeight: '102%' }}
+        >
+          {dict?.headline1 || 'Tres motores de ingresos.'}
+          <br />
+          {dict?.headline2 || 'Un solo sistema.'}
+        </h2>
+      </motion.div>
+
       {/* Desktop: Horizontal Expanding Cards */}
       <div className="hidden md:block">
         <ExpandAnimatedItems
@@ -216,7 +267,7 @@ export function BusinessModels({ className, dict }: BusinessModelsProps) {
           collapsedWidth="25%"
           getItemId={(item) => item.id}
           itemClassName="group relative overflow-hidden rounded-2xl h-[400px] cursor-pointer"
-          items={items}
+          items={cards}
           renderItem={(card, isHovered) => (
             <div className="relative h-full w-full">
               {renderCardContent(card, isHovered, false, false)}
@@ -225,28 +276,23 @@ export function BusinessModels({ className, dict }: BusinessModelsProps) {
         />
       </div>
 
-      {/* Mobile: Vertical Stack - Green Background, Reveal Content on Tap */}
-      <div className="block space-y-4 md:hidden">
-        {items.map((card, index) => {
-          const isExpanded = mobileExpandedId === card.id;
-
-          return (
-            <motion.div
-              key={card.id}
-              className="relative overflow-hidden rounded-2xl cursor-pointer h-[300px]"
-              initial={{ opacity: 0, y: 20 }}
-              transition={{
-                delay: index * 0.1,
-                duration: 0.4,
-              }}
-              viewport={{ once: true }}
-              whileInView={{ opacity: 1, y: 0 }}
-              onClick={() => handleMobileCardClick(card.id)}
-            >
-              {renderCardContent(card, false, true, isExpanded)}
-            </motion.div>
-          );
-        })}
+      {/* Mobile: Vertical Stack - Always show all content */}
+      <div className="block space-y-6 md:hidden">
+        {cards.map((card, index) => (
+          <motion.div
+            key={card.id}
+            className="relative overflow-hidden rounded-2xl h-[182px]"
+            initial={{ opacity: 0, y: 20 }}
+            transition={{
+              delay: index * 0.1,
+              duration: 0.4,
+            }}
+            viewport={{ once: true }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            {renderCardContent(card, true, true, true)}
+          </motion.div>
+        ))}
       </div>
     </Section>
   );
