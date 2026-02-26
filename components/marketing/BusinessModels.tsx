@@ -17,8 +17,22 @@ interface BusinessModelCard {
   backgroundColor?: string;
 }
 
+interface BusinessModelsDict {
+  title: string;
+  headline1: string;
+  headline2: string;
+  cards: Array<{
+    channel: string;
+    name: string;
+    description?: string;
+    margin?: string;
+    marginLabel?: string;
+  }>;
+}
+
 interface BusinessModelsProps {
   className?: string;
+  dict?: BusinessModelsDict;
 }
 
 const BUSINESS_MODELS: BusinessModelCard[] = [
@@ -117,7 +131,7 @@ function renderCardContent(
       />
 
       {/* Content Overlay */}
-      <div className={`absolute inset-0 text-white flex flex-col justify-between ${isMobile ? 'p-4' : 'p-6'}`}>
+      <div className={`absolute inset-0 text-white flex flex-col justify-between ${isMobile ? 'p-3' : 'p-6'}`}>
         {/* Top: Channel label + Title */}
         <div>
           <span
@@ -128,7 +142,7 @@ function renderCardContent(
             {card.channel}
           </span>
           <motion.h3
-            className="font-barlow-condensed font-bold whitespace-pre-line text-[#FED700] mb-3"
+            className="font-barlow-condensed font-bold whitespace-pre-line text-[#FED700] mb-5"
             animate={
               isMobile
                 ? { fontSize: '32.58px', lineHeight: '29.7px' }
@@ -149,7 +163,7 @@ function renderCardContent(
             className="flex justify-between items-end gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.45 }}
           >
             {/* Description - bottom left */}
             {card.description && (
@@ -170,21 +184,27 @@ function renderCardContent(
             {/* Margin - bottom right */}
             {card.margin && (
               <div className="flex flex-col items-start text-right">
-                <span
+                <motion.span
                   className={`font-barlow-condensed font-semibold uppercase tracking-wide opacity-80 ${
                     isMobile ? 'text-[10px] mb-0' : 'text-sm mb-1'
                   }`}
+                  initial={isMobile ? undefined : { opacity: 0, y: 10 }}
+                  animate={isMobile ? undefined : { opacity: 0.8, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.55 }}
                 >
                   {card.marginLabel}
-                </span>
-                <p
+                </motion.span>
+                <motion.p
                   className={`font-barlow-condensed font-extrabold uppercase ${
                     isMobile ? '' : 'tracking-wide text-6xl'
                   }`}
                   style={isMobile ? { fontSize: '38.32px', lineHeight: '100%' } : undefined}
+                  initial={isMobile ? undefined : { opacity: 0, y: 8 }}
+                  animate={isMobile ? undefined : { opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
                 >
                   {card.margin}
-                </p>
+                </motion.p>
               </div>
             )}
           </motion.div>
@@ -194,20 +214,32 @@ function renderCardContent(
   );
 }
 
-export function BusinessModels({ className }: BusinessModelsProps) {
+export function BusinessModels({ className, dict }: BusinessModelsProps) {
   const [mobileExpandedId, setMobileExpandedId] = useState<number | null>(null);
+
+  // Merge dict cards with static data
+  const cards: BusinessModelCard[] = BUSINESS_MODELS.map((card, i) => ({
+    ...card,
+    ...(dict?.cards?.[i] ? {
+      channel: dict.cards[i].channel,
+      name: dict.cards[i].name,
+      description: dict.cards[i].description,
+      margin: dict.cards[i].margin,
+      marginLabel: dict.cards[i].marginLabel,
+    } : {}),
+  }));
 
   const handleMobileCardClick = (cardId: number) => {
     setMobileExpandedId((prev) => (prev === cardId ? null : cardId));
   };
 
   return (
-    <Section className={className}>
+    <Section className={`${className || ''} !pb-4`}>
       {/* Section Header */}
       <motion.div
         className="mb-6 text-center xl:mb-8 2xl:mb-10"
         initial={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 1 }}
         viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
       >
@@ -215,15 +247,15 @@ export function BusinessModels({ className }: BusinessModelsProps) {
           className="font-semibold uppercase text-foreground mb-2"
           style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '10px' }}
         >
-          Modelo de negocio
+          {dict?.title || 'Modelo de negocio'}
         </h4>
         <h2
-          className="font-barlow-condensed font-bold text-foreground text-center"
+          className="font-barlow-condensed font-bold text-foreground text-center md:!text-[45px]"
           style={{ fontSize: '28px', lineHeight: '102%' }}
         >
-          Tres motores de ingresos.
+          {dict?.headline1 || 'Tres motores de ingresos.'}
           <br />
-          Un solo sistema.
+          {dict?.headline2 || 'Un solo sistema.'}
         </h2>
       </motion.div>
 
@@ -235,7 +267,7 @@ export function BusinessModels({ className }: BusinessModelsProps) {
           collapsedWidth="25%"
           getItemId={(item) => item.id}
           itemClassName="group relative overflow-hidden rounded-2xl h-[400px] cursor-pointer"
-          items={BUSINESS_MODELS}
+          items={cards}
           renderItem={(card, isHovered) => (
             <div className="relative h-full w-full">
               {renderCardContent(card, isHovered, false, false)}
@@ -246,7 +278,7 @@ export function BusinessModels({ className }: BusinessModelsProps) {
 
       {/* Mobile: Vertical Stack - Always show all content */}
       <div className="block space-y-6 md:hidden">
-        {BUSINESS_MODELS.map((card, index) => (
+        {cards.map((card, index) => (
           <motion.div
             key={card.id}
             className="relative overflow-hidden rounded-2xl h-[182px]"

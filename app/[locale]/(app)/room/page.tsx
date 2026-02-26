@@ -3,9 +3,6 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { SafeStatus } from '@prisma/client';
 
-import { authOptions } from '@/lib/auth/config';
-import { prisma } from '@/lib/api/prisma';
-import { formatCurrency } from '@/lib/helpers/formatCurrency';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,13 +12,20 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { authOptions } from '@/lib/auth/config';
+import { prisma } from '@/lib/api/prisma';
+import { formatCurrency } from '@/lib/helpers/formatCurrency';
+import { getLocaleFromCookies } from '@/lib/i18n/server';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
 
 export default async function RoomPage() {
   const session = await getServerSession(authOptions);
-  if (!session) redirect('/otp');
+  const locale = await getLocaleFromCookies();
+  if (!session) redirect(pathForLocale(locale, '/otp'));
 
   const investor = session.investor;
-  if (!investor?.approved || !investor?.profileComplete) redirect('/otp');
+  if (!investor?.approved || !investor?.profileComplete)
+    redirect(pathForLocale(locale, '/otp'));
 
   const [latestSafe, signedAggregate, totalAggregate, totalDocuments] =
     await Promise.all([
@@ -137,13 +141,13 @@ export default async function RoomPage() {
 
           <div className="flex flex-wrap gap-2">
             <Button asChild variant="default">
-              <Link href="/room/files">Ver archivos</Link>
+              <Link href={pathForLocale(locale, '/room/files')}>Ver archivos</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/room/investment">Mi inversión</Link>
+              <Link href={pathForLocale(locale, '/room/investment')}>Mi inversión</Link>
             </Button>
             <Button asChild variant="ghost">
-              <Link href="/room/helper">Ayuda</Link>
+              <Link href={pathForLocale(locale, '/room/helper')}>Ayuda</Link>
             </Button>
           </div>
         </CardContent>

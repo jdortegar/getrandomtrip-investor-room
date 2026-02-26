@@ -179,14 +179,14 @@ export function Team({ className }: TeamProps) {
 
   return (
     <Section className={className} title="EQUIPO">
-      <div className="mx-auto container">
+      <div>
         {/* Desktop: Carousel with 5 visible slides */}
         <div className="hidden md:block">
           <MobileCarousel
             itemClassName="h-[400px]"
             items={TEAM_MEMBERS}
-            showDots
-            slideWidth="18.5%"
+
+            slideWidth="22%"
             renderItem={(member) => {
               const isFlipped = flippedCard === member.id;
 
@@ -204,7 +204,7 @@ export function Team({ className }: TeamProps) {
                     className="relative h-full w-full"
                     style={{ transformStyle: 'preserve-3d' }}
                     transition={{
-                      duration: 0.6,
+                      duration: 1,
                       ease: 'easeInOut',
                     }}
                   >
@@ -242,7 +242,7 @@ export function Team({ className }: TeamProps) {
           <MobileCarousel
             itemClassName="h-[400px]"
             items={TEAM_MEMBERS}
-            showDots
+
             slideWidth="80%"
             renderItem={(member) => {
               const isFlipped = mobileFlippedCard === member.id;
@@ -260,7 +260,7 @@ export function Team({ className }: TeamProps) {
                     className="relative h-full w-full"
                     style={{ transformStyle: 'preserve-3d' }}
                     transition={{
-                      duration: 0.6,
+                      duration: 1,
                       ease: 'easeInOut',
                     }}
                   >

@@ -11,37 +11,27 @@ import {
 
 import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
+import type { Locale } from '@/lib/i18n/config';
 
 interface RoomNavItem {
-  href: string;
+  path: string;
   icon: React.ComponentType<{ className?: string }>;
   label: string;
 }
 
 const roomNavItems: RoomNavItem[] = [
-  {
-    href: '/room',
-    icon: LayoutDashboard,
-    label: 'Resumen',
-  },
-  {
-    href: '/room/files',
-    icon: FileText,
-    label: 'Archivos',
-  },
-  {
-    href: '/room/investment',
-    icon: PiggyBank,
-    label: 'Mi inversión',
-  },
-  {
-    href: '/room/helper',
-    icon: HandHelping,
-    label: 'Ayuda',
-  },
+  { icon: LayoutDashboard, label: 'Resumen', path: '/room' },
+  { icon: FileText, label: 'Archivos', path: '/room/files' },
+  { icon: PiggyBank, label: 'Mi inversión', path: '/room/investment' },
+  { icon: HandHelping, label: 'Ayuda', path: '/room/helper' },
 ];
 
-export function RoomNav() {
+interface RoomNavProps {
+  locale: Locale;
+}
+
+export function RoomNav({ locale }: RoomNavProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const approved = !!(session as any)?.investor?.approved;
@@ -50,19 +40,19 @@ export function RoomNav() {
     <nav className="space-y-2">
       {roomNavItems.map((item) => {
         const Icon = item.icon;
+        const href = pathForLocale(locale, item.path);
         const isActive =
-          pathname === item.href ||
-          (item.href !== '/room' && pathname?.startsWith(item.href));
+          pathname === href ||
+          (item.path !== '/room' && pathname?.startsWith(href + '/'));
 
-        // Disable access to the main room until approved
-        if (item.href === '/room' && !approved) {
+        if (item.path === '/room' && !approved) {
           return (
             <div
-              key={item.href}
-              className={cn(
-                'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-barlow-condensed font-semibold uppercase tracking-wide transition-colors opacity-50 cursor-not-allowed',
-              )}
+              key={item.path}
               aria-disabled
+              className={cn(
+                'flex cursor-not-allowed items-center gap-3 rounded-lg px-4 py-3 text-sm font-barlow-condensed font-semibold uppercase tracking-wide opacity-50 transition-colors',
+              )}
             >
               <Icon className="h-5 w-5" />
               {item.label}
@@ -78,8 +68,8 @@ export function RoomNav() {
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                 : 'hover:bg-accent hover:text-accent-foreground',
             )}
-            href={item.href}
-            key={item.href}
+            href={href}
+            key={item.path}
           >
             <Icon className="h-5 w-5" />
             {item.label}

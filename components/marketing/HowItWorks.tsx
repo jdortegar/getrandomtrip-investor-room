@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Section } from './Section';
+
 import { ExpandAnimatedItems } from './ExpandAnimatedItems';
 import { MobileCarousel } from './MobileCarousel';
+import { Section } from './Section';
 
 interface StepContent {
   number: number;
@@ -14,39 +15,31 @@ interface StepContent {
   animationDelay: number;
 }
 
-interface HowItWorksProps {
-  className?: string;
+interface HowItWorksDict {
+  sectionDescription: string;
+  steps: Array<{ description: string; title: string }>;
+  title: string;
 }
 
-const STEPS: StepContent[] = [
-  {
-    number: 1,
-    title: 'Planifica',
-    description:
-      'Elegi fechas, ciudad de origen, duración y presupuesto. Sumá filtros y mood si querés.',
-    imageUrl: '/images/how-it-works-1.png', // TODO: Replace with actual step 1 image
-    defaultState: 'image',
-    animationDelay: 0.1,
-  },
-  {
-    number: 2,
-    title: 'Recibi la sorpresa',
-    description:
-      'Elegí fechas, ciudad de origen, duración y presupuesto. Sumá filtros y mood si querés.',
-    imageUrl: '/images/how-it-works-1.png', // TODO: Replace with actual step 2 image
-    defaultState: 'number',
-    animationDelay: 0.2,
-  },
-  {
-    number: 3,
-    title: 'Viaja sin estres',
-    description:
-      'Hacé la valija. Pasajes y alojamiento listos: soporte humano cuando lo necesites.',
-    imageUrl: '/images/how-it-works-1.png', // TODO: Replace with actual step 3 image
-    defaultState: 'number',
-    animationDelay: 0.3,
-  },
+interface HowItWorksProps {
+  className?: string;
+  dict: HowItWorksDict;
+}
+
+const STEP_CONFIG = [
+  { defaultState: 'image' as const, animationDelay: 0.1 },
+  { defaultState: 'number' as const, animationDelay: 0.2 },
+  { defaultState: 'number' as const, animationDelay: 0.3 },
 ];
+
+function buildSteps(dict: HowItWorksDict): StepContent[] {
+  return dict.steps.slice(0, 3).map((step, i) => ({
+    ...step,
+    ...STEP_CONFIG[i],
+    imageUrl: '/images/how-it-works-1.png',
+    number: i + 1,
+  }));
+}
 
 function renderStepContent(
   step: StepContent,
@@ -106,20 +99,22 @@ function renderStepContent(
   );
 }
 
-export function HowItWorks({ className }: HowItWorksProps) {
+export function HowItWorks({ className, dict }: HowItWorksProps) {
+  const steps = buildSteps(dict);
+
   return (
     <Section
       className="bg-background py-2"
-      description="Tres pasos. Cero estrés. Más descubrimiento."
+      description={dict.sectionDescription}
       noContainerPadding
-      title="¿Cómo funciona?"
+      title={dict.title}
     >
       {/* Desktop: ExpandAnimatedItems */}
       <div className="hidden px-8 xl:px-12 2xl:px-16 md:block">
         <ExpandAnimatedItems
           getItemId={(step) => step.number}
           itemClassName="group relative overflow-hidden rounded-3xl h-[400px] cursor-pointer"
-          items={STEPS}
+          items={steps}
           defaultHoveredId={1}
           renderItem={(step, isHovered) => {
             const isStep1 = step.number === 1;
@@ -146,7 +141,7 @@ export function HowItWorks({ className }: HowItWorksProps) {
       <div className="block md:hidden">
         <MobileCarousel
           itemClassName="h-[200px]"
-          items={STEPS}
+          items={steps}
           renderItem={(step) => {
             // On mobile, always show image layout with text overlay
             const showImage = true;

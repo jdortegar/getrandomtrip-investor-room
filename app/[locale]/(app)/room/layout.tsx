@@ -1,11 +1,14 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/config';
-import Link from 'next/link';
-import { RoomNav } from '@/components/navigation/RoomNav';
+
 import { Button } from '@/components/ui/button';
+import { RoomNav } from '@/components/navigation/RoomNav';
 import { SignOutButton } from '@/components/navigation/SignOutButton';
+import { authOptions } from '@/lib/auth/config';
+import { getLocaleFromCookies } from '@/lib/i18n/server';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,29 +17,25 @@ export default async function RoomLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // During build, skip auth check
   if (process.env.NEXT_PHASE === 'phase-production-build') {
     return <>{children}</>;
   }
 
   try {
     const session = await getServerSession(authOptions);
+    const locale = await getLocaleFromCookies();
 
     if (!session) {
-      redirect('/otp');
+      redirect(pathForLocale(locale, '/otp'));
     }
 
     const investor = (session as any).investor;
 
-    // Check if profile is complete
     if (!investor || !investor.profileComplete) {
-      redirect('/onboarding');
+      redirect(pathForLocale(locale, '/onboarding'));
     }
 
-    // Check if approved
     if (!investor.approved) {
-      // Don't redirect, just show the pending message
-      // This prevents redirect loops
       return (
         <main className="container mx-auto p-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -46,7 +45,7 @@ export default async function RoomLayout({
               fundadores para obtener aprobación.
             </p>
             <Button asChild>
-              <Link href="/">Volver al inicio</Link>
+              <Link href={pathForLocale(locale, '/')}>Volver al inicio</Link>
             </Button>
           </div>
         </main>
@@ -55,16 +54,15 @@ export default async function RoomLayout({
 
     return (
       <div className="flex min-h-screen flex-col bg-background">
-        {/* Header */}
         <header className="border-b border-border bg-background">
           <div className="mx-auto flex max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px] items-center justify-between px-4 py-6 md:px-8 md:py-8 xl:px-12 xl:py-10 2xl:px-16 2xl:py-12">
             <div className="flex items-center gap-4">
               <Image
-                src="/assets/svg/logo.svg"
                 alt="Investor Room"
-                width={48}
                 height={48}
                 priority={false}
+                src="/assets/svg/logo.svg"
+                width={48}
               />
               <div>
                 <h1 className="font-barlow-condensed text-2xl font-bold uppercase tracking-wide text-primary md:text-3xl xl:text-4xl">
@@ -77,18 +75,17 @@ export default async function RoomLayout({
             </div>
             <div className="flex items-center gap-2">
               <Button asChild variant="ghost">
-                <Link href="/">Volver al inicio</Link>
+                <Link href={pathForLocale(locale, '/')}>Volver al inicio</Link>
               </Button>
               <SignOutButton />
             </div>
           </div>
         </header>
 
-        {/* Main Content */}
         <main className="flex-1">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 py-8 md:grid-cols-[240px_1fr] md:px-8 xl:max-w-[1600px] xl:px-12 xl:py-12 2xl:max-w-[1800px] 2xl:px-16 2xl:py-16">
             <aside>
-              <RoomNav />
+              <RoomNav locale={locale} />
             </aside>
             <div className="flex-1">{children}</div>
           </div>

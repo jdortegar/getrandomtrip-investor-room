@@ -50,8 +50,8 @@ export function ExpandAnimatedItems<T>({
             transition={{
               layout: { duration: 0.4, ease: 'easeInOut' },
               width: { duration: 0.4, ease: 'easeInOut' },
-              opacity: { duration: 0.6, delay: index * 0.1 },
-              y: { duration: 0.6, delay: index * 0.1 },
+              opacity: { duration: 1, delay: index * 0.1 },
+              y: { duration: 1, delay: index * 0.1 },
             }}
           >
             {renderItem(item, isHovered)}

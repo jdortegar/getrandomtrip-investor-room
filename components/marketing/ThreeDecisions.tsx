@@ -4,28 +4,26 @@ import { motion } from 'framer-motion';
 import { Section } from './Section';
 import { MobileCarousel } from './MobileCarousel';
 
-const DECISIONS = [
-  {
-    label: 'Cuándo',
-    title: 'Fechas y duración',
-    icon: '/assets/svg/icon-calendar.svg',
-    iconSize: 116,
-  },
-  {
-    label: 'Estilo',
-    title: 'MOOD, RITMO y ENERGÍA',
-    icon: '/assets/svg/icon-mood.svg',
-    iconSize: 116,
-  },
-  {
-    label: 'Confort',
-    title: 'Nivel de estadía',
-    icon: '/assets/svg/icon-confort.svg',
-    iconSize: 116,
-  },
+interface ThreeDecisionsDict {
+  sectionTitle: string;
+  headline: string;
+  headlineBold: string;
+  subtitle: string;
+  subtitleBold: string;
+  decisions: Array<{ label: string; title: string }>;
+}
+
+interface ThreeDecisionsProps {
+  dict: ThreeDecisionsDict;
+}
+
+const DECISION_ICONS = [
+  { icon: '/assets/svg/icon-calendar.svg', iconSize: 116 },
+  { icon: '/assets/svg/icon-mood.svg', iconSize: 116 },
+  { icon: '/assets/svg/icon-confort.svg', iconSize: 116 },
 ];
 
-function DecisionCard({ decision }: { decision: (typeof DECISIONS)[number] }) {
+function DecisionCard({ decision }: { decision: { label: string; title: string; icon: string; iconSize: number } }) {
   return (
     <div className="bg-[#1C2B35] rounded-2xl flex flex-col w-full h-full px-4 pt-3 pb-3 overflow-hidden">
       <div className="flex justify-end w-full">
@@ -51,7 +49,12 @@ function DecisionCard({ decision }: { decision: (typeof DECISIONS)[number] }) {
   );
 }
 
-export function ThreeDecisions() {
+export function ThreeDecisions({ dict }: ThreeDecisionsProps) {
+  const decisions = dict.decisions.map((d, i) => ({
+    ...d,
+    ...DECISION_ICONS[i],
+  }));
+
   return (
     <Section className="bg-white">
       <div className="block md:hidden">
@@ -66,33 +69,33 @@ export function ThreeDecisions() {
             className="font-semibold uppercase text-[#0F2D37] mb-3"
             style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '10px' }}
           >
-            ¿Cómo funciona?
+            {dict.sectionTitle}
           </h4>
           <h2 className="font-barlow-condensed" style={{ fontSize: '30px', lineHeight: '30px' }}>
-            Tres decisiones.
+            {dict.headline}
           </h2>
           <h2
             className="font-barlow-condensed font-black"
             style={{ fontSize: '48px', lineHeight: '48px' }}
           >
-            Cero estrés.
+            {dict.headlineBold}
           </h2>
           <p className="text-[#000000] mt-3" style={{ fontSize: '18px', lineHeight: '24px' }}>
-            El viajero no planifica. <strong>Define lo esencial.</strong>
+            {dict.subtitle} <strong>{dict.subtitleBold}</strong>
           </p>
         </motion.div>
 
         <MobileCarousel
           itemClassName="h-[240px]"
-          items={DECISIONS}
-          slideWidth="75%"
+          items={decisions}
+          slideWidth="70%"
           renderItem={(decision) => (
             <DecisionCard decision={decision} />
           )}
         />
       </div>
 
-      <div className="hidden md:flex md:flex-row md:items-start md:gap-12 max-w-[1300px] mx-auto">
+      <div className="hidden md:flex md:flex-row md:items-start md:gap-12 mx-auto">
         <motion.div
           className="shrink-0"
           initial={{ opacity: 0, y: 20 }}
@@ -104,24 +107,24 @@ export function ThreeDecisions() {
             className="font-semibold uppercase text-[#0F2D37] mb-4"
             style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '12px' }}
           >
-            ¿Cómo funciona?
+            {dict.sectionTitle}
           </h4>
           <h2 className="font-barlow-condensed" style={{ fontSize: '40px', lineHeight: '40px' }}>
-            Tres decisiones.
+            {dict.headline}
           </h2>
           <h2
             className="font-barlow-condensed font-black"
             style={{ fontSize: '68px', lineHeight: '68px' }}
           >
-            Cero estrés.
+            {dict.headlineBold}
           </h2>
           <p className="text-[#000000] mt-4" style={{ fontSize: '18px', lineHeight: '24px' }}>
-            El viajero no planifica. <strong>Define lo esencial.</strong>
+            {dict.subtitle} <strong>{dict.subtitleBold}</strong>
           </p>
         </motion.div>
 
         <div className="flex gap-6 flex-1 justify-end">
-          {DECISIONS.map((decision, i) => (
+          {decisions.map((decision, i) => (
             <motion.div
               key={decision.label}
               className="w-[273px] h-[266px] shrink-0"

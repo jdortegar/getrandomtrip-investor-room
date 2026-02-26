@@ -1,29 +1,33 @@
 import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 interface Investor {
-  profileComplete: boolean;
   approved: boolean;
+  profileComplete: boolean;
 }
 
 interface SessionWithInvestor {
   investor?: Investor;
 }
 
+function localePrefix(pathname: string): string {
+  return pathname?.startsWith('/en') ? '/en' : '';
+}
+
 /**
  * Custom hook to handle authentication redirects
- * Determines the correct redirect path based on investor status
+ * Determines the correct redirect path based on investor status and preserves locale.
  */
 export function useAuthRedirect() {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const hasRedirectedRef = useRef(false);
   const sessionRef = useRef(session);
   sessionRef.current = session;
 
   useEffect(() => {
-    // Early returns
     if (status === 'loading') return;
     if (status !== 'authenticated') return;
 
@@ -33,49 +37,39 @@ export function useAuthRedirect() {
     if (searchParams.get('error') === 'Verification') return;
 
     const investor = (currentSession as SessionWithInvestor).investor;
-    const currentPath = window.location.pathname;
+    const currentPath = pathname ?? window.location.pathname;
+    const prefix = localePrefix(currentPath);
 
-    // Only redirect if we're actually on the OTP page
-    if (currentPath !== '/otp') return;
+    if (currentPath !== '/otp' && currentPath !== '/en/otp') return;
 
-    // Determine redirect target
-    const targetPath = getRedirectTarget(investor, searchParams);
+    const targetPath = getRedirectTarget(investor, searchParams, prefix);
 
-    // Skip if no redirect needed
-    if (!targetPath || targetPath === '/otp') return;
+    if (!targetPath || targetPath === prefix + '/otp') return;
 
-    // Mark as redirected immediately so we never run redirect logic again
     hasRedirectedRef.current = true;
 
-    // Small delay so session cookie is recognized, then hard redirect.
-    // Don't depend on session in deps so effect doesn't re-run when session ref changes and cancel this timeout.
     const timeoutId = setTimeout(() => {
-      if (window.location.pathname !== '/otp') return;
+      if (window.location.pathname !== '/otp' && window.location.pathname !== '/en/otp') return;
       window.location.replace(targetPath);
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [status, searchParams]);
+  }, [status, searchParams, pathname]);
 }
 
-/**
- * Determines the redirect target based on investor status
- */
 function getRedirectTarget(
   investor: Investor | undefined,
   searchParams: URLSearchParams,
+  prefix: string,
 ): string | null {
-  // No investor or profile incomplete -> onboarding
   if (!investor || !investor.profileComplete) {
-    return '/onboarding';
+    return `${prefix || ''}/onboarding`;
   }
 
-  // Approved and complete -> room (or callbackUrl)
   if (investor.approved && investor.profileComplete) {
     const callbackUrl = searchParams.get('callbackUrl');
-    return callbackUrl ? decodeURIComponent(callbackUrl) : '/room';
+    return callbackUrl ? decodeURIComponent(callbackUrl) : `${prefix || ''}/room`;
   }
 
-  // Profile complete but not approved -> stay on OTP
   return null;
 }

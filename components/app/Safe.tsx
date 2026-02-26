@@ -4,11 +4,23 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Section } from '@/components/marketing/Section';
 
-interface SafeProps {
-  className?: string;
+interface SafeDict {
+  title: string;
+  description: string;
+  marketingLabel: string;
+  operationsLabel: string;
+  techLabel: string;
+  marketingItems: string[];
+  operationsItems: string[];
+  techItems: string[];
 }
 
-const FUND_DETAILS = {
+interface SafeProps {
+  className?: string;
+  dict?: SafeDict;
+}
+
+const DEFAULT_FUND_DETAILS = {
   marketing: ['Creators', 'Growth loops', 'Pilotos de adquisición'],
   operaciones: ['Supply', 'QA', 'Operación de rutas', 'Playbooks'],
   tech: ['Producto', 'Automatizaciones,', 'Experiencia usuario.'],
@@ -67,14 +79,19 @@ function getSlicePath(slice: Slice): string {
   ].join(' ');
 }
 
-export function Safe({ className }: SafeProps) {
+export function Safe({ className, dict }: SafeProps) {
   const slices = getSlices();
+  const fundDetails = {
+    marketing: dict?.marketingItems || DEFAULT_FUND_DETAILS.marketing,
+    operaciones: dict?.operationsItems || DEFAULT_FUND_DETAILS.operaciones,
+    tech: dict?.techItems || DEFAULT_FUND_DETAILS.tech,
+  };
 
   return (
     <Section
       className={className}
-      description={`"Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount)."`}
-      title="USO DE FONDOS & SAFE"
+      description={dict?.description || '"Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount)."'}
+      title={dict?.title || 'USO DE FONDOS & SAFE'}
     >
       <div className="flex flex-col items-center overflow-visible mt-[95px] md:mt-0">
         <div className="relative w-full max-w-[500px] md:max-w-[550px] xl:max-w-[600px] 2xl:max-w-[650px] mx-auto overflow-visible">
@@ -145,7 +162,7 @@ export function Safe({ className }: SafeProps) {
                 className="font-barlow-condensed font-semibold leading-tight text-[16px] md:text-[28px] text-center"
                 style={{ color: '#1C2B35', letterSpacing: '0.5px' }}
               >
-                MARKETING &<br />GROWTH
+                {(dict?.marketingLabel || 'MARKETING &\nGROWTH').split('\n').map((l, i) => <span key={i}>{i > 0 && <br />}{l}</span>)}
               </div>
             </motion.div>
 
@@ -177,7 +194,7 @@ export function Safe({ className }: SafeProps) {
                 className="font-barlow-condensed font-semibold leading-tight text-[16px] md:text-[28px]"
                 style={{ color: '#FED700', letterSpacing: '0.5px' }}
               >
-                OPERACIONES
+                {dict?.operationsLabel || 'OPERACIONES'}
               </div>
             </motion.div>
 
@@ -210,7 +227,7 @@ export function Safe({ className }: SafeProps) {
                   className="font-barlow-condensed font-semibold leading-tight text-[11px] md:text-[18px]"
                   style={{ color: '#FFFFFF', letterSpacing: '0.3px' }}
                 >
-                  TECH &<br />PRODUCTO
+                  {(dict?.techLabel || 'TECH &\nPRODUCTO').split('\n').map((l, i) => <span key={i}>{i > 0 && <br />}{l}</span>)}
                 </div>
               </div>
             </motion.div>
@@ -244,7 +261,7 @@ export function Safe({ className }: SafeProps) {
             transition={{ duration: 0.4, delay: 0.8 }}
           >
             <ul className="font-barlow text-[#0F2D37] text-[11px] leading-[16px] whitespace-nowrap">
-              {FUND_DETAILS.tech.map((item, i) => (
+              {fundDetails.tech.map((item, i) => (
                 <li key={i} className="flex items-start gap-1">
                   <span className="mt-[5px] w-[3px] h-[3px] rounded-full bg-[#0F2D37] shrink-0" />
                   {item}
@@ -277,7 +294,7 @@ export function Safe({ className }: SafeProps) {
             transition={{ duration: 0.4, delay: 0.9 }}
           >
             <ul className="font-barlow text-[#0F2D37] text-[11px] leading-[16px] whitespace-nowrap">
-              {FUND_DETAILS.marketing.map((item, i) => (
+              {fundDetails.marketing.map((item, i) => (
                 <li key={i} className="flex items-start gap-1">
                   <span className="mt-[5px] w-[3px] h-[3px] rounded-full bg-[#0F2D37] shrink-0" />
                   {item}
@@ -325,7 +342,7 @@ export function Safe({ className }: SafeProps) {
               />
             </motion.div>
             <ul className="font-barlow text-[#0F2D37] text-[11px] leading-[16px] whitespace-nowrap">
-              {FUND_DETAILS.operaciones.map((item, i) => (
+              {fundDetails.operaciones.map((item, i) => (
                 <li key={i} className="flex items-start gap-1">
                   <span className="mt-[5px] w-[3px] h-[3px] rounded-full bg-[#0F2D37] shrink-0" />
                   {item}
@@ -346,7 +363,7 @@ export function Safe({ className }: SafeProps) {
           >
             <div className="flex items-start gap-0">
               <ul className="font-barlow text-[#0F2D37] text-[14px] xl:text-[15px] leading-[20px]">
-                {FUND_DETAILS.tech.map((item, i) => (
+                {fundDetails.tech.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
                     <span className="mt-[7px] w-[4px] h-[4px] rounded-full bg-[#0F2D37] shrink-0" />
                     {item}
@@ -416,7 +433,7 @@ export function Safe({ className }: SafeProps) {
                 />
               </svg>
               <ul className="font-barlow text-[#0F2D37] text-[14px] xl:text-[15px] leading-[20px]">
-                {FUND_DETAILS.marketing.map((item, i) => (
+                {fundDetails.marketing.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
                     <span className="mt-[7px] w-[4px] h-[4px] rounded-full bg-[#0F2D37] shrink-0" />
                     {item}
@@ -454,7 +471,7 @@ export function Safe({ className }: SafeProps) {
               </motion.div>
               {/* Bullets debajo del círculo (lado izquierdo) */}
               <ul className="font-barlow text-[#0F2D37] text-[14px] xl:text-[15px] leading-[20px] mt-0">
-                {FUND_DETAILS.operaciones.map((item, i) => (
+                {fundDetails.operaciones.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
                     <span className="mt-[7px] w-[4px] h-[4px] rounded-full bg-[#0F2D37] shrink-0" />
                     {item}

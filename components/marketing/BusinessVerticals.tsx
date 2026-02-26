@@ -12,8 +12,13 @@ interface BusinessModelCard {
   imageUrl?: string;
 }
 
+interface BusinessVerticalsDict {
+  title: string;
+}
+
 interface BusinessVerticalsProps {
   className?: string;
+  dict?: BusinessVerticalsDict;
 }
 
 const BUSINESS_MODELS: BusinessModelCard[] = [
@@ -116,7 +121,7 @@ function renderCardContent(card: BusinessModelCard, showBack: boolean) {
   );
 }
 
-export function BusinessVerticals({ className }: BusinessVerticalsProps) {
+export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
   const [mobileFlippedCard, setMobileFlippedCard] = useState<number | null>(
     null,
@@ -131,12 +136,16 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
       className={className}
       noContainerPadding
     >
-      <h3
+      <motion.h3
         className="font-barlow-condensed font-semibold text-[#0F2D37] px-4 md:px-8 xl:px-12 2xl:px-16 mb-6"
+        initial={{ opacity: 0, y: 20 }}
         style={{ fontSize: '28px', lineHeight: '100%' }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, y: 0 }}
       >
-        Puntos de partida
-      </h3>
+        {dict?.title || 'Puntos de partida'}
+      </motion.h3>
       {/* Desktop: Grid with Flip Cards */}
       <div className="hidden px-8 xl:px-12 2xl:px-16 md:grid md:grid-cols-5 md:gap-4 xl:gap-6 2xl:gap-8">
         {BUSINESS_MODELS.map((card, index) => {
@@ -146,14 +155,15 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
             <motion.div
               key={card.id}
               className="relative aspect-square"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               style={{ perspective: '1000px' }}
               transition={{
                 delay: index * 0.1,
-                duration: 0.6,
+                duration: 0.5,
+                ease: 'easeOut',
               }}
               viewport={{ once: true }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               onHoverEnd={() => setFlippedCard(null)}
               onHoverStart={() => setFlippedCard(card.id)}
             >
@@ -164,7 +174,7 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
                 className="relative h-full w-full"
                 style={{ transformStyle: 'preserve-3d' }}
                 transition={{
-                  duration: 0.6,
+                  duration: 1,
                   ease: 'easeInOut',
                 }}
               >
@@ -197,10 +207,11 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
       </div>
 
       {/* Mobile: Carousel with Flip Cards */}
-      <div className="block md:hidden">
+      <div className="block md:hidden px-4">
         <MobileCarousel
           itemClassName="h-auto aspect-square"
           items={BUSINESS_MODELS}
+          slideWidth="70%"
           renderItem={(card) => {
             const isFlipped = mobileFlippedCard === card.id;
 
@@ -217,7 +228,7 @@ export function BusinessVerticals({ className }: BusinessVerticalsProps) {
                   className="relative h-full w-full"
                   style={{ transformStyle: 'preserve-3d' }}
                   transition={{
-                    duration: 0.6,
+                    duration: 1,
                     ease: 'easeInOut',
                   }}
                 >

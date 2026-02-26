@@ -20,7 +20,7 @@ export function Section({
 }: SectionProps) {
   return (
     <section
-      className={cn('bg-background py-10 xl:py-16 2xl:py-20', className)}
+      className={cn('bg-background py-10 xl:py-10 2xl:py-10', className)}
     >
       <div
         className={cn(
@@ -37,7 +37,7 @@ export function Section({
                 noContainerPadding && 'px-4 md:px-8 xl:px-12 2xl:px-16',
               )}
               initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 1 }}
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
             >

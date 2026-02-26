@@ -5,11 +5,18 @@ import { BookMeetingButton } from './BookMeetingButton';
 import { cn } from '@/lib/utils';
 import { Section } from './Section';
 
-interface InspirationProps {
-  className?: string;
+interface InspirationDict {
+  ctaButton: string;
+  headline: string;
+  subtext?: string;
 }
 
-export function Inspiration({ className }: InspirationProps) {
+interface InspirationProps {
+  className?: string;
+  dict: InspirationDict;
+}
+
+export function Inspiration({ className, dict }: InspirationProps) {
   return (
     <Section className={cn('relative w-full overflow-hidden', className)}>
       <motion.div
@@ -17,9 +24,8 @@ export function Inspiration({ className }: InspirationProps) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 1 }}
       >
-        {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 hover:scale-105"
           style={{
@@ -27,25 +33,20 @@ export function Inspiration({ className }: InspirationProps) {
           }}
         />
 
-        {/* Dark Overlay - Stronger on mobile for better text readability */}
         <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
 
-        {/* Content Overlay */}
-        <div className="relative flex h-full min-h-[500px] flex-col items-center justify-center text-center px-4 py-12 md:min-h-[650px] md:justify-start md:p-40 xl:p-52 2xl:p-64">
+        <div className="relative flex h-full min-h-[500px] flex-col items-center justify-center px-4 py-12 text-center md:min-h-[650px] md:justify-start md:p-40 xl:p-52 2xl:p-64">
           <motion.div
-            className="max-w-4xl xl:max-w-5xl 2xl:max-w-6xl space-y-6 md:space-y-8 xl:space-y-10 2xl:space-y-12"
+            className="max-w-4xl space-y-6 xl:max-w-5xl xl:space-y-10 2xl:max-w-6xl 2xl:space-y-12 md:space-y-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {/* Main Text */}
-            <h2 className="font-barlow-condensed text-xl uppercase tracking-wide text-[#FED700] md:text-4xl leading-tight font-semibold mb-8 md:mb-20">
-              SI TE INSPIRA LO QUE VISTE,
-              <br /> SUMATE AL TRIPPER FOUNDERS CIRCLE
+            <h2 className="mb-6 whitespace-pre-line font-barlow-condensed text-2xl font-semibold leading-tight text-[#FED700] md:mb-10 md:text-5xl">
+              {dict.headline}
             </h2>
 
-            {/* Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -53,12 +54,17 @@ export function Inspiration({ className }: InspirationProps) {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <BookMeetingButton
-                variant="secondary"
+                className="rounded-md border border-[#FED700] bg-transparent px-8 py-5 font-barlow-condensed text-sm font-semibold uppercase tracking-wide text-white transition-all hover:scale-105 hover:bg-black/60 md:px-10 md:py-6 md:text-lg"
                 size="lg"
-                className="px-6 py-3 rounded-md border border-[#FED700] bg-transparent font-barlow-condensed text-sm font-semibold uppercase tracking-wide text-white transition-all hover:bg-black/60 hover:scale-105 md:px-8 md:py-4 md:text-lg"
+                variant="secondary"
               >
-                AGENDA TU VIDEOLLAMADA
+                {dict.ctaButton}
               </BookMeetingButton>
+              {dict.subtext && (
+                <p className="mt-4 text-white/70 text-xs md:text-sm tracking-wide">
+                  {dict.subtext}
+                </p>
+              )}
             </motion.div>
           </motion.div>
         </div>

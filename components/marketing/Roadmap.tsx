@@ -11,8 +11,18 @@ interface RoadmapPhase {
   items: string[];
 }
 
+interface RoadmapDict {
+  title: string;
+  phases: Array<{
+    period: string;
+    subtitle?: string;
+    items: string[];
+  }>;
+}
+
 interface RoadmapProps {
   className?: string;
+  dict?: RoadmapDict;
 }
 
 const ROADMAP_PHASES: RoadmapPhase[] = [
@@ -65,7 +75,10 @@ function TimelineLineNoEnd() {
   );
 }
 
-export function Roadmap({ className }: RoadmapProps) {
+export function Roadmap({ className, dict }: RoadmapProps) {
+  const phases: RoadmapPhase[] = dict?.phases
+    ? dict.phases.map((p, i) => ({ id: i + 1, period: p.period, subtitle: p.subtitle, items: p.items }))
+    : ROADMAP_PHASES;
   return (
     <Section className={`${className || ''} overflow-hidden`} noContainerPadding>
       <div className="mx-auto w-full">
@@ -73,7 +86,7 @@ export function Roadmap({ className }: RoadmapProps) {
         <motion.div
           className="mb-6 text-center px-4 md:px-8 xl:mb-8 2xl:mb-10"
           initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 1 }}
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
@@ -81,7 +94,7 @@ export function Roadmap({ className }: RoadmapProps) {
             className="font-barlow-condensed font-semibold uppercase tracking-wide text-foreground"
             style={{ fontSize: '28px', lineHeight: '100%' }}
           >
-            TRACCIÓN & ROADMAP
+            {dict?.title || 'TRACCIÓN & ROADMAP'}
           </h3>
         </motion.div>
 
@@ -89,7 +102,7 @@ export function Roadmap({ className }: RoadmapProps) {
         <div className="hidden md:block">
           {/* Titles + lines row */}
           <div className="flex items-end mb-6 pl-8 xl:pl-12 2xl:pl-16" style={{ marginLeft: '130px' }}>
-            {ROADMAP_PHASES.map((phase, index) => (
+            {phases.map((phase, index) => (
               <div key={phase.id} className="flex items-end flex-1 pb-1">
                 <h3
                   className="font-barlow-condensed font-bold text-[#0F2D37] uppercase whitespace-nowrap shrink-0"
@@ -107,7 +120,7 @@ export function Roadmap({ className }: RoadmapProps) {
                     />
                     <TimelineLine />
                   </div>
-                ) : index < ROADMAP_PHASES.length - 1 ? (
+                ) : index < phases.length - 1 ? (
                   <TimelineLine />
                 ) : (
                   <TimelineLineNoEnd />
@@ -118,7 +131,7 @@ export function Roadmap({ className }: RoadmapProps) {
 
           {/* Content row */}
           <div className="grid grid-cols-3 gap-6 px-8 xl:px-12 2xl:px-16" style={{ marginLeft: '130px' }}>
-            {ROADMAP_PHASES.map((phase, index) => (
+            {phases.map((phase, index) => (
               <motion.div
                 key={phase.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -157,7 +170,9 @@ export function Roadmap({ className }: RoadmapProps) {
           <MobileCarousel
             itemClassName="h-auto"
             slideWidth="100%"
-            items={ROADMAP_PHASES}
+            items={phases}
+            showDots
+            dotColor="#FED700"
             renderItem={(phase) => (
               <div className="px-4">
                 {/* Period + icon + line */}
