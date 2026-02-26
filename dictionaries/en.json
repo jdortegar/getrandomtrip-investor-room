@@ -248,18 +248,11 @@
         },
         {
           "period": "H2 2026",
-          "items": [
-            "Narrative + metrics for next round.",
-            "LATAM Expansion"
-          ]
+          "items": ["Narrative + metrics for next round.", "LATAM Expansion"]
         },
         {
           "period": "2026/2027",
-          "items": [
-            "Predictive AI",
-            "B2B Growth",
-            "New product launches"
-          ]
+          "items": ["Predictive AI", "B2B Growth", "New product launches"]
         }
       ]
     },
