@@ -30,6 +30,57 @@ interface LoginModalProps {
   open: boolean;
 }
 
+/**
+ * Submits login via a full-page form POST so the browser receives Set-Cookie
+ * from the redirect response. Fixes cookie not being set when using signIn()
+ * with redirect: false on some hosts (e.g. Netlify).
+ */
+function submitLoginForm(
+  username: string,
+  password: string,
+  locale: Locale
+): void {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '/api/auth/callback/credentials';
+  form.style.display = 'none';
+
+  const callbackUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}${pathForLocale(locale, '/')}`
+      : pathForLocale(locale, '/');
+
+  const inputs: [string, string][] = [
+    ['callbackUrl', callbackUrl],
+    ['password', password],
+    ['username', username],
+  ];
+
+  inputs.forEach(([name, value]) => {
+    const input = document.createElement('input');
+    input.name = name;
+    input.type = 'hidden';
+    input.value = value;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+
+  fetch('/api/auth/csrf')
+    .then((res) => res.json())
+    .then((data: { csrfToken?: string }) => {
+      const csrf = document.createElement('input');
+      csrf.name = 'csrfToken';
+      csrf.type = 'hidden';
+      csrf.value = data.csrfToken ?? '';
+      form.appendChild(csrf);
+      form.submit();
+    })
+    .catch(() => {
+      document.body.removeChild(form);
+    });
+}
+
 export function LoginModal({
   dict,
   locale,
@@ -47,6 +98,7 @@ export function LoginModal({
     setIsLoading(true);
     setError(null);
     try {
+      // Validate first so we can show wrong-password in the modal
       const result = await signIn('credentials', {
         callbackUrl: pathForLocale(locale, '/'),
         password: password.trim(),
@@ -55,11 +107,15 @@ export function LoginModal({
       });
       if (result?.error) {
         setError(result.error);
-      } else if (result?.ok) {
-        onOpenChange(false);
-        window.location.href = pathForLocale(locale, '/');
         return;
       }
+      if (!result?.ok) {
+        setError('Something went wrong');
+        return;
+      }
+      // Cookie may not be set from fetch on Netlify; full-page form POST sets it
+      onOpenChange(false);
+      submitLoginForm(username.trim(), password, locale);
     } catch {
       setError('Something went wrong');
     } finally {
