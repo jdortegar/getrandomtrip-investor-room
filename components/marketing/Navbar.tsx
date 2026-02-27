@@ -35,7 +35,9 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
   const approved = !!(session as any)?.investor?.approved;
 
   const otherLocale: Locale = locale === 'es' ? 'en' : 'es';
-  const basePath = pathname?.startsWith('/en') ? pathname.slice(3) || '/' : pathname ?? '/';
+  const basePath = pathname?.startsWith('/en')
+    ? pathname.slice(3) || '/'
+    : (pathname ?? '/');
   const localeSwitchPath = pathForLocale(otherLocale, basePath);
 
   const toggleMobileMenu = () => {
@@ -71,40 +73,34 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-[100px] xl:gap-[120px] 2xl:gap-[150px] md:flex">
             <Link
-              className="text-xl transition-colors hover:text-white hover:font-bold"
+              className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
               href={pathForLocale(locale, '/')}
             >
               {dict.home}
             </Link>
             <Link
-              className="text-xl transition-colors hover:text-white hover:font-bold"
+              className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
               href={pathForLocale(locale, '/contact')}
             >
               {dict.contact}
             </Link>
             {/* Disable Investors Room until investor is approved */}
             {!approved ? (
-              <div className="text-xl transition-colors text-white/60 cursor-not-allowed">
+              <div className="text-xl font-medium cursor-not-allowed text-white/60 transition-colors">
                 {dict.investorsRoom}
               </div>
             ) : (
               <Link
-                className="text-xl transition-colors hover:text-white hover:font-bold"
+                className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
                 href={pathForLocale(locale, '/room')}
               >
                 {dict.investorsRoom}
               </Link>
             )}
-            <button
-              className="text-xl transition-colors hover:text-white hover:font-bold"
-              onClick={handleLocaleSwitch}
-              type="button"
-            >
-              {LOCALE_LABELS[otherLocale]}
-            </button>
+
             {onLogInClick ? (
               <button
-                className="text-xl transition-colors hover:text-white hover:font-bold"
+                className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
                 onClick={onLogInClick}
                 type="button"
               >
@@ -112,12 +108,19 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
               </button>
             ) : (
               <Link
-                className="text-xl transition-colors hover:text-white hover:font-bold"
+                className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
                 href={pathForLocale(locale, '/login')}
               >
                 {dict.logIn}
               </Link>
             )}
+            <button
+              className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
+              onClick={handleLocaleSwitch}
+              type="button"
+            >
+              {LOCALE_LABELS[otherLocale]}
+            </button>
           </div>
 
           {/* Mobile: Hamburger + Locale Switcher */}

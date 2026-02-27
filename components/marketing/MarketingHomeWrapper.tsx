@@ -43,9 +43,6 @@ export function MarketingHomeWrapper({
 
   return (
     <main className="flex min-h-screen flex-col">
-      <div className="absolute right-4 top-4 z-50 md:right-8 md:top-8">
-        <LocaleSwitcher locale={locale} />
-      </div>
       {isUnlocked ? (
         <>
           <Navbar dict={dict.nav} locale={locale} />
