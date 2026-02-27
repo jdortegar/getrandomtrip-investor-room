@@ -174,6 +174,7 @@ export const authOptions: NextAuthOptions = {
     maxAge: 15 * 60, // 15 minutes
     strategy: 'jwt',
   },
+  useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://') ?? false,
   callbacks: {
     async jwt({ token, user }) {
       // On sign-in, user is present; persist user id so session callback can use it
