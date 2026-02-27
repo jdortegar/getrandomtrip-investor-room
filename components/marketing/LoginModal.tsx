@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 import {
   Dialog,
@@ -41,7 +40,6 @@ export function LoginModal({
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,8 +57,8 @@ export function LoginModal({
         setError(result.error);
       } else if (result?.ok) {
         onOpenChange(false);
-        router.push(pathForLocale(locale, '/'));
-        router.refresh();
+        window.location.href = pathForLocale(locale, '/');
+        return;
       }
     } catch {
       setError('Something went wrong');

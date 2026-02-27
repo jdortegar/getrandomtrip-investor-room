@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import { FullMarketingContent } from '@/components/marketing/FullMarketingContent';
 import { LoginModal } from '@/components/marketing/LoginModal';
@@ -22,18 +23,21 @@ export function MarketingHomeWrapper({
   locale,
 }: MarketingHomeWrapperProps) {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   const openLoginModal = () => setLoginModalOpen(true);
 
+  const isLoggedIn = hasSession || (status === 'authenticated' && !!session);
+
   return (
     <main className="flex min-h-screen flex-col">
-      {hasSession && (
+      {isLoggedIn && (
         <Navbar dict={dict.nav} locale={locale} />
       )}
       <div className="absolute right-4 top-4 z-50 md:right-8 md:top-8">
         <LocaleSwitcher locale={locale} />
       </div>
-      {hasSession ? (
+      {isLoggedIn ? (
         <FullMarketingContent dict={dict} />
       ) : (
         <>
