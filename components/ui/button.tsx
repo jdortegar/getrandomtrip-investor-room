@@ -63,7 +63,7 @@ function Button({
 
   return (
     <Comp
-      className={cn(buttonVariants({ className, size, variant }))}
+      className={cn(buttonVariants({ size, variant, className }))}
       data-slot="button"
       {...props}
       onClick={handleClick}

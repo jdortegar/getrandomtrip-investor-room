@@ -26,13 +26,16 @@ interface BookMeetingButtonProps {
     | 'destructive';
   size?: 'default' | 'sm' | 'lg' | 'icon';
   className?: string;
-  children: React.ReactNode;
+  /** Fallback when children are not provided */
+  label?: string;
+  children?: React.ReactNode;
 }
 
 export function BookMeetingButton({
   variant = 'secondary',
   size = 'lg',
   className,
+  label,
   children,
 }: BookMeetingButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +68,7 @@ export function BookMeetingButton({
         size={size}
         className={className}
       >
-        {children}
+        {children ?? label}
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

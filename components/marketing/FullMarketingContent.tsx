@@ -12,6 +12,7 @@ import { Roadmap } from '@/components/marketing/Roadmap';
 import { Safe } from '@/components/app/Safe';
 import { Team } from '@/components/marketing/Team';
 import { Inspiration } from '@/components/marketing/Inspiration';
+import { FixedBookMeetingButton } from '@/components/marketing/FixedBookMeetingButton';
 import { Footer } from '@/components/marketing/Footer';
 import type { MarketingDictionary } from '@/lib/types/dictionary';
 
@@ -22,6 +23,7 @@ interface FullMarketingContentProps {
 export function FullMarketingContent({ dict }: FullMarketingContentProps) {
   return (
     <>
+      <FixedBookMeetingButton label={dict.valueProposition.ctaButton} />
       <Hero />
       <ValueProposition dict={dict.valueProposition} />
       <ProblemSolution dict={dict.problemSolution} />

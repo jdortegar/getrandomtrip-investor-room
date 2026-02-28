@@ -6,9 +6,8 @@ import { FullMarketingContent } from '@/components/marketing/FullMarketingConten
 import { LoginModal } from '@/components/marketing/LoginModal';
 import { Navbar } from '@/components/marketing/Navbar';
 import { WaitlistPage } from '@/components/marketing/WaitlistPage';
-import { LocaleSwitcher } from '@/components/navigation/LocaleSwitcher';
-import type { MarketingDictionary } from '@/lib/types/dictionary';
 import type { Locale } from '@/lib/i18n/config';
+import type { MarketingDictionary } from '@/lib/types/dictionary';
 
 const GATE_STORAGE_KEY = 'investor_room_marketing_gate';
 
