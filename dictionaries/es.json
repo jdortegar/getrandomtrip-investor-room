@@ -16,6 +16,7 @@
       "description": "La industria resolvió cómo reservar.",
       "descriptionBold": "Nadie resolvió cómo decidir.",
       "descriptionBody": "Randomtrip diseña escapadas sorpresa con precisión operativa: tú defines lo esencial, nosotros diseñamos el resto.",
+      "descriptionHtml": "La industria resolvió cómo reservar. <strong>Nadie resolvió cómo decidir.</strong> Randomtrip diseña escapadas sorpresa con precisión operativa: tú defines lo esencial, nosotros diseñamos el resto.",
       "bullets": [
         "Menos tiempo eligiendo, más tiempo viviendo.",
         "Tecnología + curación humana para acertar en gustos, ritmo y energía.",
@@ -28,17 +29,20 @@
       "problem": {
         "title": "EL PROBLEMA",
         "description": "Hoy viajar implica comparar cientos de opciones, pestañas abiertas, reseñas contradictorias y decisiones agotadoras.",
+        "descriptionHtml": "Hoy viajar implica comparar cientos de opciones, pestañas abiertas, reseñas contradictorias y decisiones agotadoras. <br/><br/><strong>Más opciones no significaron mejores experiencias.</strong> Significaron más fricción.",
         "highlight": "Más opciones no significaron mejores experiencias.",
         "highlightSuffix": "Significaron más fricción."
       },
       "solution": {
         "title": "LA SOLUCIÓN",
         "description": "Randomtrip diseña escapadas sorpresa combinando tecnología, criterio humano y curaduría local.",
+        "descriptionHtml": "Randomtrip diseña escapadas sorpresa combinando tecnología, criterio humano y curaduría local. <br/><br/><strong>El viajero decide sólo lo esencial.</strong> <br/>El sistema diseña el resto.",
         "highlight": "El viajero decide sólo lo esencial.",
         "highlightSuffix": "El sistema diseña el resto."
       },
       "whyNow": {
         "title": "WHY NOW",
+        "contentHtml": "La inspiración ya es creator-led. La reserva ya está comoditizada. La decisión sigue rota.",
         "lines": [
           "La inspiración ya es creator-led.",
           "La reserva ya está comoditizada.",
@@ -48,16 +52,8 @@
     },
     "paragraph": "Construimos el sistema para diseñar viajes cómo se diseñan productos:",
     "paragraphBold": "CON INTENCIÓN, DATA Y CRITERIO.",
-    "paragraphMobile": {
-      "line1": "CONSTRUIMOS EL SISTEMA PARA",
-      "line2": "DISEÑAR VIAJES CÓMO SE",
-      "line3": "DISEÑAN PRODUCTOS:",
-      "bold": "CON INTENCIÓN, DATA Y CRITERIO."
-    },
-    "paragraphDesktop": {
-      "line1": "CONSTRUIMOS EL SISTEMA PARA DISEÑAR VIAJES CÓMO SE DISEÑAN PRODUCTOS:",
-      "bold": "CON INTENCIÓN, DATA Y CRITERIO."
-    },
+    "paragraphMobileHtml": "CONSTRUIMOS EL SISTEMA PARA<br />DISEÑAR VIAJES CÓMO SE<br />DISEÑAN PRODUCTOS:<br /><strong>CON INTENCIÓN, DATA Y CRITERIO.</strong>",
+    "paragraphDesktopHtml": "CONSTRUIMOS EL SISTEMA PARA DISEÑAR VIAJES CÓMO SE DISEÑAN PRODUCTOS:<br /><strong>CON INTENCIÓN, DATA Y CRITERIO.</strong>",
     "threeDecisions": {
       "sectionTitle": "¿Cómo funciona?",
       "headline": "Tres decisiones.",

@@ -22,6 +22,7 @@ interface BookMeetingButtonProps {
     | 'secondary'
     | 'ghost'
     | 'link'
+    | 'feature'
     | 'destructive';
   size?: 'default' | 'sm' | 'lg' | 'icon';
   className?: string;

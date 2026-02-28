@@ -1,190 +1,86 @@
 'use client';
 
 import { motion } from 'framer-motion';
+
+import { ProblemsIcon, SolutionIcon, WhyNowIcon } from '@/components/Icons';
+import type { MarketingDictionary } from '@/lib/types/dictionary';
+import { cn } from '@/lib/utils';
 import { Section } from './Section';
 
-interface ProblemSolutionDict {
-  problem: {
-    title: string;
-    description: string;
-    highlight: string;
-    highlightSuffix: string;
-  };
-  solution: {
-    title: string;
-    description: string;
-    highlight: string;
-    highlightSuffix: string;
-  };
-  whyNow: {
-    title: string;
-    lines: string[];
-  };
-}
+/** Same shape as MarketingDictionary.problemSolution */
+type ProblemSolutionDict = MarketingDictionary['problemSolution'];
 
 interface ProblemSolutionProps {
   dict: ProblemSolutionDict;
 }
 
+interface CardConfig {
+  icon: React.ElementType;
+  contentHtml: string;
+  delay: number;
+  id: 'problem' | 'solution' | 'whyNow';
+  title: string;
+}
+
+function buildCards(dict: ProblemSolutionDict): CardConfig[] {
+  return [
+    {
+      contentHtml: dict.problem.descriptionHtml,
+      delay: 0,
+      id: 'problem',
+      title: dict.problem.title,
+      icon: ProblemsIcon,
+    },
+    {
+      contentHtml: dict.solution.descriptionHtml,
+      delay: 0.15,
+      id: 'solution',
+      title: dict.solution.title,
+      icon: SolutionIcon,
+    },
+    {
+      contentHtml: dict.whyNow.contentHtml,
+      delay: 0.3,
+      id: 'whyNow',
+      title: dict.whyNow.title,
+      icon: WhyNowIcon,
+    },
+  ];
+}
+
 export function ProblemSolution({ dict }: ProblemSolutionProps) {
+  const cards = buildCards(dict);
+
   return (
-    <Section className="bg-white !pt-20">
-      <div className="grid gap-20 md:gap-8 md:grid-cols-3 max-w-[1200px] mx-auto">
-        <motion.div
-          className="flex flex-col"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-        >
-          <div className="relative mb-2">
-            <h3 className="font-barlow-condensed text-[28px] font-semibold leading-[100%] tracking-normal uppercase text-[#0F2D37] relative z-10">
-              {dict.problem.title}
-            </h3>
-            <div
-              className="absolute z-0 md:hidden"
-              style={{
-                left: 'calc(var(--spacing) * 28)',
-                top: '-33px'
-              }}
-            >
-              <div className="relative w-16 h-16 flex items-center justify-center">
-                <img
-                  src="/assets/svg/problems_icon.svg"
-                  alt="Problem icon"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-            <div
-              className="absolute z-0 hidden md:block"
-              style={{
-                left: 'calc(var(--spacing) * 23)',
-                top: '-57px'
-              }}
-            >
-              <div className="relative w-20 h-20 flex items-center justify-center">
-                <img
-                  src="/assets/svg/problems_icon.svg"
-                  alt="Problem icon"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="space-y-3">
-            <p className="font-barlow text-[18px] mb-6 font-normal leading-[24px] tracking-normal text-[#0F2D37]">
-              {dict.problem.description}
-            </p>
+    <Section>
+      <div className="mx-auto grid max-w-[1200px] gap-12 md:grid-cols-3 md:gap-8 mb-10">
+        {cards.map((card) => (
+          <motion.div
+            key={card.id}
+            className="flex flex-col w-11/12 mr-auto md:w-full mb-10 md:mb-0"
+            initial={{ opacity: 0, y: 30 }}
+            transition={{ duration: 1, delay: card.delay }}
+            viewport={{ once: true }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <div className="relative mb-2 w-fit">
+              <h3 className="relative z-10 font-barlow-condensed text-2xl font-semibold uppercase leading-none tracking-normal text-foreground md:text-3xl">
+                {card.title}
+              </h3>
 
-            <p className="font-barlow text-[18px] font-normal leading-[24px] tracking-normal text-[#0F2D37]">
-              <span className="font-barlow text-[18px]  font-extrabold leading-[24px] tracking-normal text-[#0F2D37]">{dict.problem.highlight}</span> {dict.problem.highlightSuffix}
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="flex flex-col"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.15 }}
-        >
-          <div className="relative mb-2">
-            <h3 className="font-barlow-condensed text-[28px] font-semibold leading-[100%] tracking-normal uppercase text-[#0F2D37] relative z-10">
-              {dict.solution.title}
-            </h3>
-            <div
-              className="absolute z-0 md:hidden"
-              style={{
-                left: 'calc(var(--spacing) * 28)',
-                top: '-35px'
-              }}
-            >
-              <div className="relative w-16 h-16 flex items-center justify-center">
-                <img
-                  src="/assets/svg/solution-icon.svg"
-                  alt="Solution icon"
-                  className="w-full h-full"
-                />
+              <div
+                aria-hidden
+                className="absolute -right-1/3 -top-full z-0 shrink-0 -translate-y-1/3 size-16 md:size-20"
+              >
+                <card.icon className="size-full text-[#FED700]" />
               </div>
             </div>
-            <div
-              className="absolute z-0 hidden md:block"
-              style={{
-                left: 'calc(var(--spacing) * 23)',
-                top: '-57px'
-              }}
-            >
-              <div className="relative w-20 h-20 flex items-center justify-center">
-                <img
-                  src="/assets/svg/solution-icon.svg"
-                  alt="Solution icon"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="space-y-3">
-            <p className="font-barlow text-[18px] mb-6  font-normal leading-[24px] tracking-normal text-[#0F2D37]">
-              {dict.solution.description}
-            </p>
-            <p className="font-barlow text-[18px] font-normal leading-[24px] tracking-normal text-[#0F2D37]">
-              <span className="font-barlow text-[18px] font-extrabold leading-[24px] tracking-normal text-[#0F2D37]">{dict.solution.highlight}</span> {dict.solution.highlightSuffix}
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="flex flex-col"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          <div className="relative mb-2">
-            <h3 className="font-barlow-condensed text-[28px] font-semibold leading-[100%] tracking-normal uppercase text-[#0F2D37] relative z-10">
-              {dict.whyNow.title}
-            </h3>
-            <div
-              className="absolute z-0 md:hidden"
-              style={{
-                left: 'calc(var(--spacing) * 27)',
-                top: '-33px'
-              }}
-            >
-              <div className="relative w-16 h-16 flex items-center justify-center">
-                <img
-                  src="/assets/svg/why_now_icon.svg"
-                  alt="Why now icon"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-            <div
-              className="absolute z-0 hidden md:block"
-              style={{
-                left: 'calc(var(--spacing) * 18)',
-                top: '-57px'
-              }}
-            >
-              <div className="relative w-20 h-20 flex items-center justify-center">
-                <img
-                  src="/assets/svg/why_now_icon.svg"
-                  alt="Why now icon"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="space-y-0">
-            {dict.whyNow.lines.map((line, i) => (
-              <p key={i} className="font-barlow text-[18px] font-normal leading-[24px] tracking-normal text-[#0F2D37]">
-                {line}
-              </p>
-            ))}
-          </div>
-        </motion.div>
+            <p
+              className="font-barlow text-base md:text-lg font-normal leading-6 tracking-normal text-foreground [&_strong]:font-extrabold"
+              dangerouslySetInnerHTML={{ __html: card.contentHtml }}
+            />
+          </motion.div>
+        ))}
       </div>
     </Section>
   );

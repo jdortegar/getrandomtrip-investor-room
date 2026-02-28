@@ -25,22 +25,10 @@ export function FullMarketingContent({ dict }: FullMarketingContentProps) {
       <Hero />
       <ValueProposition dict={dict.valueProposition} />
       <ProblemSolution dict={dict.problemSolution} />
-      <Paragraph>
-        <span className="md:hidden">
-          {dict.paragraphMobile.line1}
-          <br />
-          {dict.paragraphMobile.line2}
-          <br />
-          {dict.paragraphMobile.line3}
-          <br />
-          <span className="font-bold">{dict.paragraphMobile.bold}</span>
-        </span>
-        <span className="hidden md:inline">
-          {dict.paragraphDesktop.line1}
-          <br />
-          <span className="font-bold">{dict.paragraphDesktop.bold}</span>
-        </span>
-      </Paragraph>
+      <Paragraph
+        children={dict.paragraphDesktopHtml}
+        innerClassName="text-2xl! md:text-3xl! leading-none"
+      />
       <ThreeDecisions dict={dict.threeDecisions} />
       <BusinessVerticals dict={dict.businessVerticals} />
       <SystemFeatures dict={dict.systemFeatures} />

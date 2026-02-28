@@ -5,40 +5,39 @@ export interface MarketingDictionary {
     description: string;
     descriptionBold: string;
     descriptionBody: string;
+    /** Paragraph HTML (e.g. with <strong>). Rendered as-is. */
+    descriptionHtml: string;
     bullets: string[];
     foundingRound: string;
     ctaButton: string;
   };
   problemSolution: {
     problem: {
-      title: string;
       description: string;
+      descriptionHtml: string;
       highlight: string;
       highlightSuffix: string;
+      title: string;
     };
     solution: {
-      title: string;
       description: string;
+      descriptionHtml: string;
       highlight: string;
       highlightSuffix: string;
+      title: string;
     };
     whyNow: {
-      title: string;
+      contentHtml: string;
       lines: string[];
+      title: string;
     };
   };
   paragraph: string;
   paragraphBold: string;
-  paragraphMobile: {
-    line1: string;
-    line2: string;
-    line3: string;
-    bold: string;
-  };
-  paragraphDesktop: {
-    line1: string;
-    bold: string;
-  };
+  /** Mobile view: HTML string (e.g. with <br /> and <strong>). */
+  paragraphMobileHtml: string;
+  /** Desktop view: HTML string (e.g. with <br /> and <strong>). */
+  paragraphDesktopHtml: string;
   threeDecisions: {
     sectionTitle: string;
     headline: string;

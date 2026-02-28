@@ -52,7 +52,6 @@ export function Section({
             </motion.div>
           )}
 
-          {/* Steps Section */}
           {children}
         </div>
       </div>

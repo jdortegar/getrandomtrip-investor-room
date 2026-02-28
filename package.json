@@ -43,6 +43,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/negotiator": "^0.6.4",
     "@types/node": "20",

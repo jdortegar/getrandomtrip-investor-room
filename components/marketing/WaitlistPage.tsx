@@ -81,7 +81,7 @@ export function WaitlistPage({ dict, locale, onOpenLogin }: WaitlistPageProps) {
       {/* Right: Form */}
       <div className="flex min-w-0 flex-col justify-center px-6 py-4 md:px-12 md:py-6 lg:px-16 xl:px-24">
         <div className="mx-auto w-full max-w-md">
-          <h1 className="font-barlow-condensed text-3xl font-bold uppercase leading-tight tracking-wide text-foreground md:text-4xl lg:text-5xl">
+          <h1 className="font-barlow-condensed text-3xl font-bold uppercase leading-none tracking-wide text-foreground md:text-4xl lg:text-5xl">
             {dict.headline}
           </h1>
           <p className="mt-4 text-muted-foreground md:text-lg">

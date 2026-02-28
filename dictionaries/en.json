@@ -16,6 +16,7 @@
       "description": "The industry solved how to book.",
       "descriptionBold": "No one solved how to decide.",
       "descriptionBody": "Randomtrip designs surprise getaways with operational precision: you define the essentials, we design the rest.",
+      "descriptionHtml": "The industry solved how to book. <strong>No one solved how to decide.</strong> Randomtrip designs surprise getaways with operational precision: you define the essentials, we design the rest.",
       "bullets": [
         "Less time choosing, more time living.",
         "Technology + human curation to match tastes, rhythm and energy.",
@@ -28,17 +29,20 @@
       "problem": {
         "title": "THE PROBLEM",
         "description": "Today, traveling means comparing hundreds of options, open tabs, contradictory reviews and exhausting decisions.",
+        "descriptionHtml": "Today, traveling means comparing hundreds of options, open tabs, contradictory reviews and exhausting decisions. <strong>More options didn't mean better experiences.</strong> They meant more friction.",
         "highlight": "More options didn't mean better experiences.",
         "highlightSuffix": "They meant more friction."
       },
       "solution": {
         "title": "THE SOLUTION",
         "description": "Randomtrip designs surprise getaways combining technology, human criteria and local curation.",
+        "descriptionHtml": "Randomtrip designs surprise getaways combining technology, human criteria and local curation. <strong>The traveler only decides the essentials.</strong> The system designs the rest.",
         "highlight": "The traveler only decides the essentials.",
         "highlightSuffix": "The system designs the rest."
       },
       "whyNow": {
         "title": "WHY NOW",
+        "contentHtml": "Inspiration is already creator-led. Booking is already commoditized. The decision is still broken.",
         "lines": [
           "Inspiration is already creator-led.",
           "Booking is already commoditized.",
@@ -48,16 +52,8 @@
     },
     "paragraph": "We built the system to design trips the way products are designed:",
     "paragraphBold": "WITH INTENTION, DATA AND CRITERIA.",
-    "paragraphMobile": {
-      "line1": "WE BUILT THE SYSTEM TO",
-      "line2": "DESIGN TRIPS THE WAY",
-      "line3": "PRODUCTS ARE DESIGNED:",
-      "bold": "WITH INTENTION, DATA AND CRITERIA."
-    },
-    "paragraphDesktop": {
-      "line1": "WE BUILT THE SYSTEM TO DESIGN TRIPS THE WAY PRODUCTS ARE DESIGNED:",
-      "bold": "WITH INTENTION, DATA AND CRITERIA."
-    },
+    "paragraphMobileHtml": "WE BUILT THE SYSTEM TO<br />DESIGN TRIPS THE WAY<br />PRODUCTS ARE DESIGNED:<br /><strong>WITH INTENTION, DATA AND CRITERIA.</strong>",
+    "paragraphDesktopHtml": "WE BUILT THE SYSTEM TO DESIGN TRIPS THE WAY PRODUCTS ARE DESIGNED:<br /><strong>WITH INTENTION, DATA AND CRITERIA.</strong>",
     "threeDecisions": {
       "sectionTitle": "How does it work?",
       "headline": "Three decisions.",
