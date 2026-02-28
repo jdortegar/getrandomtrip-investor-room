@@ -69,8 +69,8 @@ export interface MarketingDictionary {
       backgroundColor?: string | null;
     }>;
     description: string;
-    headline1: string;
-    headline2: string;
+    /** Headline HTML (e.g. with <br />). Rendered with dangerouslySetInnerHTML. */
+    headlineHtml: string;
     title: string;
   };
   businessVerticals: {

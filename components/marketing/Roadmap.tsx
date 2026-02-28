@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { MapPin } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { Section } from './Section';
 import { MobileCarousel } from './MobileCarousel';
 
@@ -22,65 +24,91 @@ interface RoadmapDict {
 
 interface RoadmapProps {
   className?: string;
-  dict?: RoadmapDict;
+  dict: RoadmapDict;
 }
 
-const ROADMAP_PHASES: RoadmapPhase[] = [
-  {
-    id: 1,
-    period: 'Q1-Q2 2026',
-    subtitle: 'El milestone del Founding Round',
-    items: [
-      'Producto base + curación inicial.',
-      'Activación Trippers + primeras rutas.',
-      'Pilotos pagos + aprendizaje del sistema.',
-      'Optimización de experiencia y operación.',
-    ],
-  },
-  {
-    id: 2,
-    period: 'H2 2026',
-    items: [
-      'Narrativa + métricas para siguiente ronda.',
-      'Expansión LATAM',
-    ],
-  },
-  {
-    id: 3,
-    period: '2026/2027',
-    items: [
-      'IA Predictiva',
-      'Crecimiento B2B',
-      'Lanzamiento nuevos productos',
-    ],
-  },
-];
-
-function TimelineLine() {
+function TimelineLine({ isLast = false }: { isLast?: boolean }) {
   return (
-    <div className="flex items-center flex-1 mx-1">
-      <div className="w-[6px] h-[6px] rounded-full bg-[#FED700] shrink-0" />
-      <div className="flex-1 h-[1.5px] bg-[#FED700]" />
-      <div className="w-[6px] h-[6px] rounded-full bg-[#FED700] shrink-0" />
+    <div className={cn('flex flex-1 items-center', isLast ? 'ml-1' : 'mx-1')}>
+      <div className="h-[6px] w-[6px] shrink-0 rounded-full bg-[#FED700]" />
+      <div className="h-[1.5px] flex-1 bg-[#FED700]" />
+      {!isLast && (
+        <div className="h-[6px] w-[6px] shrink-0 rounded-full bg-[#FED700]" />
+      )}
     </div>
   );
 }
 
-function TimelineLineNoEnd() {
+interface PhaseHeaderProps {
+  isFirst: boolean;
+  isLast: boolean;
+  period: string;
+}
+
+function PhaseHeader({ period, isFirst, isLast }: PhaseHeaderProps) {
   return (
-    <div className="flex items-center ml-1 flex-1">
-      <div className="w-[6px] h-[6px] rounded-full bg-[#FED700] shrink-0" />
-      <div className="flex-1 h-[1.5px] bg-[#FED700]" />
+    <div className="flex flex-1 items-end pb-1">
+      <h3 className="font-barlow-condensed font-bold uppercase whitespace-nowrap shrink-0 text-[#0F2D37] text-5xl">
+        {period}
+      </h3>
+      {isFirst ? (
+        <div className="relative ml-1 flex flex-1 items-center">
+          <MapPin
+            aria-hidden
+            className={cn(
+              'absolute bottom-2 text-[#FED700] left-[-13px] size-[29px] md:left-[-7px] md:size-[30px]',
+            )}
+          />
+          <TimelineLine />
+        </div>
+      ) : (
+        <TimelineLine isLast={isLast} />
+      )}
     </div>
+  );
+}
+
+interface PhaseBodyProps {
+  phase: RoadmapPhase;
+}
+
+function PhaseBody({ phase }: PhaseBodyProps) {
+  return (
+    <>
+      {phase.subtitle && (
+        <p
+          className={cn(
+            'font-barlow-condensed font-bold text-[#0F2D37] mb-3 text-3xl',
+          )}
+        >
+          {phase.subtitle}
+        </p>
+      )}
+      <ul className="space-y-1">
+        {phase.items.map((item, i) => (
+          <li
+            key={i}
+            className="font-barlow flex items-start gap-2 font-normal text-[#0F2D37] text-base md:text-lg"
+          >
+            <span className="size-[5px] shrink-0 rounded-full bg-[#0F2D37] mt-2 md:mt-2.5" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
 export function Roadmap({ className, dict }: RoadmapProps) {
-  const phases: RoadmapPhase[] = dict?.phases
-    ? dict.phases.map((p, i) => ({ id: i + 1, period: p.period, subtitle: p.subtitle, items: p.items }))
-    : ROADMAP_PHASES;
+  const phases: RoadmapPhase[] = dict.phases.map((p, i) => ({
+    id: i + 1,
+    period: p.period,
+    subtitle: p.subtitle,
+    items: p.items,
+  }));
+
   return (
-    <Section className={`${className || ''} overflow-hidden`} noContainerPadding>
+    <Section className={cn(className, 'overflow-hidden')} noContainerPadding>
       <div className="mx-auto w-full">
         {/* Title */}
         <motion.div
@@ -90,76 +118,42 @@ export function Roadmap({ className, dict }: RoadmapProps) {
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <h3
-            className="font-barlow-condensed font-semibold uppercase tracking-wide text-foreground"
-            style={{ fontSize: '28px', lineHeight: '100%' }}
-          >
-            {dict?.title || 'TRACCIÓN & ROADMAP'}
+          <h3 className="font-barlow-condensed font-semibold uppercase tracking-wide text-foreground text-3xl">
+            {dict?.title}
           </h3>
         </motion.div>
 
         {/* Desktop */}
         <div className="hidden md:block">
           {/* Titles + lines row */}
-          <div className="flex items-end mb-6 pl-8 xl:pl-12 2xl:pl-16" style={{ marginLeft: '130px' }}>
+          <div
+            className="flex items-end mb-6 pl-8 xl:pl-12 2xl:pl-16"
+            style={{ marginLeft: '130px' }}
+          >
             {phases.map((phase, index) => (
-              <div key={phase.id} className="flex items-end flex-1 pb-1">
-                <h3
-                  className="font-barlow-condensed font-bold text-[#0F2D37] uppercase whitespace-nowrap shrink-0"
-                  style={{ fontSize: '45px', lineHeight: '100%', marginRight: index === 0 ? '5px' : undefined }}
-                >
-                  {phase.period}
-                </h3>
-                {index === 0 ? (
-                  <div className="relative flex items-center flex-1 ml-1">
-                    <img
-                      src="/assets/icons/icon_map.svg"
-                      alt="Map"
-                      className="w-[30px] h-[30px] absolute"
-                      style={{ bottom: '8px', left: '-7px' }}
-                    />
-                    <TimelineLine />
-                  </div>
-                ) : index < phases.length - 1 ? (
-                  <TimelineLine />
-                ) : (
-                  <TimelineLineNoEnd />
-                )}
-              </div>
+              <PhaseHeader
+                key={phase.id}
+                isFirst={index === 0}
+                isLast={index === phases.length - 1}
+                period={phase.period}
+              />
             ))}
           </div>
 
           {/* Content row */}
-          <div className="grid grid-cols-3 gap-6 px-8 xl:px-12 2xl:px-16" style={{ marginLeft: '130px' }}>
+          <div
+            className="grid grid-cols-3 gap-6 px-8 xl:px-12 2xl:px-16"
+            style={{ marginLeft: '130px' }}
+          >
             {phases.map((phase, index) => (
               <motion.div
                 key={phase.id}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
               >
-                {phase.subtitle && (
-                  <p
-                    className="font-barlow-condensed font-semibold text-[#0F2D37] mb-3"
-                    style={{ fontSize: '28px', lineHeight: '122%' }}
-                  >
-                    {phase.subtitle}
-                  </p>
-                )}
-
-                <ul className="space-y-1">
-                  {phase.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="font-barlow text-[#0F2D37] font-normal flex items-start gap-2"
-                      style={{ fontSize: '16px', lineHeight: '22px' }}
-                    >
-                      <span className="mt-[8px] w-[5px] h-[5px] rounded-full bg-[#0F2D37] shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <PhaseBody phase={phase} />
               </motion.div>
             ))}
           </div>
@@ -168,65 +162,24 @@ export function Roadmap({ className, dict }: RoadmapProps) {
         {/* Mobile - Slider */}
         <div className="block md:hidden">
           <MobileCarousel
-            itemClassName="h-auto"
-            slideWidth="100%"
-            items={phases}
-            showDots
             dotColor="#FED700"
-            renderItem={(phase) => (
+            itemClassName="h-auto"
+            className="md:hidden block -mr-4 w-[calc(100%+1rem)] md:mr-0 md:w-full"
+            items={phases}
+            renderItem={(phase, index) => (
               <div className="px-4">
-                {/* Period + icon + line */}
-                <div className="flex items-end mb-3 pb-1">
-                  <h3
-                    className="font-barlow-condensed font-bold text-[#0F2D37] uppercase whitespace-nowrap shrink-0"
-                    style={{ fontSize: '43.52px', lineHeight: '100%', marginRight: phase.id === 1 ? '10px' : undefined }}
-                  >
-                    {phase.period}
-                  </h3>
-                  {phase.id === 1 ? (
-                    <div className="relative flex items-center flex-1 ml-1">
-                      <img
-                        src="/assets/icons/icon_map.svg"
-                        alt="Map"
-                        className="w-[29px] h-[29px] absolute"
-                        style={{ bottom: '8px', left: '-13px' }}
-                      />
-                      <div className="w-[5px] h-[5px] rounded-full bg-[#FED700] shrink-0" />
-                      <div className="flex-1 h-[1.5px] bg-[#FED700]" />
-                      <div className="w-[5px] h-[5px] rounded-full bg-[#FED700] shrink-0" />
-                    </div>
-                  ) : (
-                    <div className="flex items-center flex-1 mx-1">
-                      <div className="w-[5px] h-[5px] rounded-full bg-[#FED700] shrink-0" />
-                      <div className="flex-1 h-[1.5px] bg-[#FED700]" />
-                      <div className="w-[5px] h-[5px] rounded-full bg-[#FED700] shrink-0" />
-                    </div>
-                  )}
+                <div className="mb-3">
+                  <PhaseHeader
+                    isLast={true}
+                    isFirst={false}
+                    period={phase.period}
+                  />
                 </div>
-
-                {phase.subtitle && (
-                  <p
-                    className="font-barlow-condensed font-bold text-[#0F2D37] mb-3"
-                    style={{ fontSize: '28px', lineHeight: '122%' }}
-                  >
-                    {phase.subtitle}
-                  </p>
-                )}
-
-                <ul className="space-y-1">
-                  {phase.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="font-barlow text-[#0F2D37] font-normal flex items-start gap-2"
-                      style={{ fontSize: '18px', lineHeight: '23.21px' }}
-                    >
-                      <span className="mt-[9px] w-[5px] h-[5px] rounded-full bg-[#0F2D37] shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <PhaseBody phase={phase} />
               </div>
             )}
+            showDots
+            slideWidth="100%"
           />
         </div>
       </div>

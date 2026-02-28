@@ -17,7 +17,7 @@ interface SafeDict {
 
 interface SafeProps {
   className?: string;
-  dict?: SafeDict;
+  dict: SafeDict;
 }
 
 const DEFAULT_FUND_DETAILS = {
@@ -43,9 +43,9 @@ interface Slice extends SliceData {
 }
 
 const SLICE_DATA: SliceData[] = [
-  { percentage: 45, color: '#FED700', radius: 1.0 },    // 45% - full radius
-  { percentage: 35, color: '#626B2F', radius: 0.92 },   // 35% - slightly less
-  { percentage: 20, color: '#172C36', radius: 0.82 },   // 20% - smallest
+  { percentage: 45, color: '#FED700', radius: 1.0 }, // 45% - full radius
+  { percentage: 35, color: '#626B2F', radius: 0.92 }, // 35% - slightly less
+  { percentage: 20, color: '#172C36', radius: 0.82 }, // 20% - smallest
 ];
 
 function getSlices(): Slice[] {
@@ -58,7 +58,10 @@ function getSlices(): Slice[] {
   });
 }
 
-function polarToCartesian(angle: number, radius: number): { x: number; y: number } {
+function polarToCartesian(
+  angle: number,
+  radius: number,
+): { x: number; y: number } {
   const rad = (angle * Math.PI) / 180;
   return {
     x: PIE_CENTER + radius * Math.cos(rad),
@@ -90,8 +93,8 @@ export function Safe({ className, dict }: SafeProps) {
   return (
     <Section
       className={className}
-      description={dict?.description || '"Ronda Pre-Seed (Friends & Family): USD 100 K bajo SAFE (20 % discount)."'}
-      title={dict?.title || 'USO DE FONDOS & SAFE'}
+      description={dict.description}
+      title={dict.title}
     >
       <div className="flex flex-col items-center overflow-visible mt-[95px] md:mt-0">
         <div className="relative w-full max-w-[500px] md:max-w-[550px] xl:max-w-[600px] 2xl:max-w-[650px] mx-auto overflow-visible">
@@ -162,7 +165,14 @@ export function Safe({ className, dict }: SafeProps) {
                 className="font-barlow-condensed font-semibold leading-tight text-[16px] md:text-[28px] text-center"
                 style={{ color: '#1C2B35', letterSpacing: '0.5px' }}
               >
-                {(dict?.marketingLabel || 'MARKETING &\nGROWTH').split('\n').map((l, i) => <span key={i}>{i > 0 && <br />}{l}</span>)}
+                {(dict?.marketingLabel || 'MARKETING &\nGROWTH')
+                  .split('\n')
+                  .map((l, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {l}
+                    </span>
+                  ))}
               </div>
             </motion.div>
 
@@ -227,7 +237,14 @@ export function Safe({ className, dict }: SafeProps) {
                   className="font-barlow-condensed font-semibold leading-tight text-[11px] md:text-[18px]"
                   style={{ color: '#FFFFFF', letterSpacing: '0.3px' }}
                 >
-                  {(dict?.techLabel || 'TECH &\nPRODUCTO').split('\n').map((l, i) => <span key={i}>{i > 0 && <br />}{l}</span>)}
+                  {(dict?.techLabel || 'TECH &\nPRODUCTO')
+                    .split('\n')
+                    .map((l, i) => (
+                      <span key={i}>
+                        {i > 0 && <br />}
+                        {l}
+                      </span>
+                    ))}
                 </div>
               </div>
             </motion.div>
@@ -398,9 +415,16 @@ export function Safe({ className, dict }: SafeProps) {
             transition={{ duration: 0.5, delay: 1.1 }}
           >
             <div className="flex items-center gap-0">
-              <svg width="130" height="70" className="shrink-0 mr-1" viewBox="0 0 130 70">
+              <svg
+                width="130"
+                height="70"
+                className="shrink-0 mr-1"
+                viewBox="0 0 130 70"
+              >
                 <motion.circle
-                  cx="4" cy="60" r="4"
+                  cx="4"
+                  cy="60"
+                  r="4"
                   fill="#FED700"
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -408,23 +432,33 @@ export function Safe({ className, dict }: SafeProps) {
                   transition={{ duration: 0.3, delay: 1.1 }}
                 />
                 <motion.line
-                  x1="8" y1="60" x2="60" y2="20"
-                  stroke="#FED700" strokeWidth="2"
+                  x1="8"
+                  y1="60"
+                  x2="60"
+                  y2="20"
+                  stroke="#FED700"
+                  strokeWidth="2"
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 1.3 }}
                 />
                 <motion.line
-                  x1="60" y1="20" x2="126" y2="20"
-                  stroke="#FED700" strokeWidth="2"
+                  x1="60"
+                  y1="20"
+                  x2="126"
+                  y2="20"
+                  stroke="#FED700"
+                  strokeWidth="2"
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: 1.6 }}
                 />
                 <motion.circle
-                  cx="126" cy="20" r="4"
+                  cx="126"
+                  cy="20"
+                  r="4"
                   fill="#FED700"
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}

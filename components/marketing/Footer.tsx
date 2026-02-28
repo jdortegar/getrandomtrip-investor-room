@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface FooterDict {
@@ -31,8 +32,7 @@ export function Footer({ className, dict }: FooterProps) {
       <div className="flex flex-col gap-4 items-center mx-auto px-4 py-1 md:gap-5 md:py-1">
         {/* Main Text */}
         <motion.p
-          className="font-barlow font-semibold text-foreground leading-none"
-          style={{ fontSize: '16px' }}
+          className="font-barlow font-semibold text-foreground leading-none text-base md:text-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -42,20 +42,21 @@ export function Footer({ className, dict }: FooterProps) {
         </motion.p>
 
         {/* Visit Button */}
-        <motion.button
-          className={cn(
-            'bg-[#FED700] font-barlow-condensed font-semibold px-6 py-3 rounded-lg text-black tracking-wide transition-all uppercase',
-            'hover:bg-[#FED700]/90 hover:scale-105',
-          )}
-          style={{ fontSize: '16px' }}
-          onClick={handleVisitClick}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.2 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, y: 0 }}
         >
-          {dict.visitButton}
-        </motion.button>
+          <Button
+            className="rounded-lg px-6 py-3 text-base uppercase tracking-wide md:text-lg"
+            onClick={handleVisitClick}
+            size="lg"
+            variant="feature"
+          >
+            {dict.visitButton}
+          </Button>
+        </motion.div>
 
         {/* Logo and Branding */}
         <motion.div

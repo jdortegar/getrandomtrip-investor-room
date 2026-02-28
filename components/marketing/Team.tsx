@@ -181,12 +181,12 @@ export function Team({ className }: TeamProps) {
     <Section className={className} title="EQUIPO">
       <div>
         {/* Desktop: Carousel with 5 visible slides */}
-        <div className="hidden md:block">
+        <div className="hidden md:block md:-mr-8 md:w-[calc(100%+2rem)] xl:-mr-12 xl:w-[calc(100%+3rem)] 2xl:-mr-16 2xl:w-[calc(100%+4rem)]">
           <MobileCarousel
             itemClassName="h-[400px]"
             items={TEAM_MEMBERS}
-
             slideWidth="22%"
+            showDots
             renderItem={(member) => {
               const isFlipped = flippedCard === member.id;
 
@@ -242,8 +242,9 @@ export function Team({ className }: TeamProps) {
           <MobileCarousel
             itemClassName="h-[400px]"
             items={TEAM_MEMBERS}
-
+            className="md:hidden block -mr-4 w-[calc(100%+1rem)] md:mr-0 md:w-full"
             slideWidth="80%"
+            showDots
             renderItem={(member) => {
               const isFlipped = mobileFlippedCard === member.id;
 

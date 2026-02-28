@@ -10,9 +10,15 @@ const FEATURE_ICONS = [
   '/assets/svg/community.svg',
 ];
 
+interface CommunityProfile {
+  description: string;
+  name: string;
+  role: string;
+}
+
 interface CommunityDict {
   features: Array<{ description: string; title: string }>;
-  profiles: Array<{ description: string; name: string; role: string }>;
+  profiles: CommunityProfile[];
   subtitle: string;
   title: string;
 }
@@ -20,6 +26,38 @@ interface CommunityDict {
 interface CommunityProps {
   className?: string;
   dict: CommunityDict;
+}
+
+interface ProfileCardProps {
+  delay?: number;
+  profile: CommunityProfile;
+}
+
+function ProfileCard({ profile, delay = 0 }: ProfileCardProps) {
+  return (
+    <motion.div
+      className="h-full space-y-2 rounded-2xl bg-[#D9D9D9] p-4 md:p-6"
+      initial={{ opacity: 0, y: 30 }}
+      transition={{ duration: 1, delay }}
+      viewport={{ once: true }}
+      whileInView={{ opacity: 1, y: 0 }}
+    >
+      <div className="flex items-start gap-3 md:items-center md:gap-4">
+        <div className="h-12 w-12 shrink-0 rounded-full bg-white md:h-[42px] md:w-[42px]" />
+        <div className="min-w-0 flex-1 space-y-1 md:space-y-2">
+          <h4 className="font-barlow-condensed text-lg font-bold uppercase leading-none tracking-wide text-foreground md:text-[22px]">
+            {profile.name}
+          </h4>
+          <p className="font-barlow-condensed text-[10px] uppercase tracking-[0.25em] text-foreground md:text-[11px]">
+            {profile.role}
+          </p>
+        </div>
+      </div>
+      <p className="font-barlow-condensed font-light leading-relaxed text-foreground text-[13px] md:text-[15px]">
+        {profile.description}
+      </p>
+    </motion.div>
+  );
 }
 
 export function Community({ className, dict }: CommunityProps) {
@@ -53,7 +91,7 @@ export function Community({ className, dict }: CommunityProps) {
           />
 
           {/* Overlay Gradient - Stronger on mobile for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent md:from-black/40 md:via-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/40 to-transparent md:from-black/40 md:via-transparent" />
 
           {/* Content Overlay */}
           <div className="relative h-full flex items-center py-8 md:py-0">
@@ -96,7 +134,7 @@ export function Community({ className, dict }: CommunityProps) {
                           <h4 className="font-barlow-condensed text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-wide text-white mb-1">
                             {feature.title}
                           </h4>
-                          <p className="font-barlow text-sm sm:text-base md:text-lg text-white leading-relaxed max-w-sm">
+                          <p className="font-barlow text-sm sm:text-base md:text-lg text-white leading-tight md:leading-relaxed max-w-sm">
                             {feature.description}
                           </p>
                         </div>
@@ -112,82 +150,24 @@ export function Community({ className, dict }: CommunityProps) {
         </motion.div>
 
         {/* Profile Cards Section - Mobile Carousel on mobile, grid on desktop */}
-        <div className="md:hidden">
-          <MobileCarousel
-            className=""
-            itemClassName="h-full"
-            items={dict.profiles}
-            renderItem={(profile, index) => (
-              <motion.div
-                className="bg-[#D9D9D9] rounded-2xl p-4 space-y-2 h-full"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 1,
-                  delay: index * 0.1,
-                }}
-              >
-                <div className="flex items-start gap-3">
-                  {/* Profile Picture Placeholder */}
-                  <div className="shrink-0 w-12 h-12 rounded-full bg-white" />
 
-                  {/* Profile Info */}
-                  <div className="flex-1 space-y-2">
-                    <h4 className="font-barlow-condensed text-lg font-bold uppercase tracking-wide text-foreground leading-none">
-                      {profile.name}
-                    </h4>
-                    <p
-                      className="font-barlow-condensed text-[10px] uppercase tracking-wide text-foreground"
-                      style={{ letterSpacing: '0.25em' }}
-                    >
-                      {profile.role}
-                    </p>
-                  </div>
-                </div>
-                <p className="font-barlow-condensed text-[13px] leading-relaxed text-foreground font-light">
-                  {profile.description}
-                </p>
-              </motion.div>
-            )}
-          />
-        </div>
+        <MobileCarousel
+          className="md:hidden block -mr-4 w-[calc(100%+1rem)] md:mr-0 md:w-full"
+          itemClassName="h-full"
+          items={dict.profiles}
+          renderItem={(profile, index) => (
+            <ProfileCard delay={index * 0.1} profile={profile} />
+          )}
+        />
 
         {/* Desktop Grid */}
         <div className="hidden gap-4 px-10 md:grid md:grid-cols-3 xl:gap-6 xl:px-12 2xl:gap-8 2xl:px-16">
           {dict.profiles.map((profile, index) => (
-            <motion.div
+            <ProfileCard
               key={profile.name}
-              className="bg-[#D9D9D9] rounded-2xl p-6 space-y-2"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 1,
-                delay: index * 0.1,
-              }}
-            >
-              <div className="flex items-center gap-4">
-                {/* Profile Picture Placeholder */}
-                <div className="shrink-0 w-[42px] h-[42px] rounded-full bg-white" />
-
-                {/* Profile Info */}
-                <div className="flex-1 space-y-1">
-                  <h4 className="font-barlow-condensed font-bold uppercase tracking-wide text-foreground leading-none" style={{ fontSize: '22px' }}>
-                    {profile.name}
-                  </h4>
-                  <p
-                    className="font-barlow-condensed uppercase tracking-wide text-foreground"
-                    style={{ fontSize: '11px', letterSpacing: '0.25em' }}
-                  >
-                    {profile.role}
-                  </p>
-                </div>
-              </div>
-              <p className="font-barlow-condensed leading-relaxed text-foreground font-light" style={{ fontSize: '15px' }}>
-                {profile.description}
-              </p>
-            </motion.div>
+              delay={index * 0.1}
+              profile={profile}
+            />
           ))}
         </div>
       </div>

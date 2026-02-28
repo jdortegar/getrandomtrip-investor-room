@@ -10,9 +10,6 @@ interface ExpandAnimatedItemsProps<T> {
   renderItem: (item: T, isHovered: boolean) => ReactNode;
   className?: string;
   itemClassName?: string;
-  expandedWidth?: string;
-  collapsedWidth?: string;
-  gap?: string;
 }
 
 export function ExpandAnimatedItems<T>({
@@ -22,14 +19,11 @@ export function ExpandAnimatedItems<T>({
   renderItem,
   className = '',
   itemClassName = '',
-  expandedWidth = '50%',
-  collapsedWidth = '25%',
-  gap = 'gap-4',
 }: ExpandAnimatedItemsProps<T>) {
   const [hoveredId, setHoveredId] = useState<number | string>(defaultHoveredId);
 
   return (
-    <div className={`flex ${gap} ${className}`}>
+    <div className={`flex gap-4 ${className}`}>
       {items.map((item, index) => {
         const itemId = getItemId(item);
         const isHovered = hoveredId === itemId;
@@ -45,7 +39,7 @@ export function ExpandAnimatedItems<T>({
             viewport={{ once: true }}
             layout
             animate={{
-              width: isHovered ? expandedWidth : collapsedWidth,
+              width: isHovered ? '50%' : '25%',
             }}
             transition={{
               layout: { duration: 0.4, ease: 'easeInOut' },

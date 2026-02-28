@@ -147,8 +147,7 @@
     "businessModels": {
       "title": "Modelo de negocio",
       "description": "Nuestros canales de ingresos",
-      "headline1": "Tres motores de ingresos.",
-      "headline2": "Un solo sistema.",
+      "headlineHtml": "Tres motores de ingresos.<br />Un solo sistema.",
       "cards": [
         {
           "channel": "Motor 1 – (B2C)",

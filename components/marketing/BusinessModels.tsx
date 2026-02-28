@@ -14,87 +14,35 @@ interface BusinessModelCard {
   margin?: string;
   marginLabel?: string;
   imageUrl: string;
-  backgroundColor?: string;
+  backgroundColor?: string | null;
 }
 
 interface BusinessModelsDict {
   title: string;
-  headline1: string;
-  headline2: string;
+  headlineHtml: string;
   cards: Array<{
     channel: string;
     name: string;
     description?: string;
+    descriptionLabel?: string;
     margin?: string;
     marginLabel?: string;
+    imageUrl: string;
+    backgroundColor?: string | null;
   }>;
 }
 
 interface BusinessModelsProps {
   className?: string;
-  dict?: BusinessModelsDict;
-}
-
-const BUSINESS_MODELS: BusinessModelCard[] = [
-  {
-    id: 1,
-    channel: 'Motor 1 – (B2C)',
-    name: 'Escapadas\nsorpresa',
-    description: 'Viajes sorpresa diseñados y vendidos directamente al viajero.\nMotor de volumen, adquisición y aprendizaje del sistema.',
-    margin: '22-30%',
-    marginLabel: 'MARGEN ESTIMADO',
-    imageUrl: '/images/business-model-1.png',
-  },
-  {
-    id: 2,
-    channel: 'Motor 2 – B2B (Cashflow & escala)',
-    name: 'Corporate & Gift\nExperiences',
-    description: 'Experiencias diseñadas para empresas, regalos y equipos.\nVenta anticipada, menor CAC y tickets más altos.',
-    margin: '22-30%',
-    marginLabel: 'MARGEN ESTIMADO',
-    backgroundColor: '#3B4A3F',
-    imageUrl: '/corporate_img.png',
-  },
-  {
-    id: 3,
-    channel: 'Motor 3 – COMUNIDAD TRIPPER',
-    name: 'Signature Routes\n(IP)',
-    description: 'Rutas diseñadas junto a trippers y creadores. Experiencias únicas,\nrepetibles y difíciles de copiar.',
-    margin: '22-30%',
-    marginLabel: 'MARGEN ESTIMADO',
-    backgroundColor: '#3B4A3F',
-    imageUrl: '/signature_img.png',
-  },
-];
-
-function calculateFontSize(name: string, isMobile: boolean = false): number {
-  const minSize = isMobile ? 24 : 40;
-  const maxSize = isMobile ? 48 : 80;
-  const minLength = 2; // Shortest expected name
-  const maxLength = 20; // Longest expected name
-
-  // Clamp the length to our expected range
-  const clampedLength = Math.max(minLength, Math.min(maxLength, name.length));
-
-  // Calculate size: longer names = smaller font, shorter names = larger font
-  // Linear interpolation: size = maxSize - ((length - minLength) / (maxLength - minLength)) * (maxSize - minSize)
-  const size =
-    maxSize -
-    ((clampedLength - minLength) / (maxLength - minLength)) *
-      (maxSize - minSize);
-
-  return Math.round(size);
+  dict: BusinessModelsDict;
 }
 
 function renderCardContent(
   card: BusinessModelCard,
   isHovered: boolean,
   isMobile: boolean = false,
-  showDetails: boolean = false,
 ) {
-  const nameFontSize = calculateFontSize(card.name, isMobile);
   const shouldShowDetails = isMobile ? true : isHovered;
-
   const shouldShowImage = isMobile ? true : isHovered;
 
   return (
@@ -123,7 +71,7 @@ function renderCardContent(
         transition={{ duration: 0.4 }}
       />
       <motion.div
-        className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+        className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent"
         animate={{
           opacity: shouldShowImage ? 1 : 0,
         }}
@@ -131,7 +79,9 @@ function renderCardContent(
       />
 
       {/* Content Overlay */}
-      <div className={`absolute inset-0 text-white flex flex-col justify-between ${isMobile ? 'p-3' : 'p-6'}`}>
+      <div
+        className={`absolute inset-0 text-white flex flex-col justify-between ${isMobile ? 'p-3' : 'p-6'}`}
+      >
         {/* Top: Channel label + Title */}
         <div>
           <span
@@ -198,7 +148,11 @@ function renderCardContent(
                   className={`font-barlow-condensed font-extrabold uppercase ${
                     isMobile ? '' : 'tracking-wide text-6xl'
                   }`}
-                  style={isMobile ? { fontSize: '38.32px', lineHeight: '100%' } : undefined}
+                  style={
+                    isMobile
+                      ? { fontSize: '38.32px', lineHeight: '100%' }
+                      : undefined
+                  }
                   initial={isMobile ? undefined : { opacity: 0, y: 8 }}
                   animate={isMobile ? undefined : { opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
@@ -215,26 +169,13 @@ function renderCardContent(
 }
 
 export function BusinessModels({ className, dict }: BusinessModelsProps) {
-  const [mobileExpandedId, setMobileExpandedId] = useState<number | null>(null);
-
-  // Merge dict cards with static data
-  const cards: BusinessModelCard[] = BUSINESS_MODELS.map((card, i) => ({
+  const cards: BusinessModelCard[] = dict.cards.map((card, i) => ({
     ...card,
-    ...(dict?.cards?.[i] ? {
-      channel: dict.cards[i].channel,
-      name: dict.cards[i].name,
-      description: dict.cards[i].description,
-      margin: dict.cards[i].margin,
-      marginLabel: dict.cards[i].marginLabel,
-    } : {}),
+    id: i + 1,
   }));
 
-  const handleMobileCardClick = (cardId: number) => {
-    setMobileExpandedId((prev) => (prev === cardId ? null : cardId));
-  };
-
   return (
-    <Section className={`${className || ''} !pb-4`}>
+    <Section className={className}>
       {/* Section Header */}
       <motion.div
         className="mb-6 text-center xl:mb-8 2xl:mb-10"
@@ -243,34 +184,27 @@ export function BusinessModels({ className, dict }: BusinessModelsProps) {
         viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        <h4
-          className="font-semibold uppercase text-foreground mb-2"
-          style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '10px' }}
-        >
-          {dict?.title || 'Modelo de negocio'}
+        <h4 className="mb-2 font-semibold uppercase tracking-[10px] text-foreground text-base leading-tight">
+          {dict.title}
         </h4>
         <h2
-          className="font-barlow-condensed font-bold text-foreground text-center md:!text-[45px]"
-          style={{ fontSize: '28px', lineHeight: '102%' }}
-        >
-          {dict?.headline1 || 'Tres motores de ingresos.'}
-          <br />
-          {dict?.headline2 || 'Un solo sistema.'}
-        </h2>
+          className="font-barlow-condensed font-bold text-foreground text-center md:text-5xl text-3xl leading-tight"
+          dangerouslySetInnerHTML={{
+            __html: dict.headlineHtml,
+          }}
+        />
       </motion.div>
 
       {/* Desktop: Horizontal Expanding Cards */}
       <div className="hidden md:block">
         <ExpandAnimatedItems
           defaultHoveredId={1}
-          expandedWidth="50%"
-          collapsedWidth="25%"
           getItemId={(item) => item.id}
           itemClassName="group relative overflow-hidden rounded-2xl h-[400px] cursor-pointer"
           items={cards}
           renderItem={(card, isHovered) => (
             <div className="relative h-full w-full">
-              {renderCardContent(card, isHovered, false, false)}
+              {renderCardContent(card, isHovered, false)}
             </div>
           )}
         />
@@ -290,7 +224,7 @@ export function BusinessModels({ className, dict }: BusinessModelsProps) {
             viewport={{ once: true }}
             whileInView={{ opacity: 1, y: 0 }}
           >
-            {renderCardContent(card, true, true, true)}
+            {renderCardContent(card, true, true)}
           </motion.div>
         ))}
       </div>

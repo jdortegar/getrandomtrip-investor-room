@@ -49,13 +49,13 @@ export function SystemFeatures({ dict }: SystemFeaturesProps) {
             dangerouslySetInnerHTML={{ __html: dict.subtitleHtml }}
           />
         </motion.div>
-        <div className="flex flex-col gap-8 w-2/3">
+        <div className="flex flex-col gap-8 w-full md:w-2/3">
           {dict.features.map((feature, i) => {
             const Icon = FEATURE_ICONS[i];
             return (
               <motion.div
                 key={i}
-                className="flex gap-4 items-start"
+                className="flex flex-col md:flex-row gap-4 items-center md:items-start justify-center md:justify-start text-center md:text-left"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

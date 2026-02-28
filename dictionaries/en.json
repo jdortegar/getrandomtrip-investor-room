@@ -147,8 +147,7 @@
     "businessModels": {
       "title": "Business model",
       "description": "Our revenue channels",
-      "headline1": "Three revenue engines.",
-      "headline2": "A single system.",
+      "headlineHtml": "Three revenue engines.<br />A single system.",
       "cards": [
         {
           "channel": "Engine 1 – (B2C)",
