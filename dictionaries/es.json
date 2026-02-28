@@ -58,8 +58,7 @@
       "sectionTitle": "¿Cómo funciona?",
       "headline": "Tres decisiones.",
       "headlineBold": "Cero estrés.",
-      "subtitle": "El viajero no planifica.",
-      "subtitleBold": "Define lo esencial.",
+      "subtitleHtml": "El viajero no planifica. <strong>Define lo esencial.</strong>",
       "decisions": [
         { "label": "Cuándo", "title": "Fechas y duración" },
         { "label": "Estilo", "title": "MOOD, RITMO y ENERGÍA" },
@@ -69,23 +68,19 @@
     "systemFeatures": {
       "headline": "No es una agencia.",
       "headlineBold": "Es un sistema.",
-      "subtitle": "Diseñado para escalar criterio, no improvisación.",
-      "subtitleBold": "El sistema aprende con cada viaje.",
+      "subtitleHtml": "Diseñado para escalar criterio, no improvisación.<br /><strong>El sistema aprende con cada viaje.</strong>",
       "features": [
         {
           "title": "Decision Engine",
-          "description": "Algoritmos y reglas propias que combinan preferencias, timing y contexto para reducir fricción y aumentar acierto.",
-          "descriptionBold": "No recomendamos destinos. Diseñamos combinaciones."
+          "descriptionHtml": "Algoritmos y reglas propias que combinan preferencias, timing y contexto para reducir fricción y aumentar acierto. <strong>No recomendamos destinos. Diseñamos combinaciones.</strong>"
         },
         {
           "title": "Curación con criterio",
-          "description": "Expertos locales y trippers diseñan rutas bajo frameworks\nclaros. No es gusto personal:",
-          "descriptionBold": "es criterio sistematizado."
+          "descriptionHtml": "Expertos locales y trippers diseñan rutas bajo frameworks<br />claros. No es gusto personal: <strong>es criterio sistematizado.</strong>"
         },
         {
           "title": "Rutas con alma (IP)",
-          "description": "Cada viaje diseñado alimenta una librería propietaria de\nrutas, patrones y aprendizajes.",
-          "descriptionBold": "Más uso = mejor sistema."
+          "descriptionHtml": "Cada viaje diseñado alimenta una librería propietaria de<br />rutas, patrones y aprendizajes. <strong>Más uso = mejor sistema.</strong>"
         }
       ]
     },

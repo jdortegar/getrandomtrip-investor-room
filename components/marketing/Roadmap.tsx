@@ -113,7 +113,7 @@ export function Roadmap({ className, dict }: RoadmapProps) {
                 {index === 0 ? (
                   <div className="relative flex items-center flex-1 ml-1">
                     <img
-                      src="/assets/svg/icon_map.svg"
+                      src="/assets/icons/icon_map.svg"
                       alt="Map"
                       className="w-[30px] h-[30px] absolute"
                       style={{ bottom: '8px', left: '-7px' }}
@@ -186,7 +186,7 @@ export function Roadmap({ className, dict }: RoadmapProps) {
                   {phase.id === 1 ? (
                     <div className="relative flex items-center flex-1 ml-1">
                       <img
-                        src="/assets/svg/icon_map.svg"
+                        src="/assets/icons/icon_map.svg"
                         alt="Map"
                         className="w-[29px] h-[29px] absolute"
                         style={{ bottom: '8px', left: '-13px' }}

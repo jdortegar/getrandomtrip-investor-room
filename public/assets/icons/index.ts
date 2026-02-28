@@ -1,0 +1,9 @@
+export { default as IconCalendar } from './icon-calendar.svg';
+export { default as IconConfort } from './icon-confort.svg';
+export { default as IconCriterio } from './icon-criterio.svg';
+export { default as IconEngine } from './icon-engine.svg';
+export { default as IconMood } from './icon-mood.svg';
+export { default as IconRutas } from './icon-rutas.svg';
+export { default as ProblemsIcon } from './problems-icon.svg';
+export { default as SolutionIcon } from './solution-icon.svg';
+export { default as WhyNowIcon } from './why-now-icon.svg';

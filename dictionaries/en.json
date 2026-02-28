@@ -58,8 +58,7 @@
       "sectionTitle": "How does it work?",
       "headline": "Three decisions.",
       "headlineBold": "Zero stress.",
-      "subtitle": "The traveler doesn't plan.",
-      "subtitleBold": "Define the essentials.",
+      "subtitleHtml": "The traveler doesn't plan. <strong>Define the essentials.</strong>",
       "decisions": [
         { "label": "When", "title": "Dates and duration" },
         { "label": "Style", "title": "VIBE & RHYTHM" },
@@ -69,23 +68,19 @@
     "systemFeatures": {
       "headline": "Not an agency.",
       "headlineBold": "It's a system.",
-      "subtitle": "Designed to scale criteria, not improvisation.",
-      "subtitleBold": "The system learns with every trip.",
+      "subtitleHtml": "Designed to scale criteria, not improvisation.<br /><strong>The system learns with every trip.</strong>",
       "features": [
         {
           "title": "Decision Engine",
-          "description": "Proprietary algorithms and rules that combine preferences, timing and context to reduce friction and increase accuracy.",
-          "descriptionBold": "We don't recommend destinations. We design combinations."
+          "descriptionHtml": "Proprietary algorithms and rules that combine preferences, timing and context to reduce friction and increase accuracy. <strong>We don't recommend destinations. We design combinations.</strong>"
         },
         {
           "title": "Curation with criteria",
-          "description": "Local experts and trippers design routes under clear frameworks. It's not personal taste:",
-          "descriptionBold": "it's systematized criteria."
+          "descriptionHtml": "Local experts and trippers design routes under clear frameworks. It's not personal taste: <strong>it's systematized criteria.</strong>"
         },
         {
           "title": "Routes with soul (IP)",
-          "description": "Every designed trip feeds a proprietary library of routes, patterns and learnings.",
-          "descriptionBold": "More use = better system."
+          "descriptionHtml": "Every designed trip feeds a proprietary library of routes, patterns and learnings. <strong>More use = better system.</strong>"
         }
       ]
     },

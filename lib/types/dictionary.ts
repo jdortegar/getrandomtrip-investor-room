@@ -42,19 +42,19 @@ export interface MarketingDictionary {
     sectionTitle: string;
     headline: string;
     headlineBold: string;
-    subtitle: string;
-    subtitleBold: string;
+    /** Subtitle HTML (e.g. with <strong>). Rendered with dangerouslySetInnerHTML. */
+    subtitleHtml: string;
     decisions: Array<{ label: string; title: string }>;
   };
   systemFeatures: {
     headline: string;
     headlineBold: string;
-    subtitle: string;
-    subtitleBold: string;
+    /** Subtitle HTML (e.g. with <br /> and <strong>). Rendered with dangerouslySetInnerHTML. */
+    subtitleHtml: string;
     features: Array<{
       title: string;
-      description: string;
-      descriptionBold: string;
+      /** Description HTML (e.g. with <br /> and <strong>). Rendered with dangerouslySetInnerHTML. */
+      descriptionHtml: string;
     }>;
   };
   businessModels: {

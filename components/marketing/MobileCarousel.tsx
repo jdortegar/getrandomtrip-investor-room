@@ -102,12 +102,17 @@ export function MobileCarousel<T>({
                 aria-label={`Go to slide ${index + 1}`}
                 className={cn(
                   'h-2 rounded-full transition-all duration-300',
-                  !dotColor && (isActive ? 'w-8 bg-foreground' : 'w-2 bg-foreground/30'),
+                  !dotColor &&
+                    (isActive ? 'w-8 bg-foreground' : 'w-2 bg-foreground/30'),
                   dotColor && (isActive ? 'w-8' : 'w-2'),
                 )}
                 key={index}
                 onClick={() => handleDotClick(index)}
-                style={dotColor ? { backgroundColor: isActive ? dotColor : `${dotColor}40` } : undefined}
+                style={
+                  dotColor
+                    ? { backgroundColor: isActive ? dotColor : `${dotColor}40` }
+                    : undefined
+                }
                 type="button"
               />
             );

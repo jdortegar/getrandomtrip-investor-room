@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-import { ProblemsIcon, SolutionIcon, WhyNowIcon } from '@/components/Icons';
+import { ProblemsIcon, SolutionIcon, WhyNowIcon } from '@/public/assets/Icons';
 import type { MarketingDictionary } from '@/lib/types/dictionary';
 import { cn } from '@/lib/utils';
 import { Section } from './Section';
@@ -53,7 +53,7 @@ export function ProblemSolution({ dict }: ProblemSolutionProps) {
 
   return (
     <Section>
-      <div className="mx-auto grid max-w-[1200px] gap-12 md:grid-cols-3 md:gap-8 mb-10">
+      <div className="mx-auto grid max-w-[1200px] gap-12 md:grid-cols-3 md:gap-8 md:mb-10 ">
         {cards.map((card) => (
           <motion.div
             key={card.id}

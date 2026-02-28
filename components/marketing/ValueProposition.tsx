@@ -32,14 +32,14 @@ export function ValueProposition({ dict }: ValuePropositionProps) {
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <div className="relative w-fit">
+          <div className="relative md:w-fit">
             <h2 className="relative z-10 font-barlow-condensed text-3xl font-normal uppercase leading-none text-foreground md:text-4xl">
               <span className="block">{dict.title}</span>
               <span className="block text-5xl font-black md:text-6xl">
                 {dict.titleBold}
               </span>
             </h2>
-            <Hourglass className="absolute right-0 translate-x-1/2 top-0 ml-2 h-20 w-20 shrink-0 text-[#FFD700] md:top-6" />
+            <Hourglass className="absolute right-0 md:translate-x-1/2 top-0 ml-2 h-20 w-20 shrink-0 text-[#FFD700] md:top-6" />
           </div>
 
           <p

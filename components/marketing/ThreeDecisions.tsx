@@ -1,137 +1,103 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Section } from './Section';
-import { MobileCarousel } from './MobileCarousel';
 
-interface ThreeDecisionsDict {
-  sectionTitle: string;
-  headline: string;
-  headlineBold: string;
-  subtitle: string;
-  subtitleBold: string;
-  decisions: Array<{ label: string; title: string }>;
-}
+import { IconCalendar, IconConfort, IconMood } from '@/public/assets/Icons';
+import type { MarketingDictionary } from '@/lib/types/dictionary';
+import { MobileCarousel } from './MobileCarousel';
+import { Section } from './Section';
+
+/** Same shape as MarketingDictionary.threeDecisions */
+type ThreeDecisionsDict = MarketingDictionary['threeDecisions'];
 
 interface ThreeDecisionsProps {
   dict: ThreeDecisionsDict;
 }
 
-const DECISION_ICONS = [
-  { icon: '/assets/svg/icon-calendar.svg', iconSize: 116 },
-  { icon: '/assets/svg/icon-mood.svg', iconSize: 116 },
-  { icon: '/assets/svg/icon-confort.svg', iconSize: 116 },
+interface DecisionWithIcon {
+  icon: React.ElementType;
+  label: string;
+  title: string;
+}
+
+const DECISION_ICONS: React.ElementType[] = [
+  IconCalendar,
+  IconMood,
+  IconConfort,
 ];
 
-function DecisionCard({ decision }: { decision: { label: string; title: string; icon: string; iconSize: number } }) {
+function DecisionCard({ decision }: { decision: DecisionWithIcon }) {
+  const Icon = decision.icon;
   return (
-    <div className="bg-[#1C2B35] rounded-2xl flex flex-col w-full h-full px-4 pt-3 pb-3 overflow-hidden">
-      <div className="flex justify-end w-full">
-        <img
-          src={decision.icon}
-          alt={decision.label}
-          className="w-[105px] h-[105px] md:w-auto md:h-auto"
-          style={{ maxWidth: `${decision.iconSize}px`, maxHeight: `${decision.iconSize}px` }}
-        />
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-2xl bg-[#1C2B35] p-4 justify-between">
+      <div className="flex w-full justify-end">
+        <Icon className="size-28 text-[#FED700] md:size-28" />
       </div>
-      <div className="-mt-2">
-        <p className="font-barlow-condensed font-semibold text-[#FED700] text-[17px] leading-[20px] md:text-[20px] md:leading-[24px]">
+      <div>
+        <p className="font-barlow-condensed text-xl font-semibold leading-5 text-[#FED700] md:text-xl md:leading-6">
           {decision.label}
         </p>
-        <h3
-          className="font-barlow-condensed font-black uppercase text-white text-[43px] leading-[43px] md:text-[49px] md:leading-[50px]"
-          style={{ letterSpacing: '0.5px' }}
-        >
+        <p className="font-barlow-condensed text-5xl font-black uppercase leading-none tracking-wide text-white">
           {decision.title}
-        </h3>
+        </p>
       </div>
     </div>
   );
 }
 
 export function ThreeDecisions({ dict }: ThreeDecisionsProps) {
-  const decisions = dict.decisions.map((d, i) => ({
-    ...d,
-    ...DECISION_ICONS[i],
+  const decisions: DecisionWithIcon[] = dict.decisions.map((d, i) => ({
+    label: d.label,
+    title: d.title,
+    icon: DECISION_ICONS[i],
   }));
 
   return (
-    <Section className="bg-white">
-      <div className="block md:hidden">
+    <Section>
+      <div className="flex flex-col md:flex-row gap-12 items-center">
         <motion.div
-          className="text-center mb-4 px-4"
+          className="w-full md:w-1/3 flex flex-col gap-4 text-center md:text-left"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, y: 0 }}
         >
-          <h4
-            className="font-semibold uppercase text-[#0F2D37] mb-3"
-            style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '10px' }}
-          >
+          <h4 className=" font-semibold uppercase tracking-[10px] text-[#0F2D37] text-base">
             {dict.sectionTitle}
           </h4>
-          <h2 className="font-barlow-condensed" style={{ fontSize: '30px', lineHeight: '30px' }}>
-            {dict.headline}
+
+          <h2 className="font-barlow-condensed">
+            <span className="text-3xl md:text-4xl block leading-none  ">
+              {dict.headline}
+            </span>
+            <span className="text-5xl md:text-7xl font-black block leading-none">
+              {dict.headlineBold}
+            </span>
           </h2>
-          <h2
-            className="font-barlow-condensed font-black"
-            style={{ fontSize: '48px', lineHeight: '48px' }}
-          >
-            {dict.headlineBold}
-          </h2>
-          <p className="text-[#000000] mt-3" style={{ fontSize: '18px', lineHeight: '24px' }}>
-            {dict.subtitle} <strong>{dict.subtitleBold}</strong>
-          </p>
+          <p
+            className="text-lg"
+            dangerouslySetInnerHTML={{ __html: dict.subtitleHtml }}
+          />
         </motion.div>
 
         <MobileCarousel
-          itemClassName="h-[240px]"
+          itemClassName="h-auto aspect-square"
           items={decisions}
+          renderItem={(decision) => <DecisionCard decision={decision} />}
           slideWidth="70%"
-          renderItem={(decision) => (
-            <DecisionCard decision={decision} />
-          )}
+          className="md:hidden block -mr-4 w-[calc(100%+1rem)] md:mr-0 md:w-full"
+          showDots
         />
-      </div>
 
-      <div className="hidden md:flex md:flex-row md:items-start md:gap-12 mx-auto">
-        <motion.div
-          className="shrink-0"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h4
-            className="font-semibold uppercase text-[#0F2D37] mb-4"
-            style={{ fontSize: '15px', lineHeight: '18px', letterSpacing: '12px' }}
-          >
-            {dict.sectionTitle}
-          </h4>
-          <h2 className="font-barlow-condensed" style={{ fontSize: '40px', lineHeight: '40px' }}>
-            {dict.headline}
-          </h2>
-          <h2
-            className="font-barlow-condensed font-black"
-            style={{ fontSize: '68px', lineHeight: '68px' }}
-          >
-            {dict.headlineBold}
-          </h2>
-          <p className="text-[#000000] mt-4" style={{ fontSize: '18px', lineHeight: '24px' }}>
-            {dict.subtitle} <strong>{dict.subtitleBold}</strong>
-          </p>
-        </motion.div>
-
-        <div className="flex gap-6 flex-1 justify-end">
+        <div className="grid-cols-3 gap-6 w-2/3 hidden md:grid">
           {decisions.map((decision, i) => (
             <motion.div
               key={decision.label}
-              className="w-[273px] h-[266px] shrink-0"
+              className="shrink-0"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
             >
               <DecisionCard decision={decision} />
             </motion.div>

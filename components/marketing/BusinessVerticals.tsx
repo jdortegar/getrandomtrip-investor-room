@@ -113,7 +113,7 @@ function renderCardContent(card: BusinessModelCard, showBack: boolean) {
       />
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-4 xl:p-6 2xl:p-8 text-white">
-        <h3 className="font-barlow-condensed text-3xl font-semibold uppercase tracking-wide w-full text-center whitespace-pre-line leading-tight">
+        <h3 className="font-barlow-condensed text-3xl font-bold uppercase tracking-wide w-full text-center whitespace-pre-line leading-tight">
           {card.title}
         </h3>
       </div>
@@ -132,22 +132,18 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
   };
 
   return (
-    <Section
-      className={className}
-      noContainerPadding
-    >
+    <Section className={className}>
       <motion.h3
-        className="font-barlow-condensed font-semibold text-[#0F2D37] px-4 md:px-8 xl:px-12 2xl:px-16 mb-6"
+        className="font-barlow-condensed font-semibold text-[#0F2D37] text-3xl mb-6"
         initial={{ opacity: 0, y: 20 }}
-        style={{ fontSize: '28px', lineHeight: '100%' }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        {dict?.title || 'Puntos de partida'}
+        {dict?.title}
       </motion.h3>
       {/* Desktop: Grid with Flip Cards */}
-      <div className="hidden px-8 xl:px-12 2xl:px-16 md:grid md:grid-cols-5 md:gap-4 xl:gap-6 2xl:gap-8">
+      <div className="hidden md:grid md:grid-cols-5 md:gap-4 ">
         {BUSINESS_MODELS.map((card, index) => {
           const isFlipped = flippedCard === card.id;
 
@@ -207,59 +203,59 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
       </div>
 
       {/* Mobile: Carousel with Flip Cards */}
-      <div className="block md:hidden px-4">
-        <MobileCarousel
-          itemClassName="h-auto aspect-square"
-          items={BUSINESS_MODELS}
-          slideWidth="70%"
-          renderItem={(card) => {
-            const isFlipped = mobileFlippedCard === card.id;
 
-            return (
-              <div
+      <MobileCarousel
+        itemClassName="h-auto aspect-square"
+        className="md:hidden block -mr-4 w-[calc(100%+1rem)] md:mr-0 md:w-full"
+        items={BUSINESS_MODELS}
+        slideWidth="70%"
+        renderItem={(card) => {
+          const isFlipped = mobileFlippedCard === card.id;
+
+          return (
+            <div
+              className="relative h-full w-full"
+              onClick={() => handleMobileCardFlip(card.id)}
+              style={{ perspective: '1000px' }}
+            >
+              <motion.div
+                animate={{
+                  rotateY: isFlipped ? 180 : 0,
+                }}
                 className="relative h-full w-full"
-                onClick={() => handleMobileCardFlip(card.id)}
-                style={{ perspective: '1000px' }}
+                style={{ transformStyle: 'preserve-3d' }}
+                transition={{
+                  duration: 1,
+                  ease: 'easeInOut',
+                }}
               >
+                {/* Front of Card */}
                 <motion.div
-                  animate={{
-                    rotateY: isFlipped ? 180 : 0,
-                  }}
-                  className="relative h-full w-full"
-                  style={{ transformStyle: 'preserve-3d' }}
-                  transition={{
-                    duration: 1,
-                    ease: 'easeInOut',
+                  className="absolute inset-0 rounded-2xl overflow-hidden"
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
                   }}
                 >
-                  {/* Front of Card */}
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl overflow-hidden"
-                    style={{
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                    }}
-                  >
-                    {renderCardContent(card, false)}
-                  </motion.div>
-
-                  {/* Back of Card */}
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl overflow-hidden"
-                    style={{
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                      transform: 'rotateY(180deg)',
-                    }}
-                  >
-                    {renderCardContent(card, true)}
-                  </motion.div>
+                  {renderCardContent(card, false)}
                 </motion.div>
-              </div>
-            );
-          }}
-        />
-      </div>
+
+                {/* Back of Card */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl overflow-hidden"
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)',
+                  }}
+                >
+                  {renderCardContent(card, true)}
+                </motion.div>
+              </motion.div>
+            </div>
+          );
+        }}
+      />
     </Section>
   );
 }
