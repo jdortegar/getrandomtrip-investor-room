@@ -28,9 +28,10 @@ export function FullMarketingContent({ dict }: FullMarketingContentProps) {
       <ValueProposition dict={dict.valueProposition} />
       <ProblemSolution dict={dict.problemSolution} />
       <Paragraph
-        children={dict.paragraphDesktopHtml}
         innerClassName="text-2xl! md:text-3xl! leading-none"
-      />
+      >
+        {dict.paragraphDesktopHtml}
+      </Paragraph>
       <ThreeDecisions dict={dict.threeDecisions} />
       <BusinessVerticals dict={dict.businessVerticals} />
       <SystemFeatures dict={dict.systemFeatures} />
