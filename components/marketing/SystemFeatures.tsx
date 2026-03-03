@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-import { IconCriterio, IconEngine, IconRutas } from '@/public/assets/Icons';
+import { IconCriterio, IconEngine, IconRutas } from '@/public/assets/icons';
 import { Section } from './Section';
 
 interface SystemFeaturesDict {

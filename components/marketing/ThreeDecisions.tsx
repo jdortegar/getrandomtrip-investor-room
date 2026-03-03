@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-import { IconCalendar, IconConfort, IconMood } from '@/public/assets/Icons';
+import { IconCalendar, IconConfort, IconMood } from '@/public/assets/icons';
 import type { MarketingDictionary } from '@/lib/types/dictionary';
 import { MobileCarousel } from './MobileCarousel';
 import { Section } from './Section';
