@@ -22,66 +22,42 @@ const TEAM_MEMBERS: TeamMember[] = [
   {
     id: 1,
     name: 'SANTIAGO<br/>SENEGA',
-    role: 'CEO & Fundador (Hospitality / Ops)',
+    role: 'Hospitality Operator & Founder',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Leads operations and hospitality strategy. Background in high-end travel and experience design.',
     linkedinUrl: 'https://www.linkedin.com/in/santiago-senega/',
   },
   {
     id: 2,
-    name: 'RODRIGO<br/>BENITEZ',
-    role: '',
-    description: '',
+    name: 'DAVID<br/>ORTEGA',
+    role: 'Platform Systems & Co-Founder',
+    description:
+      'Drives product and technology. Focus on scalable systems and seamless user experiences.',
+    linkedinUrl: 'https://www.linkedin.com/in/david-ortega/',
   },
   {
     id: 3,
-    name: 'DAVID<br/>ORTEGA',
-    role: '',
-    description: '',
+    name: 'RODRIGO<br/>BENITEZ',
+    role: 'Partnerships & Commercial & Co-Founder',
+    description:
+      'Heads partnerships and go-to-market. Connects Randomtrip with key players in travel and lifestyle.',
+    linkedinUrl: 'https://www.linkedin.com/in/rodrigo-benitez/',
   },
   {
     id: 4,
-    name: 'CARLA<br/>VAZQUEZ',
-    role: '',
-    description: '',
+    name: 'NICOLÁS<br/>ASMAR',
+    role: 'Creative Director',
+    description:
+      'Owns brand and creative direction. Ensures every touchpoint reflects our vision and quality.',
+    linkedinUrl: 'https://www.linkedin.com/in/nicolas-asmar/',
   },
   {
     id: 5,
-    name: 'NICOLÁS<br/>ASMAR',
-    role: '',
-    description: '',
-  },
-  {
-    id: 6,
-    name: 'FABRIZIO<br/>BORDONI',
-    role: 'CEO & Fundador (Hospitality / Ops)',
+    name: 'CARLA<br/>VAZQUEZ',
+    role: 'UX/UI Director',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    linkedinUrl: 'https://www.linkedin.com/in/santiago-senega/',
-  },
-  {
-    id: 7,
-    name: 'FEDERICO<br/>BOGADO',
-    role: '',
-    description: '',
-  },
-  {
-    id: 8,
-    name: 'LEONARDO<br/>ALVAREZ',
-    role: '',
-    description: '',
-  },
-  {
-    id: 9,
-    name: 'LEONARDO<br/>ALVAREZ',
-    role: '',
-    description: '',
-  },
-  {
-    id: 10,
-    name: 'NICOLÁS<br/>MARTINEZ',
-    role: '',
-    description: '',
+      'Shapes product design and user research. Makes the platform intuitive and delightful to use.',
+    linkedinUrl: 'https://www.linkedin.com/in/carla-vazquez/',
   },
 ];
 
