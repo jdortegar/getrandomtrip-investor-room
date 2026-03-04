@@ -13,67 +13,31 @@ interface BusinessModelCard {
 }
 
 interface BusinessVerticalsDict {
+  cards: Array<{ description: string[]; title: string }>;
   title: string;
 }
 
 interface BusinessVerticalsProps {
   className?: string;
-  dict?: BusinessVerticalsDict;
+  dict: BusinessVerticalsDict;
 }
 
-const BUSINESS_MODELS: BusinessModelCard[] = [
-  {
-    id: 1,
-    title: 'BY TRAVELLER',
-    description: [
-      'Descubre experiencias',
-      'auténticas creadas',
-      'por viajeros reales.',
-    ],
-    imageUrl: '/images/business-1.png',
-  },
-  {
-    id: 2,
-    title: 'BY TRIPPER',
-    description: [
-      'Explora perfiles',
-      'de viajeros expertos',
-      'que curan experiencias',
-      'auténticas y memorables',
-    ],
-    imageUrl: '/images/business-1.png',
-  },
-  {
-    id: 3,
-    title: 'ROADTRIPS',
-    description: [
-      'Planifica roadtrips épicos',
-      'con rutas cuidadosamente',
-      'seleccionadas.',
-    ],
-    imageUrl: '/images/business-3.png',
-  },
-  {
-    id: 4,
-    title: 'TRIPPERS DECODE',
-    description: [
-      'Decodifica los mejores',
-      'destinos con insights',
-      'de viajeros expertos.',
-    ],
-    imageUrl: '/images/business-4.png',
-  },
-  {
-    id: 5,
-    title: 'SUNDAYS\nRANDOMTRIP XSED',
-    description: [
-      'Experiencias exclusivas',
-      'diseñadas para domingos',
-      'especiales.',
-    ],
-    imageUrl: '/images/business-5.png',
-  },
-];
+const BUSINESS_VERTICAL_IMAGES = [
+  '/images/business-1.png',
+  '/images/business-1.png',
+  '/images/business-3.png',
+  '/images/business-4.png',
+  '/images/business-5.png',
+] as const;
+
+function buildCards(dict: BusinessVerticalsDict): BusinessModelCard[] {
+  return dict.cards.map((card, index) => ({
+    id: index + 1,
+    title: card.title,
+    description: card.description,
+    imageUrl: BUSINESS_VERTICAL_IMAGES[index],
+  }));
+}
 
 function renderCardContent(card: BusinessModelCard, showBack: boolean) {
   if (showBack) {
@@ -127,6 +91,8 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
     null,
   );
 
+  const cards = buildCards(dict);
+
   const handleMobileCardFlip = (cardId: number) => {
     setMobileFlippedCard((prev) => (prev === cardId ? null : cardId));
   };
@@ -140,11 +106,11 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
         viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        {dict?.title}
+        {dict.title}
       </motion.h3>
       {/* Desktop: Grid with Flip Cards */}
       <div className="hidden md:grid md:grid-cols-5 md:gap-4 ">
-        {BUSINESS_MODELS.map((card, index) => {
+        {cards.map((card, index) => {
           const isFlipped = flippedCard === card.id;
 
           return (
@@ -207,7 +173,7 @@ export function BusinessVerticals({ className, dict }: BusinessVerticalsProps) {
       <MobileCarousel
         itemClassName="h-auto aspect-square"
         className="md:hidden block -mr-4 w-[calc(100%+1rem)] md:mr-0 md:w-full"
-        items={BUSINESS_MODELS}
+        items={cards}
         slideWidth="70%"
         renderItem={(card) => {
           const isFlipped = mobileFlippedCard === card.id;

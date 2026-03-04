@@ -108,12 +108,13 @@
         {
           "title": "BY TRAVELLER",
           "description": [
-            "Descubre experiencias auténticas creadas por viajeros reales.",
-            "Cada aventura está diseñada por personas que conocen los destinos."
+            "Descubre experiencias",
+            "auténticas creadas",
+            "por viajeros reales."
           ]
         },
         {
-          "title": "Trippers",
+          "title": "BY TRIPPER",
           "description": [
             "Explora perfiles",
             "de viajeros expertos",
@@ -124,22 +125,25 @@
         {
           "title": "ROADTRIPS",
           "description": [
-            "Planifica roadtrips épicos con rutas cuidadosamente seleccionadas.",
-            "Descubre destinos fuera de lo común y vive aventuras inolvidables."
+            "Planifica roadtrips épicos",
+            "con rutas cuidadosamente",
+            "seleccionadas."
           ]
         },
         {
           "title": "TRIPPERS DECODE",
           "description": [
-            "Decodifica los mejores destinos con insights de viajeros expertos.",
-            "Accede a información privilegiada sobre lugares y experiencias."
+            "Decodifica los mejores",
+            "destinos con insights",
+            "de viajeros expertos."
           ]
         },
         {
           "title": "SUNDAYS\nRANDOMTRIP XSED",
           "description": [
-            "Experiencias exclusivas diseñadas para domingos especiales.",
-            "Aventuras únicas que transforman tus fines de semana."
+            "Experiencias exclusivas",
+            "diseñadas para domingos",
+            "especiales."
           ]
         }
       ]
