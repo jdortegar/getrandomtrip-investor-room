@@ -2,7 +2,11 @@
 
 import BrandingAnimation from './BrandingAnimation';
 
-export function Hero() {
+interface HeroProps {
+  hero: { videoSrc: string };
+}
+
+export function Hero({ hero }: HeroProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden px-4 md:px-8 xl:px-12 2xl:px-16 mx-auto max-w-7xl xl:max-w-[1600px] 2xl:max-w-[1800px]">
       <div className="relative h-[calc(100vh-2rem)] w-full overflow-hidden rounded-3xl md:h-[calc(100vh-3rem)] md:rounded-[2.5rem] lg:h-[calc(100vh-4rem)]">
@@ -23,7 +27,7 @@ export function Hero() {
           playsInline
           poster="/images/hero.jpg"
         >
-          <source src="/videos/intro.mp4" type="video/mp4" />
+          <source src={hero.videoSrc} type="video/mp4" />
         </video>
 
         {/* Hero Content */}

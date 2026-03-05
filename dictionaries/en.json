@@ -10,6 +10,9 @@
       "tagline": "The adventure starts here.",
       "visitButton": "VISIT GETRANDOMTRIP.COM"
     },
+    "hero": {
+      "videoSrc": "/videos/intro-en.mp4"
+    },
     "valueProposition": {
       "title": "GIVING TIME BACK TO THE TRAVELER",
       "titleBold": "IS THE NEW LUXURY",

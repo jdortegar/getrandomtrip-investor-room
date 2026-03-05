@@ -102,6 +102,9 @@ export interface MarketingDictionary {
     steps: Array<{ description: string; title: string }>;
     title: string;
   };
+  hero: {
+    videoSrc: string;
+  };
   inspiration: {
     ctaButton: string;
     headline: string;

@@ -24,7 +24,7 @@ export function FullMarketingContent({ dict }: FullMarketingContentProps) {
   return (
     <>
       <FixedBookMeetingButton label={dict.valueProposition.ctaButton} />
-      <Hero />
+      <Hero hero={dict.hero} />
       <ValueProposition dict={dict.valueProposition} />
       <ProblemSolution dict={dict.problemSolution} />
       <Paragraph

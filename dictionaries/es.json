@@ -10,6 +10,9 @@
       "tagline": "La aventura empieza acá.",
       "visitButton": "VISITÁ GETRANDOMTRIP.COM"
     },
+    "hero": {
+      "videoSrc": "/videos/intro.mp4"
+    },
     "valueProposition": {
       "title": "DEVOLVERLE TIEMPO AL VIAJERO",
       "titleBold": "ES EL NUEVO LUJO",
