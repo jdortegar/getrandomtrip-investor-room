@@ -66,7 +66,7 @@ export function RoomNav({ locale }: RoomNavProps) {
               'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-barlow-condensed font-semibold uppercase tracking-wide transition-colors',
               isActive
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                : 'hover:bg-accent hover:text-accent-foreground',
+                : 'hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20',
             )}
             href={href}
             key={item.path}

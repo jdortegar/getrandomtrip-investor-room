@@ -126,6 +126,7 @@ export const authOptions: NextAuthOptions = {
             from: provider.from as string,
             to: identifier,
             subject: strings.subject,
+            // Self-contained full document; html/head/body are not from any other part
             html: `
               <!doctype html>
               <html>
