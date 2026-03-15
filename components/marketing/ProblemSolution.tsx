@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-import { ProblemsIcon, SolutionIcon, WhyNowIcon } from '@/public/assets/Icons';
+import { ProblemsIcon, SolutionIcon, WhyNowIcon } from '@/public/assets/icons';
 import type { MarketingDictionary } from '@/lib/types/dictionary';
 import { cn } from '@/lib/utils';
 import { Section } from './Section';
