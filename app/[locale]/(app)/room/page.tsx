@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 import { SafeStatus } from '@prisma/client';
 
 import { Badge } from '@/components/ui/badge';
@@ -12,20 +10,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
+import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
 import { formatCurrency } from '@/lib/helpers/formatCurrency';
-import { getLocaleFromCookies } from '@/lib/i18n/server';
 import { pathForLocale } from '@/lib/i18n/pathForLocale';
 
 export default async function RoomPage() {
-  const session = await getServerSession(authOptions);
-  const locale = await getLocaleFromCookies();
-  if (!session) redirect(pathForLocale(locale, '/otp'));
-
-  const investor = session.investor;
-  if (!investor?.approved || !investor?.profileComplete)
-    redirect(pathForLocale(locale, '/otp'));
+  const { investor, locale } = await requireRoomAuth();
+  if (!investor.approved) return null;
 
   const [latestSafe, signedAggregate, totalAggregate, totalDocuments] =
     await Promise.all([

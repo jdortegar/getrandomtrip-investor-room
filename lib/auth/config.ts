@@ -6,6 +6,10 @@ import { prisma } from '@/lib/api/prisma';
 import { Resend } from 'resend';
 import type { Adapter } from 'next-auth/adapters';
 
+import { DEFAULT_LOCALE } from '@/lib/i18n/config';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import type { EmailsDictionary } from '@/lib/types/dictionary';
+
 // WIP gate: single hardcoded admin user (no DB)
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'randomtrip2026';
@@ -105,49 +109,58 @@ export const authOptions: NextAuthOptions = {
       name: 'Username & password',
     }),
     EmailProvider({
+      // Use EMAIL_FROM from env; must be a sender on your verified Resend domain (e.g. contact.getrandomtrip.com)
       from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
       maxAge: 10 * 60, // 10 minutes
       // Custom email sending with Resend
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        // Only initialize Resend when actually sending an email
-        const resend = getResend();
+        const baseUrl ='https://investors.getrandomtrip.com';
 
         try {
-          const { data, error } = await resend.emails.send({
+          const resend = getResend();
+          const dict = await getDictionary(DEFAULT_LOCALE);
+          const strings = (dict as { emails: EmailsDictionary }).emails
+            .magicLink;
+
+          const { error } = await resend.emails.send({
             from: provider.from as string,
             to: identifier,
-            subject: 'Accede al Investor Room',
+            subject: strings.subject,
             html: `
               <!doctype html>
               <html>
                 <head>
                   <meta charset="utf-8" />
                   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                  <link rel="preconnect" href="https://fonts.googleapis.com" />
+                  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
                   <style>
-                    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin:0; background:#f6f7fb; -webkit-font-smoothing:antialiased; }
+                    body { font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; background:#f6f7fb; -webkit-font-smoothing:antialiased; }
                     .container { max-width:600px; margin:24px auto; background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 8px 24px rgba(10,34,64,0.06); }
                     .header { background: #ffffff; padding:20px; text-align:center; border-bottom:1px solid #eef2f7; }
-                    .logo { height:40px; display:inline-block; }
-                    .main { padding:28px; color:#0A2240; }
-                    .title { font-size:20px; margin:0 0 8px; }
-                    .copy { color:#475569; margin-bottom:18px; font-size:15px; line-height:1.5; }
-                    .button { background:#0A2240; color:#fff; padding:12px 22px; text-decoration:none; border-radius:8px; display:inline-block; font-weight:600; }
-                    .footer { padding:18px; border-top:1px solid #eef2f7; color:#6b7280; font-size:13px; text-align:center; }
-                    @media (max-width:480px){ .container{margin:12px} .main{padding:20px} .logo{height:36px} }
+                    .logo { display:block; height:48px; width:192px; max-width:100%; object-fit:contain; margin-left:auto; margin-right:auto; }
+                    .main { padding:28px; color:#0A2240; font-family: 'Barlow', sans-serif; }
+                    .title { font-family: 'Barlow Condensed', Arial Narrow, sans-serif; font-size:20px; font-weight:600; margin:0 0 8px; }
+                    .copy { font-family: 'Barlow', sans-serif; color:#475569; margin-bottom:18px; font-size:15px; line-height:1.5; }
+                    .button { background:#FED700; color:#000; padding:12px 24px; text-decoration:none; border-radius:8px; display:block; font-weight:600; font-size:1rem; font-family: 'Barlow Condensed', Arial Narrow, sans-serif; text-transform:uppercase; letter-spacing:0.025em; width:100%; }
+                    @media (min-width:768px){ .button { font-size:1.125rem; } }
+                    .footer { font-family: 'Barlow', sans-serif; padding:18px; border-top:1px solid #eef2f7; color:#6b7280; font-size:13px; text-align:center; }
+                    @media (max-width:480px){ .container{margin:12px} .main{padding:20px} .logo{height:40px;width:160px} }
                   </style>
                 </head>
                 <body>
-                  <div class="container" role="article" aria-label="Accede a la Sala de inversores">
+                  <div class="container" role="article" aria-label="${strings.logoAlt}">
                     <div class="header" role="banner">
-                      <img src="https://investors.getrandomtrip.com/assets/svg/logo.svg" alt="Sala de inversores" class="logo" />
+                      <img src="${baseUrl}/assets/svg/randomtrip.svg" alt="${strings.logoAlt}" class="logo" width="280" height="120" style="display:block;height:120px;width:280px;max-width:100%;object-fit:contain;margin-left:auto;margin-right:auto;" />
                     </div>
                     <div class="main">
-                      <h2 class="title">Accede a tu cuenta</h2>
-                      <p class="copy">Haz clic en el botón abajo para acceder a la Sala de inversores. Este enlace expirará en 10 minutos.</p>
+                      <h2 class="title">${strings.title}</h2>
+                      <p class="copy">${strings.copy}</p>
                       <div style="text-align:center; margin:22px 0;">
-                        <a href="${url}" class="button" target="_blank" rel="noopener noreferrer">Acceder</a>
+                        <a href="${url}" class="button" target="_blank" rel="noopener noreferrer" style="background:#FED700;color:#000;padding:12px 24px;text-decoration:none;border-radius:8px;display:block;font-weight:600;font-size:1rem;font-family:'Barlow Condensed',Arial Narrow,sans-serif;text-transform:uppercase;letter-spacing:0.025em;width:100%;">${strings.button}</a>
                       </div>
-                      <p class="copy">Si no solicitaste este correo, puedes ignorarlo de forma segura.</p>
+                      <p class="copy">${strings.safeIgnore}</p>
                     </div>
                     <div class="footer">&copy; ${new Date().getFullYear()} getrandomtrip</div>
                   </div>
@@ -157,11 +170,22 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (error) {
-            throw new Error(`Resend error: ${error.message}`);
+            console.error('[NextAuth Email] Resend error:', {
+              identifier,
+              message: error.message,
+              name: error.name,
+            });
+            throw new Error(`error: ${error.message}`);
           }
-        } catch (error) {
-          console.error('Failed to send email:', error);
-          throw new Error('Failed to send email');
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : 'Failed to send email';
+          console.error('[NextAuth Email] sendVerificationRequest failed:', {
+            identifier,
+            message,
+            error: err,
+          });
+          throw new Error(message);
         }
       },
     }),

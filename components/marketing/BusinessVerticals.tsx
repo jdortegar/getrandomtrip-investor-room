@@ -24,7 +24,7 @@ interface BusinessVerticalsProps {
 
 const BUSINESS_VERTICAL_IMAGES = [
   '/images/business-1.png',
-  '/images/business-1.png',
+  '/images/business-2.jpg',
   '/images/business-3.png',
   '/images/business-4.png',
   '/images/business-5.png',

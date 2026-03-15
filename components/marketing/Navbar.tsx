@@ -32,7 +32,7 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
-  const approved = !!(session as any)?.investor?.approved;
+  const approved = !!session?.investor?.approved;
 
   const otherLocale: Locale = locale === 'es' ? 'en' : 'es';
   const basePath = pathname?.startsWith('/en')

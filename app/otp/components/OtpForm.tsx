@@ -1,9 +1,12 @@
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+
+import type { OtpDictionary } from '@/lib/types/dictionary';
 
 interface OtpFormProps {
+  dict: OtpDictionary['form'];
   email: string;
   error: string | null;
   isLoading: boolean;
@@ -12,6 +15,7 @@ interface OtpFormProps {
 }
 
 export function OtpForm({
+  dict,
   email,
   error,
   isLoading,
@@ -21,13 +25,18 @@ export function OtpForm({
   return (
     <form className="space-y-4" onSubmit={onSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="email">Correo electrónico</Label>
+        <Label
+          className="font-barlow"
+          htmlFor="email"
+        >
+          {dict.emailLabel}
+        </Label>
         <Input
           autoFocus
           disabled={isLoading}
           id="email"
           onChange={(e) => onEmailChange(e.target.value)}
-          placeholder="inversor@ejemplo.com"
+          placeholder={dict.placeholder}
           required
           type="email"
           value={email}
@@ -40,8 +49,14 @@ export function OtpForm({
         </Alert>
       )}
 
-      <Button className="w-full" disabled={isLoading || !email} type="submit">
-        {isLoading ? 'Enviando...' : 'Enviar enlace de acceso'}
+      <Button
+        className="rounded-lg px-6 py-3 text-base uppercase tracking-wide md:text-lg w-full"
+        disabled={isLoading || !email}
+        // size="lg"
+        type="submit"
+        variant="feature"
+      >
+        {isLoading ? dict.sending : dict.submitButton}
       </Button>
     </form>
   );

@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 import { DocumentType } from '@prisma/client';
 
-import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
+import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,11 +24,8 @@ const DOCUMENT_TYPE_LABELS: Record<DocumentType, string> = {
 };
 
 export default async function FilesPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect('/otp');
-
-  const investor = session.investor;
-  if (!investor?.approved || !investor?.profileComplete) redirect('/otp');
+  const { investor, locale } = await requireRoomAuth();
+  if (!investor.approved) return null;
 
   const documents = await prisma.document.findMany({
     orderBy: { updatedAt: 'desc' },
@@ -82,7 +78,7 @@ export default async function FilesPage() {
                   Actualizado {new Date(doc.updatedAt).toLocaleDateString()}
                 </div>
                 <Button asChild variant="outline">
-                  <Link href={`/room/files/${doc.id}`}>Ver</Link>
+                  <Link href={pathForLocale(locale, `/room/files/${doc.id}`)}>Ver</Link>
                 </Button>
               </CardContent>
             </Card>

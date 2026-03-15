@@ -12,6 +12,7 @@ interface TeamMember {
   role: string;
   description: string;
   linkedinUrl?: string;
+  imageUrl: string;
 }
 
 interface TeamProps {
@@ -25,24 +26,28 @@ const TEAM_MEMBERS: TeamMember[] = [
     role: 'Hospitality Operator & Founder',
     description:
       'Leads operations and hospitality strategy. Background in high-end travel and experience design.',
-    linkedinUrl: 'https://www.linkedin.com/in/santiago-senega/',
+    linkedinUrl: 'https://www.linkedin.com/in/santiagosng/',
+    imageUrl: '/images/team-1.jpg',
   },
   {
     id: 2,
-    name: 'DAVID<br/>ORTEGA',
-    role: 'Platform Systems & Co-Founder',
-    description:
-      'Drives product and technology. Focus on scalable systems and seamless user experiences.',
-    linkedinUrl: 'https://www.linkedin.com/in/david-ortega/',
-  },
-  {
-    id: 3,
     name: 'RODRIGO<br/>BENITEZ',
     role: 'Partnerships & Commercial & Co-Founder',
     description:
       'Heads partnerships and go-to-market. Connects Randomtrip with key players in travel and lifestyle.',
-    linkedinUrl: 'https://www.linkedin.com/in/rodrigo-benitez/',
+    linkedinUrl: 'https://www.linkedin.com/in/rodrigo-sebastian-benitez-426055158/',
+    imageUrl: '/images/team-2.jpg',
   },
+  {
+    id: 3,
+    name: 'DAVID<br/>ORTEGA',
+    role: 'Platform Systems & Co-Founder',
+    description:
+      'Drives product and technology. Focus on scalable systems and seamless user experiences.',
+    linkedinUrl: 'https://www.linkedin.com/in/jdortegar/',
+    imageUrl: '/images/team-3.jpg',
+  },
+ 
   {
     id: 4,
     name: 'NICOLÁS<br/>ASMAR',
@@ -50,6 +55,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     description:
       'Owns brand and creative direction. Ensures every touchpoint reflects our vision and quality.',
     linkedinUrl: 'https://www.linkedin.com/in/nicolas-asmar/',
+    imageUrl: '/images/team-1.png',
   },
   {
     id: 5,
@@ -58,6 +64,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     description:
       'Shapes product design and user research. Makes the platform intuitive and delightful to use.',
     linkedinUrl: 'https://www.linkedin.com/in/carla-vazquez/',
+    imageUrl: '/images/team1.png',
   },
 ];
 
@@ -80,13 +87,13 @@ function renderCardFront(member: TeamMember) {
     <div className="relative h-full w-full">
       <Image
         alt={member.name}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover object-top"
         fill
-        src="/images/team-1.png"
+        src={member.imageUrl}
       />
 
       {/* Dark Gradient Overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/20 to-transparent" />
 
       {/* Name Overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-6 xl:p-8 2xl:p-10">

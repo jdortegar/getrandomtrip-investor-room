@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
+import { notFound } from 'next/navigation';
 
-import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
+import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -23,11 +23,8 @@ export default async function FileViewerPage({
 }: {
   params: { id: string };
 }) {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect('/otp');
-
-  const investor = session.investor;
-  if (!investor?.approved || !investor?.profileComplete) redirect('/otp');
+  const { investor, locale } = await requireRoomAuth();
+  if (!investor.approved) return null;
 
   const document = await prisma.document.findUnique({
     where: { id: params.id },
@@ -50,7 +47,7 @@ export default async function FileViewerPage({
           </p>
         </div>
         <Button asChild variant="outline">
-          <Link href="/room/files">Back</Link>
+          <Link href={pathForLocale(locale, '/room/files')}>Back</Link>
         </Button>
       </div>
 

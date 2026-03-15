@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+
 import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
+import { DEFAULT_LOCALE } from '@/lib/i18n/config';
+import { getDictionary, hasLocale } from '@/lib/i18n/dictionaries';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
+import type { EmailsDictionary } from '@/lib/types/dictionary';
 import { Resend } from 'resend';
 
 export async function POST(req: Request) {
@@ -25,6 +30,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing email' }, { status: 400 });
     }
     const email = emailParam.trim().toLowerCase();
+    const localeParam = body?.locale;
+    const locale =
+      typeof localeParam === 'string' && hasLocale(localeParam)
+        ? localeParam
+        : DEFAULT_LOCALE;
 
     // Find or create investor so "send invitation" works for new emails
     let investor = await prisma.investor.findUnique({
@@ -39,7 +49,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // Send access email with link to /otp?callbackUrl=/room
+    // Send access email with locale-aware link (default locale when no preference)
     const resendApiKey = process.env.RESEND_API_KEY;
     if (!resendApiKey) {
       return NextResponse.json(
@@ -51,27 +61,31 @@ export async function POST(req: Request) {
     const resend = new Resend(resendApiKey);
     const fromAddress = process.env.EMAIL_FROM || 'onboarding@resend.dev';
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3011';
-    const accessUrl = `${baseUrl}/otp?callbackUrl=/room`;
+    const otpPath = pathForLocale(locale, '/otp');
+    const roomPath = pathForLocale(locale, '/room');
+    const accessUrl = `${baseUrl}${otpPath}?callbackUrl=${encodeURIComponent(roomPath)}`;
 
+    const dict = await getDictionary(locale);
+    const strings = (dict as { emails: EmailsDictionary }).emails.resend;
     const subject = investor.approved
-      ? 'Reenvío: Acceso a Sala de inversores'
-      : 'Acceso a Sala de inversores';
-    const title = investor.approved ? 'Reenvío de acceso' : 'Has sido aprobado';
+      ? strings.subjectResend
+      : strings.subjectApproved;
+    const title = investor.approved ? strings.titleResend : strings.titleApproved;
     const message = investor.approved
-      ? 'Se te ha reenviado el enlace de acceso a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión.'
-      : 'Felicidades — has sido aprobado para acceder a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión y acceder al data room.';
+      ? strings.messageResend
+      : strings.messageApproved;
 
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; max-width:600px; margin:24px auto; padding:20px; background:#fff; border-radius:8px;">
         <div style="text-align:center; margin-bottom:16px;">
-          <img src="${baseUrl}/assets/svg/logo.svg" alt="Investor Room" style="height:40px;" />
+          <img src="${baseUrl}/assets/svg/logo.svg" alt="${strings.logoAlt}" style="height:40px;" />
         </div>
         <h2 style="color:#0A2240">${title}</h2>
         <p>${message}</p>
         <div style="text-align:center; margin:20px 0;">
-          <a href="${accessUrl}" style="background:#0A2240;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;">Acceder a la Sala de inversores</a>
+          <a href="${accessUrl}" style="background:#0A2240;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;">${strings.button}</a>
         </div>
-        <p style="color:#6b7280;font-size:13px;">Si no solicitaste este acceso, ignora este correo.</p>
+        <p style="color:#6b7280;font-size:13px;">${strings.safeIgnore}</p>
       </div>
     `;
 

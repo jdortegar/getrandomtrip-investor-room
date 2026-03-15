@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 import { SafeStatus } from '@prisma/client';
 import { CheckCircle2, Circle, ExternalLink } from 'lucide-react';
 
-import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
+import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
 import { getGoogleMeetLink } from '@/lib/constants/meeting';
+import { pathForLocale } from '@/lib/i18n/pathForLocale';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -24,11 +23,8 @@ interface ChecklistItem {
 }
 
 export default async function HelperPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect('/otp');
-
-  const investor = session.investor;
-  if (!investor?.approved || !investor?.profileComplete) redirect('/otp');
+  const { investor, locale } = await requireRoomAuth();
+  if (!investor.approved) return null;
 
   const docs = await prisma.safeDocument.findMany({
     select: { status: true },
@@ -42,19 +38,19 @@ export default async function HelperPage() {
     {
       description:
         'Accede a los documentos del data room que necesitas revisar.',
-      href: '/room/files',
+      href: pathForLocale(locale, '/room/files'),
       isComplete: false,
       title: 'Revisar archivos de inversión',
     },
     {
       description: 'Crea tu documento SAFE con el monto de inversión previsto.',
-      href: '/room/investment',
+      href: pathForLocale(locale, '/room/investment'),
       isComplete: hasGeneratedSafe,
       title: 'Generar tu SAFE',
     },
     {
       description: 'Completa el proceso de firma para finalizar tu inversión.',
-      href: '/room/investment',
+      href: pathForLocale(locale, '/room/investment'),
       isComplete: hasSignedSafe,
       title: 'Firmar tu SAFE',
     },
@@ -144,10 +140,12 @@ export default async function HelperPage() {
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
           <Button asChild variant="default">
-            <Link href="/room/files">Ver archivos</Link>
+            <Link href={pathForLocale(locale, '/room/files')}>Ver archivos</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/room/investment">Mi inversión</Link>
+            <Link href={pathForLocale(locale, '/room/investment')}>
+              Mi inversión
+            </Link>
           </Button>
         </CardContent>
       </Card>

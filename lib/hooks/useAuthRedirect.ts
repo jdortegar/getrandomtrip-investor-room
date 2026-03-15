@@ -2,13 +2,17 @@ import { useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
+import { LOCALES } from '@/lib/i18n/config';
+
 interface Investor {
   approved: boolean;
   profileComplete: boolean;
 }
 
-interface SessionWithInvestor {
-  investor?: Investor;
+function isOtpPath(pathname: string): boolean {
+  if (!pathname) return false;
+  if (pathname === '/otp') return true;
+  return LOCALES.some((locale) => pathname === `/${locale}/otp`);
 }
 
 function localePrefix(pathname: string): string {
@@ -36,11 +40,11 @@ export function useAuthRedirect() {
     if (hasRedirectedRef.current) return;
     if (searchParams.get('error') === 'Verification') return;
 
-    const investor = (currentSession as SessionWithInvestor).investor;
+    const investor = currentSession.investor;
     const currentPath = pathname ?? window.location.pathname;
     const prefix = localePrefix(currentPath);
 
-    if (currentPath !== '/otp' && currentPath !== '/en/otp') return;
+    if (!isOtpPath(currentPath)) return;
 
     const targetPath = getRedirectTarget(investor, searchParams, prefix);
 
@@ -49,7 +53,7 @@ export function useAuthRedirect() {
     hasRedirectedRef.current = true;
 
     const timeoutId = setTimeout(() => {
-      if (window.location.pathname !== '/otp' && window.location.pathname !== '/en/otp') return;
+      if (!isOtpPath(window.location.pathname)) return;
       window.location.replace(targetPath);
     }, 300);
 

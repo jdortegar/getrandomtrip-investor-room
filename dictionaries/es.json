@@ -315,5 +315,58 @@
         "usernamePlaceholder": "Usuario"
       }
     }
+  },
+  "otp": {
+    "title": "Sala de Inversores",
+    "subtitle": "Introduce tu correo para recibir un enlace seguro de acceso",
+    "footerNote": "Este es un inicio de sesión seguro sin contraseña. Recibirás un enlace que expira en 10 minutos.",
+    "logoAlt": "Sala de Inversores",
+    "form": {
+      "emailLabel": "Correo electrónico",
+      "placeholder": "inversor@ejemplo.com",
+      "submitButton": "Enviar enlace de acceso",
+      "sending": "Enviando..."
+    },
+    "success": {
+      "title": "Revisa tu correo",
+      "sentTo": "Hemos enviado un enlace de acceso a",
+      "instruction": "Haz clic en el enlace del correo para iniciar sesión. El enlace expira en 10 minutos.",
+      "resendIn": "Reenvío disponible en {0} segundos",
+      "resendButton": "Reenviar correo",
+      "useDifferentEmail": "Usar otro correo"
+    },
+    "loading": "Cargando...",
+    "errorEmailSignin": "No pudimos enviar el enlace de acceso. Inténtalo de nuevo o contacta a soporte.",
+    "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "errorVerification": "El enlace de acceso ha caducado o ya fue usado. Solicita un nuevo enlace abajo."
+  },
+  "emails": {
+    "magicLink": {
+      "subject": "Accede al Investor Room",
+      "logoAlt": "Sala de inversores",
+      "title": "Accede a tu cuenta",
+      "copy": "Haz clic en el botón abajo para acceder a la Sala de inversores. Este enlace expirará en 10 minutos.",
+      "button": "Acceder",
+      "safeIgnore": "Si no solicitaste este correo, puedes ignorarlo de forma segura."
+    },
+    "approve": {
+      "subject": "Acceso a Sala de inversores",
+      "logoAlt": "Sala de inversores",
+      "title": "Has sido aprobado",
+      "message": "Felicidades — has sido aprobado para acceder a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión y acceder al data room.",
+      "button": "Acceder a la Sala de inversores",
+      "safeIgnore": "Si no solicitaste este acceso, ignora este correo."
+    },
+    "resend": {
+      "subjectResend": "Reenvío: Acceso a Sala de inversores",
+      "subjectApproved": "Acceso a Sala de inversores",
+      "logoAlt": "Sala de inversores",
+      "titleResend": "Reenvío de acceso",
+      "titleApproved": "Has sido aprobado",
+      "messageResend": "Se te ha reenviado el enlace de acceso a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión.",
+      "messageApproved": "Felicidades — has sido aprobado para acceder a la Sala de inversores. Haz clic en el botón de abajo para iniciar sesión y acceder al data room.",
+      "button": "Acceder a la Sala de inversores",
+      "safeIgnore": "Si no solicitaste este acceso, ignora este correo."
+    }
   }
 }

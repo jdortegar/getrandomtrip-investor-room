@@ -1,23 +1,27 @@
-import { Button } from '@/components/ui/button';
 import {
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+import type { OtpDictionary } from '@/lib/types/dictionary';
 
 interface OtpSuccessProps {
-  email: string;
-  cooldown: number;
   canResend: boolean;
+  cooldown: number;
+  dict: OtpDictionary['success'];
+  email: string;
   onResend: () => void;
   onUseDifferentEmail: () => void;
 }
 
 export function OtpSuccess({
-  email,
-  cooldown,
   canResend,
+  cooldown,
+  dict,
+  email,
   onResend,
   onUseDifferentEmail,
 }: OtpSuccessProps) {
@@ -25,43 +29,40 @@ export function OtpSuccess({
     <>
       <CardHeader className="text-center">
         <CardTitle className="font-barlow-condensed text-2xl font-bold uppercase tracking-wide md:text-3xl">
-          Revisa tu correo
+          {dict.title}
         </CardTitle>
-        <CardDescription className="text-sm md:text-base">
-          Hemos enviado un enlace de acceso a <strong>{email}</strong>
+        <CardDescription className="font-barlow text-sm md:text-base">
+          {dict.sentTo} <strong>{email}</strong>
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="rounded-lg bg-muted p-4 text-center text-sm">
-          <p className="text-muted-foreground">
-            Haz clic en el enlace del correo para iniciar sesión. El enlace
-            expira en 10 minutos.
-          </p>
+        <div className="font-barlow rounded-lg bg-muted p-4 text-center text-sm">
+          <p className="text-muted-foreground">{dict.instruction}</p>
         </div>
 
         {!canResend && (
-          <div className="text-center text-sm text-muted-foreground">
+          <div className="font-barlow text-center text-sm text-muted-foreground">
             {cooldown > 0 ? (
-              <p>Reenvío disponible en {cooldown} segundos</p>
+              <p>{dict.resendIn.replace('{0}', String(cooldown))}</p>
             ) : (
               <Button
-                className="w-full"
+                className="w-full font-barlow-condensed"
                 disabled={!canResend}
                 onClick={onResend}
                 variant="outline"
               >
-                Reenviar correo
+                {dict.resendButton}
               </Button>
             )}
           </div>
         )}
 
         <Button
-          className="w-full"
+          className="w-full font-barlow-condensed"
           onClick={onUseDifferentEmail}
           variant="ghost"
         >
-          Usar otro correo
+          {dict.useDifferentEmail}
         </Button>
       </CardContent>
     </>

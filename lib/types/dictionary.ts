@@ -170,3 +170,59 @@ export interface MarketingDictionary {
     successMessage: string;
   };
 }
+
+export interface OtpDictionary {
+  errorEmailSignin: string;
+  errorGeneric: string;
+  errorVerification: string;
+  form: {
+    emailLabel: string;
+    placeholder: string;
+    sending: string;
+    submitButton: string;
+  };
+  loading: string;
+  logoAlt: string;
+  success: {
+    instruction: string;
+    resendButton: string;
+    /** Template with {0} for countdown seconds */
+    resendIn: string;
+    sentTo: string;
+    title: string;
+    useDifferentEmail: string;
+  };
+  subtitle: string;
+  title: string;
+  footerNote: string;
+}
+
+export interface EmailsDictionary {
+  approve: {
+    button: string;
+    logoAlt: string;
+    message: string;
+    safeIgnore: string;
+    subject: string;
+    title: string;
+  };
+  magicLink: {
+    button: string;
+    copy: string;
+    logoAlt: string;
+    safeIgnore: string;
+    subject: string;
+    title: string;
+  };
+  resend: {
+    button: string;
+    logoAlt: string;
+    messageApproved: string;
+    messageResend: string;
+    safeIgnore: string;
+    subjectApproved: string;
+    subjectResend: string;
+    titleApproved: string;
+    titleResend: string;
+  };
+}

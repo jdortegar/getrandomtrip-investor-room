@@ -1,13 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 
 import { Button } from '@/components/ui/button';
 import { RoomNav } from '@/components/navigation/RoomNav';
 import { SignOutButton } from '@/components/navigation/SignOutButton';
-import { authOptions } from '@/lib/auth/config';
-import { getLocaleFromCookies } from '@/lib/i18n/server';
+import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
 import { pathForLocale } from '@/lib/i18n/pathForLocale';
 
 export const dynamic = 'force-dynamic';
@@ -22,18 +19,7 @@ export default async function RoomLayout({
   }
 
   try {
-    const session = await getServerSession(authOptions);
-    const locale = await getLocaleFromCookies();
-
-    if (!session) {
-      redirect(pathForLocale(locale, '/otp'));
-    }
-
-    const investor = (session as any).investor;
-
-    if (!investor || !investor.profileComplete) {
-      redirect(pathForLocale(locale, '/onboarding'));
-    }
+    const { investor, locale } = await requireRoomAuth();
 
     if (!investor.approved) {
       return (
@@ -92,7 +78,17 @@ export default async function RoomLayout({
         </main>
       </div>
     );
-  } catch (error) {
+  } catch (error: unknown) {
+    // Next.js redirect() throws an error with digest NEXT_REDIRECT — rethrow so the redirect happens
+    if (
+      error &&
+      typeof error === 'object' &&
+      'digest' in error &&
+      typeof (error as { digest?: string }).digest === 'string' &&
+      (error as { digest: string }).digest.startsWith('NEXT_REDIRECT')
+    ) {
+      throw error;
+    }
     console.error('Error loading room layout:', error);
     return (
       <main className="container mx-auto p-8">

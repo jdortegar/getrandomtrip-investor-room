@@ -308,5 +308,58 @@
         "usernamePlaceholder": "Username"
       }
     }
+  },
+  "otp": {
+    "title": "Investor Room",
+    "subtitle": "Enter your email to receive a secure access link",
+    "footerNote": "This is a secure passwordless sign-in. You will receive a link that expires in 10 minutes.",
+    "logoAlt": "Investor Room",
+    "form": {
+      "emailLabel": "Email",
+      "placeholder": "investor@example.com",
+      "submitButton": "Send access link",
+      "sending": "Sending..."
+    },
+    "success": {
+      "title": "Check your email",
+      "sentTo": "We sent an access link to",
+      "instruction": "Click the link in the email to sign in. The link expires in 10 minutes.",
+      "resendIn": "Resend available in {0} seconds",
+      "resendButton": "Resend email",
+      "useDifferentEmail": "Use a different email"
+    },
+    "loading": "Loading...",
+    "errorEmailSignin": "We couldn't send the sign-in link. Please try again or contact support.",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "errorVerification": "The sign-in link has expired or was already used. Please request a new link below."
+  },
+  "emails": {
+    "magicLink": {
+      "subject": "Access your Investor Room",
+      "logoAlt": "Investor Room",
+      "title": "Access your account",
+      "copy": "Click the button below to access the Investor Room. This link will expire in 10 minutes.",
+      "button": "Access",
+      "safeIgnore": "If you didn't request this email, you can safely ignore it."
+    },
+    "approve": {
+      "subject": "Access to Investor Room",
+      "logoAlt": "Investor Room",
+      "title": "You have been approved",
+      "message": "Congratulations — you have been approved to access the Investor Room. Click the button below to sign in and access the data room.",
+      "button": "Access the Investor Room",
+      "safeIgnore": "If you didn't request this access, ignore this email."
+    },
+    "resend": {
+      "subjectResend": "Resend: Access to Investor Room",
+      "subjectApproved": "Access to Investor Room",
+      "logoAlt": "Investor Room",
+      "titleResend": "Access link resent",
+      "titleApproved": "You have been approved",
+      "messageResend": "Your access link to the Investor Room has been resent. Click the button below to sign in.",
+      "messageApproved": "Congratulations — you have been approved to access the Investor Room. Click the button below to sign in and access the data room.",
+      "button": "Access the Investor Room",
+      "safeIgnore": "If you didn't request this access, ignore this email."
+    }
   }
 }

@@ -34,7 +34,7 @@ interface RoomNavProps {
 export function RoomNav({ locale }: RoomNavProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const approved = !!(session as any)?.investor?.approved;
+  const approved = !!session?.investor?.approved;
 
   return (
     <nav className="space-y-2">

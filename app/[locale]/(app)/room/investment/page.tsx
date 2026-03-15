@@ -1,9 +1,7 @@
-import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 import { SafeStatus } from '@prisma/client';
 
-import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/api/prisma';
+import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
 import { formatCurrency } from '@/lib/helpers/formatCurrency';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,11 +14,8 @@ import {
 } from '@/components/ui/card';
 
 export default async function InvestmentPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect('/otp');
-
-  const investor = session.investor;
-  if (!investor?.approved || !investor?.profileComplete) redirect('/otp');
+  const { investor } = await requireRoomAuth();
+  if (!investor.approved) return null;
 
   const safeDocuments = await prisma.safeDocument.findMany({
     orderBy: { generatedAt: 'desc' },
