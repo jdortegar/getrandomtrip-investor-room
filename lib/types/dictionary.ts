@@ -197,6 +197,47 @@ export interface OtpDictionary {
   footerNote: string;
 }
 
+export interface RoomDictionary {
+  layout: {
+    backToHome: string;
+    logoAlt: string;
+    pendingMessage: string;
+    pendingTitle: string;
+    title: string;
+    /** Prefix before investor name, e.g. "Welcome, " */
+    welcomePrefix: string;
+  };
+  nav: {
+    files: string;
+    helper: string;
+    investment: string;
+    summary: string;
+  };
+  summary: {
+    generatedOn: string;
+    help: string;
+    investmentFiles: string;
+    investmentFilesDescription: string;
+    lastSafe: string;
+    lastSafeDescription: string;
+    myInvestment: string;
+    noSafesYet: string;
+    pageSubtitle: string;
+    pageTitle: string;
+    statusPending: string;
+    statusSigned: string;
+    totalGenerated: string;
+    totalGeneratedDescription: string;
+    totalSigned: string;
+    totalSignedDescription: string;
+    viewFiles: string;
+  };
+  notFound: {
+    description: string;
+    title: string;
+  };
+}
+
 export interface EmailsDictionary {
   approve: {
     button: string;

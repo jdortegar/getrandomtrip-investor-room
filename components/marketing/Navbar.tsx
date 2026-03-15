@@ -109,7 +109,7 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
             ) : (
               <Link
                 className="text-xl font-medium text-white no-underline transition-colors hover:text-white hover:underline hover:decoration-2 hover:underline-offset-2"
-                href={pathForLocale(locale, '/login')}
+                href={pathForLocale(locale, '/otp')}
               >
                 {dict.logIn}
               </Link>
@@ -208,7 +208,7 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
           ) : (
             <Link
               className="text-xl font-bold text-white transition-colors hover:text-white/80"
-              href={pathForLocale(locale, '/login')}
+              href={pathForLocale(locale, '/otp')}
               onClick={closeMobileMenu}
             >
               {dict.logIn}

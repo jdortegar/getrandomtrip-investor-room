@@ -368,5 +368,44 @@
       "button": "Acceder a la Sala de inversores",
       "safeIgnore": "Si no solicitaste este acceso, ignora este correo."
     }
+  },
+  "room": {
+    "layout": {
+      "backToHome": "Volver al inicio",
+      "logoAlt": "Sala de Inversores",
+      "pendingMessage": "Tu acceso está pendiente de aprobación. Por favor contacta a los fundadores para obtener aprobación.",
+      "pendingTitle": "Acceso pendiente",
+      "title": "Sala de Inversores",
+      "welcomePrefix": "Bienvenido,"
+    },
+    "nav": {
+      "files": "Archivos",
+      "helper": "Ayuda",
+      "investment": "Mi inversión",
+      "summary": "Resumen"
+    },
+    "summary": {
+      "pageTitle": "Resumen",
+      "pageSubtitle": "Resumen de tu inversión y acceso rápido a recursos clave.",
+      "totalGenerated": "Total generado",
+      "totalGeneratedDescription": "Todos los documentos SAFE creados hasta ahora",
+      "totalSigned": "Total firmado",
+      "totalSignedDescription": "Solo documentos SAFE firmados",
+      "investmentFiles": "Archivos de inversión",
+      "investmentFilesDescription": "Documentos del data room de la empresa",
+      "lastSafe": "Último SAFE",
+      "lastSafeDescription": "El estado de tu último SAFE",
+      "noSafesYet": "Aún no hay documentos SAFE. Cuando generes uno, aparecerá aquí.",
+      "generatedOn": "Generado",
+      "viewFiles": "Ver archivos",
+      "myInvestment": "Mi inversión",
+      "help": "Ayuda",
+      "statusSigned": "Firmado",
+      "statusPending": "Pendiente"
+    },
+    "notFound": {
+      "title": "Página no encontrada",
+      "description": "La página que buscas no existe o no tienes acceso a ella."
+    }
   }
 }

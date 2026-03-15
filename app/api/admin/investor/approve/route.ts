@@ -63,7 +63,7 @@ export async function POST(req: Request) {
 
     const resend = new Resend(resendApiKey);
     const fromAddress = process.env.EMAIL_FROM || 'onboarding@resend.dev';
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3011';
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://investors.getrandomtrip.com';
     const otpPath = pathForLocale(locale, '/otp');
     const roomPath = pathForLocale(locale, '/room');
     const accessUrl = `${baseUrl}${otpPath}?callbackUrl=${encodeURIComponent(roomPath)}`;
@@ -103,8 +103,8 @@ export async function POST(req: Request) {
             <div class="main">
               <h2 class="title">${strings.title}</h2>
               <p class="copy">${strings.message}</p>
-              <div style="text-align:center; margin:22px 0;">
-                <a href="${accessUrl}" class="button" target="_blank" rel="noopener noreferrer" style="background:#FED700;color:#000;padding:12px 24px;text-decoration:none;border-radius:8px;display:block;font-weight:600;font-size:1rem;font-family:'Barlow Condensed',Arial Narrow,sans-serif;text-transform:uppercase;letter-spacing:0.025em;width:100%;">${strings.button}</a>
+              <div style="border-radius:8px; margin:22px 0; overflow:hidden; text-align:center;">
+                <a href="${accessUrl}" class="button" target="_blank" rel="noopener noreferrer" style="background:#FED700;border-bottom-left-radius:8px;border-bottom-right-radius:8px;border-top-left-radius:8px;border-top-right-radius:8px;color:#000;display:inline-block;font-family:'Barlow Condensed',Arial Narrow,sans-serif;font-size:1rem;font-weight:600;letter-spacing:0.025em;padding:12px 24px;text-decoration:none;text-transform:uppercase;width:100%;">${strings.button}</a>
               </div>
               <p class="copy">${strings.safeIgnore}</p>
             </div>

@@ -2,17 +2,29 @@
 
 import { signOut } from 'next-auth/react';
 import { LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
-export function SignOutButton() {
+import { cn } from '@/lib/utils';
+
+interface SignOutButtonProps {
+  className?: string;
+}
+
+export function SignOutButton({ className }: SignOutButtonProps) {
   async function handleSignOut() {
     await signOut({ callbackUrl: '/' });
   }
 
   return (
-    <Button onClick={handleSignOut} variant="ghost">
-      <LogOut className="mr-2 h-4 w-4" />
+    <button
+      className={cn(
+        'inline-flex cursor-pointer items-center gap-2 outline-none',
+        className,
+      )}
+      onClick={() => handleSignOut()}
+      type="button"
+    >
+      {/* <LogOut className="h-4 w-4 shrink-0" /> */}
       Cerrar sesión
-    </Button>
+    </button>
   );
 }

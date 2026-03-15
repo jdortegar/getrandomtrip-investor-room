@@ -13,11 +13,16 @@ import {
 import { prisma } from '@/lib/api/prisma';
 import { requireRoomAuth } from '@/lib/auth/requireRoomAuth';
 import { formatCurrency } from '@/lib/helpers/formatCurrency';
+import { getDictionary } from '@/lib/i18n/dictionaries';
 import { pathForLocale } from '@/lib/i18n/pathForLocale';
+import type { RoomDictionary } from '@/lib/types/dictionary';
 
 export default async function RoomPage() {
   const { investor, locale } = await requireRoomAuth();
   if (!investor.approved) return null;
+
+  const dict = await getDictionary(locale);
+  const s = (dict.room as RoomDictionary).summary;
 
   const [latestSafe, signedAggregate, totalAggregate, totalDocuments] =
     await Promise.all([
@@ -43,10 +48,10 @@ export default async function RoomPage() {
     <div className="space-y-8 xl:space-y-12">
       <div>
         <h2 className="mb-2 font-barlow-condensed text-3xl font-bold uppercase tracking-wide text-foreground md:text-4xl xl:text-5xl">
-          Resumen
+          {s.pageTitle}
         </h2>
         <p className="text-muted-foreground text-sm md:text-base">
-          Resumen de tu inversión y acceso rápido a recursos clave.
+          {s.pageSubtitle}
         </p>
       </div>
 
@@ -54,10 +59,10 @@ export default async function RoomPage() {
         <Card>
           <CardHeader>
             <CardTitle className="font-barlow-condensed text-lg font-semibold uppercase tracking-wide">
-              Total generado
+              {s.totalGenerated}
             </CardTitle>
             <CardDescription className="text-sm">
-              Todos los documentos SAFE creados hasta ahora
+              {s.totalGeneratedDescription}
             </CardDescription>
           </CardHeader>
           <CardContent className="font-barlow-condensed text-2xl font-bold tracking-wide md:text-3xl">
@@ -68,10 +73,10 @@ export default async function RoomPage() {
         <Card>
           <CardHeader>
             <CardTitle className="font-barlow-condensed text-lg font-semibold uppercase tracking-wide">
-              Total firmado
+              {s.totalSigned}
             </CardTitle>
             <CardDescription className="text-sm">
-              Solo documentos SAFE FIRMADOS
+              {s.totalSignedDescription}
             </CardDescription>
           </CardHeader>
           <CardContent className="font-barlow-condensed text-2xl font-bold tracking-wide md:text-3xl">
@@ -82,10 +87,10 @@ export default async function RoomPage() {
         <Card>
           <CardHeader>
             <CardTitle className="font-barlow-condensed text-lg font-semibold uppercase tracking-wide">
-              Archivos de inversión
+              {s.investmentFiles}
             </CardTitle>
             <CardDescription className="text-sm">
-              Documentos del data room de la empresa
+              {s.investmentFilesDescription}
             </CardDescription>
           </CardHeader>
           <CardContent className="font-barlow-condensed text-2xl font-bold tracking-wide md:text-3xl">
@@ -97,16 +102,16 @@ export default async function RoomPage() {
       <Card>
         <CardHeader>
           <CardTitle className="font-barlow-condensed text-xl font-semibold uppercase tracking-wide md:text-2xl">
-            Último SAFE
+            {s.lastSafe}
           </CardTitle>
           <CardDescription className="text-sm">
-            El estado de tu último SAFE
+            {s.lastSafeDescription}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {!latestSafe ? (
             <div className="text-muted-foreground text-sm">
-              Aún no hay documentos SAFE. Cuando generes uno, aparecerá aquí.
+              {s.noSafesYet}
             </div>
           ) : (
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -115,8 +120,8 @@ export default async function RoomPage() {
                   {formatCurrency(latestSafe.amount)}
                 </div>
                 <div className="text-muted-foreground text-sm">
-                  Generado{' '}
-                  {new Date(latestSafe.generatedAt).toLocaleDateString()}
+                  {s.generatedOn}{' '}
+                  {new Date(latestSafe.generatedAt).toLocaleDateString(locale)}
                 </div>
               </div>
               <Badge
@@ -126,20 +131,26 @@ export default async function RoomPage() {
                     : 'secondary'
                 }
               >
-                {latestSafe.status}
+                {latestSafe.status === SafeStatus.SIGNED
+                  ? s.statusSigned
+                  : s.statusPending}
               </Badge>
             </div>
           )}
 
           <div className="flex flex-wrap gap-2">
             <Button asChild variant="default">
-              <Link href={pathForLocale(locale, '/room/files')}>Ver archivos</Link>
+              <Link href={pathForLocale(locale, '/room/files')}>
+                {s.viewFiles}
+              </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={pathForLocale(locale, '/room/investment')}>Mi inversión</Link>
+              <Link href={pathForLocale(locale, '/room/investment')}>
+                {s.myInvestment}
+              </Link>
             </Button>
             <Button asChild variant="ghost">
-              <Link href={pathForLocale(locale, '/room/helper')}>Ayuda</Link>
+              <Link href={pathForLocale(locale, '/room/helper')}>{s.help}</Link>
             </Button>
           </div>
         </CardContent>

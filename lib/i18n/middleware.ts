@@ -28,7 +28,12 @@ export function handleI18n(request: NextRequest): NextResponse | null {
   }
 
   if (hasEn) {
-    return null;
+    const res = NextResponse.next();
+    res.cookies.set(COOKIE_LOCALE, 'en', {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+    });
+    return res;
   }
 
   const locale = getLocale(request);

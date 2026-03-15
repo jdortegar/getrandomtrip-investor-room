@@ -2,18 +2,19 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Globe } from 'lucide-react';
 
+import { cn } from '@/lib/utils';
 import { COOKIE_LOCALE, LOCALE_LABELS, type Locale } from '@/lib/i18n/config';
 import { pathForLocale } from '@/lib/i18n/pathForLocale';
 
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 interface LocaleSwitcherProps {
+  className?: string;
   locale: Locale;
 }
 
-export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
+export function LocaleSwitcher({ className, locale }: LocaleSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -76,12 +77,11 @@ export function LocaleSwitcher({ locale }: LocaleSwitcherProps) {
     <div className="relative" ref={ref}>
       <button
         aria-label="Select language"
-        className="flex items-center gap-1.5 text-white cursor-pointer outline-none"
-        type="button"
+        className={cn('cursor-pointer outline-none', className)}
         onClick={() => setOpen(!open)}
+        type="button"
       >
-        <Globe className="h-5 w-5" />
-        <span className="font-barlow-condensed text-base font-semibold uppercase">{locale.toUpperCase()}</span>
+        {LOCALE_LABELS[locale]}
       </button>
 
       {open && (

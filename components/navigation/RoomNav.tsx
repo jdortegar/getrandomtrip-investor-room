@@ -13,25 +13,27 @@ import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
 import { pathForLocale } from '@/lib/i18n/pathForLocale';
 import type { Locale } from '@/lib/i18n/config';
+import type { RoomDictionary } from '@/lib/types/dictionary';
 
 interface RoomNavItem {
-  path: string;
   icon: React.ComponentType<{ className?: string }>;
-  label: string;
+  labelKey: keyof RoomDictionary['nav'];
+  path: string;
 }
 
 const roomNavItems: RoomNavItem[] = [
-  { icon: LayoutDashboard, label: 'Resumen', path: '/room' },
-  { icon: FileText, label: 'Archivos', path: '/room/files' },
-  { icon: PiggyBank, label: 'Mi inversión', path: '/room/investment' },
-  { icon: HandHelping, label: 'Ayuda', path: '/room/helper' },
+  { icon: LayoutDashboard, labelKey: 'summary', path: '/room' },
+  { icon: FileText, labelKey: 'files', path: '/room/files' },
+  { icon: PiggyBank, labelKey: 'investment', path: '/room/investment' },
+  { icon: HandHelping, labelKey: 'helper', path: '/room/helper' },
 ];
 
 interface RoomNavProps {
+  dict: RoomDictionary['nav'];
   locale: Locale;
 }
 
-export function RoomNav({ locale }: RoomNavProps) {
+export function RoomNav({ dict, locale }: RoomNavProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const approved = !!session?.investor?.approved;
@@ -40,6 +42,7 @@ export function RoomNav({ locale }: RoomNavProps) {
     <nav className="space-y-2">
       {roomNavItems.map((item) => {
         const Icon = item.icon;
+        const label = dict[item.labelKey];
         const href = pathForLocale(locale, item.path);
         const isActive =
           pathname === href ||
@@ -55,7 +58,7 @@ export function RoomNav({ locale }: RoomNavProps) {
               )}
             >
               <Icon className="h-5 w-5" />
-              {item.label}
+              {label}
             </div>
           );
         }
@@ -72,7 +75,7 @@ export function RoomNav({ locale }: RoomNavProps) {
             key={item.path}
           >
             <Icon className="h-5 w-5" />
-            {item.label}
+            {label}
           </Link>
         );
       })}

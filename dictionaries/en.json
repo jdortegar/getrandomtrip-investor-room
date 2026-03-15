@@ -361,5 +361,44 @@
       "button": "Access the Investor Room",
       "safeIgnore": "If you didn't request this access, ignore this email."
     }
+  },
+  "room": {
+    "layout": {
+      "backToHome": "Back to home",
+      "logoAlt": "Investor Room",
+      "pendingMessage": "Your access is pending approval. Please contact the founders to get approved.",
+      "pendingTitle": "Access pending",
+      "title": "Investor Room",
+      "welcomePrefix": "Welcome,"
+    },
+    "nav": {
+      "files": "Files",
+      "helper": "Help",
+      "investment": "My investment",
+      "summary": "Summary"
+    },
+    "summary": {
+      "pageTitle": "Summary",
+      "pageSubtitle": "Overview of your investment and quick access to key resources.",
+      "totalGenerated": "Total generated",
+      "totalGeneratedDescription": "All SAFE documents created so far",
+      "totalSigned": "Total signed",
+      "totalSignedDescription": "Signed SAFE documents only",
+      "investmentFiles": "Investment files",
+      "investmentFilesDescription": "Company data room documents",
+      "lastSafe": "Latest SAFE",
+      "lastSafeDescription": "Status of your latest SAFE",
+      "noSafesYet": "No SAFE documents yet. When you generate one, it will appear here.",
+      "generatedOn": "Generated",
+      "viewFiles": "View files",
+      "myInvestment": "My investment",
+      "help": "Help",
+      "statusSigned": "Signed",
+      "statusPending": "Pending"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist or you don't have access to it."
+    }
   }
 }
