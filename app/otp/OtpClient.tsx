@@ -57,14 +57,8 @@ export default function OtpClient({ dict }: OtpClientProps) {
       const result = await sendEmail(email.trim());
 
       if (result.error) {
-        // Map NextAuth error codes to friendly messages (same as URL param handling)
-        if (result.error === 'EmailSignin') {
-          setError(dict.errorEmailSignin);
-        } else if (result.error === 'Verification') {
-          setError(dict.errorVerification);
-        } else {
-          setError(result.error);
-        }
+        // API returns the real server error message for display
+        setError(result.error);
       } else {
         setIsSuccess(true);
       }

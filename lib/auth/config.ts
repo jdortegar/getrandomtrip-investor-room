@@ -114,7 +114,11 @@ export const authOptions: NextAuthOptions = {
       maxAge: 10 * 60, // 10 minutes
       // Custom email sending with Resend
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        const baseUrl ='https://investors.getrandomtrip.com';
+        const baseUrl = 'https://investors.getrandomtrip.com';
+        console.error('[NextAuth Email] sendVerificationRequest start', {
+          identifier,
+          from: provider.from,
+        });
 
         try {
           const resend = getResend();
@@ -186,6 +190,9 @@ export const authOptions: NextAuthOptions = {
             message,
             error: err,
           });
+          if (err instanceof Error && err.stack) {
+            console.error('[NextAuth Email] stack:', err.stack);
+          }
           throw new Error(message);
         }
       },

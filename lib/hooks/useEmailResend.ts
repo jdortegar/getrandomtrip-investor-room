@@ -1,12 +1,16 @@
+'use client';
+
 import { useState, useCallback } from 'react';
-import { signIn } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 const RESEND_COOLDOWN_SECONDS = 60;
 
 /**
- * Custom hook to handle email resend with cooldown
+ * Custom hook to handle email resend with cooldown.
+ * Uses custom API so the server can return the real error message to the client.
  */
 export function useEmailResend() {
+  const pathname = usePathname();
   const [cooldown, setCooldown] = useState(0);
   const [canResend, setCanResend] = useState(true);
 
@@ -32,20 +36,28 @@ export function useEmailResend() {
         return { error: 'Please wait before resending' };
       }
 
-      const result = await signIn('email', {
-        email,
-        redirect: false,
-        callbackUrl: '/room',
+      const locale = pathname?.startsWith('/en') ? 'en' : 'es';
+
+      const res = await fetch('/api/auth/send-magic-link', {
+        body: JSON.stringify({
+          callbackUrl: '/room',
+          email: email.trim(),
+          locale,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
       });
 
-      if (result?.error) {
-        return { error: result.error };
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        return { error: data?.error ?? 'Failed to send the sign-in link' };
       }
 
       startCooldown();
       return {};
     },
-    [canResend, startCooldown],
+    [canResend, pathname, startCooldown],
   );
 
   return { cooldown, canResend, sendEmail };
