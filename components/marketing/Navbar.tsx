@@ -187,16 +187,9 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
               {dict.investorsRoom}
             </Link>
           )}
-          <button
-            className="text-xl font-bold text-white transition-colors hover:text-white/80"
-            onClick={handleLocaleSwitch}
-            type="button"
-          >
-            {LOCALE_LABELS[otherLocale]}
-          </button>
           {onLogInClick ? (
             <button
-              className="text-xl font-bold text-white transition-colors hover:text-white/80"
+              className="text-xl  text-white transition-colors hover:text-white/80"
               onClick={() => {
                 onLogInClick();
                 closeMobileMenu();
@@ -207,13 +200,20 @@ export function Navbar({ dict, locale, onLogInClick }: NavbarProps) {
             </button>
           ) : (
             <Link
-              className="text-xl font-bold text-white transition-colors hover:text-white/80"
+              className="text-xl  text-white transition-colors hover:text-white/80"
               href={pathForLocale(locale, '/otp')}
               onClick={closeMobileMenu}
             >
               {dict.logIn}
             </Link>
           )}
+           <button
+            className="text-xl font-bold text-white transition-colors hover:text-white/80 text-left"
+            onClick={handleLocaleSwitch}
+            type="button"
+          >
+            {LOCALE_LABELS[otherLocale]}
+          </button>
         </div>
       </div>
     </>
