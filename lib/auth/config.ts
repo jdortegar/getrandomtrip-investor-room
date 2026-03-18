@@ -114,7 +114,7 @@ export const authOptions: NextAuthOptions = {
       maxAge: 10 * 60, // 10 minutes
       // Custom email sending with Resend
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        const baseUrl = 'https://investors.getrandomtrip.com';
+        const baseUrl = process.env.NEXTAUTH_URL || 'https://investors.getrandomtrip.com';
         console.error('[NextAuth Email] sendVerificationRequest start', {
           identifier,
           from: provider.from,

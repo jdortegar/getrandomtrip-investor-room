@@ -22,7 +22,15 @@ export default async function RoomLayout({
   }
 
   try {
-    const { investor, locale } = await requireRoomAuth();
+    const { investor, locale, session } = await requireRoomAuth();
+    const founders = (process.env.FOUNDER_EMAIL || '')
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    const isAdmin =
+      !!session?.user?.email &&
+      founders.includes(session.user.email.toLowerCase());
+
     const dict = await getDictionary(locale);
     const room = dict.room as RoomDictionary;
 
@@ -77,6 +85,14 @@ export default async function RoomLayout({
               >
                 {room.layout.backToHome}
               </Link>
+              {isAdmin && (
+                <Link
+                  className="text-sm font-medium text-foreground underline-offset-2 hover:text-primary hover:underline"
+                  href={pathForLocale(locale, '/admin/investors')}
+                >
+                  {room.layout.approveInvestors}
+                </Link>
+              )}
               <LocaleSwitcher
                 className="text-sm font-medium text-foreground underline-offset-2 hover:text-primary hover:underline"
                 locale={locale}

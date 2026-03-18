@@ -365,6 +365,7 @@
   },
   "room": {
     "layout": {
+      "approveInvestors": "Approve investors",
       "backToHome": "Back to home",
       "logoAlt": "Investor Room",
       "pendingMessage": "Your access is pending approval. Please contact the founders to get approved.",

@@ -372,6 +372,7 @@
   },
   "room": {
     "layout": {
+      "approveInvestors": "Aprobar inversores",
       "backToHome": "Volver al inicio",
       "logoAlt": "Sala de Inversores",
       "pendingMessage": "Tu acceso está pendiente de aprobación. Por favor contacta a los fundadores para obtener aprobación.",

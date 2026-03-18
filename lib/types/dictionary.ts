@@ -199,6 +199,7 @@ export interface OtpDictionary {
 
 export interface RoomDictionary {
   layout: {
+    approveInvestors: string;
     backToHome: string;
     logoAlt: string;
     pendingMessage: string;
