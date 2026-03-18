@@ -9,6 +9,8 @@ export default async function MarketingPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  console.log('[marketing home] NEXTAUTH_URL=', process.env.NEXTAUTH_URL);
+
   const { locale } = await params;
   if (!hasLocale(locale)) return null;
 
