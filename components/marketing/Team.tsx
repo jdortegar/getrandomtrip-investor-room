@@ -47,9 +47,17 @@ const TEAM_MEMBERS: TeamMember[] = [
     linkedinUrl: 'https://www.linkedin.com/in/jdortegar/',
     imageUrl: '/images/team-3.jpg',
   },
- 
   {
     id: 4,
+    name: 'CARLA<br/>VAZQUEZ',
+    role: 'UX/UI Director',
+    description:
+      'Shapes product design and user research. Makes the platform intuitive and delightful to use.',
+    linkedinUrl: 'https://www.linkedin.com/in/carla-vazquez/',
+    imageUrl: '/images/team-4.jpg',
+  },
+  {
+    id: 5,
     name: 'NICOLÁS<br/>ASMAR',
     role: 'Creative Director',
     description:
@@ -57,15 +65,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     linkedinUrl: 'https://www.linkedin.com/in/nicolas-asmar/',
     imageUrl: '/images/team-1.png',
   },
-  {
-    id: 5,
-    name: 'CARLA<br/>VAZQUEZ',
-    role: 'UX/UI Director',
-    description:
-      'Shapes product design and user research. Makes the platform intuitive and delightful to use.',
-    linkedinUrl: 'https://www.linkedin.com/in/carla-vazquez/',
-    imageUrl: '/images/team1.png',
-  },
+ 
 ];
 
 function renderNameWithBreaks(name: string) {
@@ -93,7 +93,7 @@ function renderCardFront(member: TeamMember) {
       />
 
       {/* Dark Gradient Overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/10 via-black/5 to-transparent" />
 
       {/* Name Overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-6 xl:p-8 2xl:p-10">
